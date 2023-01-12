@@ -29,7 +29,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @SpringBootTest // test에는 항상 넣어줘야한다.test class로 쓰겠다는 의미!
-//@TestPropertySource(locations = "classpath:application-test.properties")
+@TestPropertySource(locations = "classpath:application-test.properties")
 // 아까 하나 더 만들었던 h2 DB를 적용할 수 있도록 위치를 지정해준다. 
 class ItemRepositoryTest {
 
@@ -251,7 +251,7 @@ class ItemRepositoryTest {
 	public void queryDslTest() {
 		this.createItemTest();
 		JPAQueryFactory qf = new JPAQueryFactory(em); 
-		// 쿼리를 동적으로 생산하기 위한 JPAQueryFactory
+		// 쿼리를 동적으로 생산하기 위한 JPAQueryFactory -> 앞서 선언한 entity mananger을 통해 처리하려면 얘가 있어야한다.
 		
 		QItem qItem = QItem.item; 
 		// Querydsl 환경만들면서 자동으로 생성한 QItem.java를 가져온다.

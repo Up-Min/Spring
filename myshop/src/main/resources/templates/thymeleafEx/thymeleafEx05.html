@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<a th:href="@{/thymeleaf/ex01}">예제 1 페이지 이동 </a>
+	</div>
+	<div>
+		<a th:href="@{https://www.naver.com}">킹이버 이동 </a>
+	</div>
+	<div>
+		<a th:href="@{/thymeleaf/ex06(param1='데이터1', param2='데이터2')}">파라메터 전달 </a>
+		<!-- get방식 뭐 어쩌구 이렇게 주는게 아니다.
+			주소를 클릭하면 컨트롤러로 넘어가게 되고, 해당 맵핑 된 메소드에서 파라메터를 받을 수 있다.
+			-->
+	</div>
+</body>
+</html>

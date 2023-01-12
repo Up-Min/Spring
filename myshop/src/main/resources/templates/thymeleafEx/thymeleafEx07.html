@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+ <!-- 레이아웃에 있는 content에 넣어주기 위해 추가해준다. 
+      body안에 있는 내용이 layout1안에 들어가야 하기 때문에, 거기 위치를 넣고 레이아웃을 꾸며주겠다는 
+      이야기를 하는 것이다.-->
+      
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="content">
+	<!-- layout1.html에 있는 layout:fragment에서 선언된 이름과 동일하게 셋팅해준다. --> 
+		thymeleafEx07 에서 넘어오는 본문 영역입니다.
+	</div>
+</body>
+</html>
