@@ -1,7 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- bootstrap css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
 
+    <link rel="stylesheet" href="css/style.css" />
 
+    <!-- bootstrap js, popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+      integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+      crossorigin="anonymous"
+    ></script>
 
+    <!-- jquery -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.3.min.js"
+      integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <!-- 헤더  -->
+    <div class="header">
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+        <!-- 컨텐츠가 밀리지 않도록 fixed-top를 넣어준다. -->
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">LOGO 올 자리 </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled">Disabled</a>
+              </li>
+            </ul>
+            <form class="d-flex" role="search">
+              <input
+                class="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <button class="btn btn-outline-success" type="submit">
+                Search
+              </button>
+            </form>
+          </div>
+        </div>
+      </nav>
+      <div class="container align-center">
+        <h1><strong>Display your web design</strong><br />in a web browser</h1>
+        <h4 class="silver hidden-xs">
+          Fastest way to present your design and get feedback from your clients!
+        </h4>
+        Upload Project
 
+        <div class="silver small-info margin-top-big d-none d-md-block"></div>
+        <img src="images/drop-icon.png" />
+        Drop here or select your project<br />prepared in the PNG or JPG format
+      </div>
+    </div>
+    <!-- 섹션1 -->
+    <div class="box-padding-big grey-bg">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5">
+            <h2>Fastest way to<br /><strong>present your design</strong></h2>
+            <p>
+              Symu is an easy to use tool for web designers. With the help of
+              our system you can present your projects in a browser for free. It
+              is all very easy!
+            </p>
+            <p>
+              <strong>Drop your project anywhere</strong><br />Symu will prepare
+              a mockup of your website for you!
+            </p>
+          </div>
+          <div class="col-md-7">
+            <img src="images/symu-panel-1.png" />
+          </div>
+          <!-- container : 뭔가를 받는 요소, 컨텐츠를 추가하고 싶을 때 하면 된다.
+               row, column 요소 -->
+        </div>
+      </div>
+    </div>
+    <!-- 섹션2 -->
+    <div class="box-padding-big white-bg">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <img src="images/symu-panel-2.png" />
+          </div>
+          <div class="col-md-5">
+            <h2>
+              The simplest way to<br /><strong
+                >get feedback from your clients!</strong
+              >
+            </h2>
+            <p>
+              <strong>You can add a comment anywhere</strong> on a project, this
+              is a fast and easy way to gather input and proposed changes from
+              your client. Click anywhere on a project and leave your thoughts.
+            </p>
+            <p>
+              <strong>Every added comment becomes a task! </strong> Thanks to
+              this solution you can easily mark the changes you have made.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 섹션3 -->
+    <div class="box-padding-big grey-bg">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5">
+            <h2>Support for<br /><strong>Responsive projects</strong></h2>
+            <p>
+              Projects added to Symu are automatically checked whether they are
+              mobile ready.
+            </p>
+            <p>
+              The program will divide your files into responsive versions on its
+              own! You have the option to view the projects in either normal or
+              responsive modes!
+            </p>
+          </div>
+          <div class="col-md-7">
+            <img src="images/home-panel-3.jpg" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 섹션4 -->
+    <div class="box-padding-big white-bg">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <img src="images/envelope-icon.jpg" style="float: left" />
+            <h2 class="icon-title">
+              Email<br /><strong>notifications</strong>
+            </h2>
+            <p>
+              An email notification will be sent when your client comments or
+              opens a project. You will know when a client recieves the projects
+              and if he has seen it!
+            </p>
+          </div>
+          <div class="col-md-6">
+            <img src="images/lock-icon.jpg" style="float: left" />
+            <h2 class="icon-title">Project<br /><strong>protection</strong></h2>
+            <p>
+              Your projects will be perfectly safe, Symu uses SSL encryption and
+              every project added receives a unique link. Additionally you have
+              the option to secure your project with a password.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 섹션5 -->
+    <div class="d-none d-md-block box-padding-big bark-bg-stat">
+      <!-- 만약 특정한 세션을 숨기고 싶을 때. d-none, d-md-block / 특정한 사이즈(md) 밑으로 가서는 안보이게 한다. -->
+      <div class="container">
+        <div class="row">
+          <div class="col-md-2">
+            <div class="info-box align-center">
+              <h3>253</h3>
+              Todays uploads
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="info-box align-center">
+              <h3>171092</h3>
+              Projects uploaded
+            </div>
+          </div>
+          <div class="col-md-4">
+            <a href="#registerModal" role="button" data-toggle="modal"
+              >Sign Up <strong>now</strong></a
+            >
+          </div>
+          <div class="col-md-2">
+            <div class="info-box align-center">
+              <h3>931523</h3>
+              Project views
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="info-box align-center">
+              <h3>100867</h3>
+              Comments posted
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-
-
+    <!-- 푸터 -->
+    <footer class="footer">
+      The site owner is not responsible for uploaded images. You can only upload
+      images for which you own the copyright.
+    </footer>
+  </body>
+</html>

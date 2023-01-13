@@ -1,0 +1,13 @@
+{
+  "folders": [
+	{
+		"path": "../../FE/HTML/study/study"
+	},
+	{
+		"path": "."
+	}
+],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "bootstrap"
+  }
+}
