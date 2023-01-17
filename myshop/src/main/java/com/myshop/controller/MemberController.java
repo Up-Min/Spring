@@ -72,4 +72,19 @@ public class MemberController {
 	}
 	
 	
+	// 로그인 화면
+	@GetMapping(value = "/login")
+	public String loginMember() {
+		return "member/memberLoginForm";
+	}
+	
+	// 로그인 에러시 발생시킬 페이지 (securityconfig 에서 넘겨받은거!)
+	@GetMapping(value = "/login/error")
+	public String loginError(Model model) {
+		model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
+	 //memberLoginForm 에서 에러를 받아낼 수 있도록 거기서 선언한 "${loginErrorMsg}"에 맞춰 에러값을 넣어준다.
+		return "member/memberLoginForm";
+	}
+	
+	
 }
