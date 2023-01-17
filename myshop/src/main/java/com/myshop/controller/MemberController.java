@@ -1,5 +1,8 @@
 package com.myshop.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.myshop.dto.MemberFormDto;
 import com.myshop.entity.Member;
@@ -77,6 +81,28 @@ public class MemberController {
 	public String loginMember() {
 		return "member/memberLoginForm";
 	}
+	
+	
+	private final SessionManager sessionManager; //의존성 주입
+	
+	
+//	// 쿠키, 세션 테스트
+//	@PostMapping(value = "/login2")
+//	public String loginMember2(HttpServletResponse response, HttpSession session, @RequestParam String email) { 
+//		//세션을 저장할 수 있는 HttpSession 객체 , email 주소를 알아서 가져와주는 @RequestParam String email.
+//		System.out.println("email : "+ email);
+//		Cookie idCookie = new Cookie("userCookieId", email);
+//		response.addCookie(idCookie); // id를 쿠키에 저장함.
+//		
+//		//setAttribute 통해 session 객체 그 자체를 저장
+//		// session.setAttribute("userSessionId2", email);
+//		
+//		sessionManager.createSession("sessionPerson2", response); // sessionPerson2라는 값을 넣어줌
+//		// sessionManager 을 통해 나중에 세션의 쿠키를 통해서 값을 가져올 수도 있다.
+//		
+//		return "member/memberLoginForm";
+//	}
+	
 	
 	// 로그인 에러시 발생시킬 페이지 (securityconfig 에서 넘겨받은거!)
 	@GetMapping(value = "/login/error")

@@ -7,6 +7,53 @@
       이야기를 하는 것이다.-->
 <head>
 
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" th:src="@{/js/cookie.js}"></script>
+<!-- 촤상의 root 경로를 기준으로 잡는다! -->
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	    // 쿠키를 이용한 아이디 기억
+		$(document).ready(function(){
+        	var userInputId = getCookie("userInputId");
+        	var setCookieYN = getCookie("setCookieYN");
+		
+        	if(setCookieYN == 'Y'){
+        		$("#id_save").prop("checked", true);
+        		$("#email").val(userInputId);
+        	} else{
+        		$("#id_save").prop("checked", false);
+        	}
+        	
+        	$('#loginbtn').click(function(){
+        		if(#("#id_save").is(":checked")){
+        			var userInputId = $('#email').val();
+        			setCookie("userInputId", userInputId, 60);
+        			setCookie("setCookieYN", "Y", 60);
+        		}else{
+        			deleteCookie("userInputId");
+        			deleteCookie("setCookieYN");
+        		}
+        	})
+    	});
+	</script>
+	<!-- 쿠키의 키로  "userInputId" / "setCookieYN" 을 지정할 수 있어짐.
+		
+		setCookieYN이 Y일 때
+		아이디 저장 버튼을 활성화 시키고
+		아이디 칸 ("#email")안에 유저의 아이디를 저장시켜둔다
+		아닐 때
+		아이디 저장 버튼을 비활성화 시킨다
+		
+		로그인 버튼이 클릭됐을 때에 대한 function 선언
+		아이디 기억 체크박스가 체크되어 있는지 여부를 확인해서,되어있으면 true를 반환함.
+		true면, input창에 입력 된 이메일 값을 불러와서
+		setcoookie에 (cookie.js에 있는 setcookie 참고) 저장시킨다. ("userInputId", userInputId, 60일)
+		체크가 되어있지 않으면 쿠키를 삭제시키는 것도 한다 (else)
+	-->
+</th:block>
+
+
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
   <style>
@@ -15,9 +62,6 @@
      }
   </style>
 </th:block>
-
-<meta charset="UTF-8">
-<title>Insert title here</title>
 </head>
 <body>
 	<div layout:fragment="content">

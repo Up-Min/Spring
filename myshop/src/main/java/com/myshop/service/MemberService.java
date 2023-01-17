@@ -37,7 +37,7 @@ public class MemberService implements UserDetailsService {
 		}
 		
 		
-		// 사용자 정보가 있을경우. DB에서 받은 사용자 객체를 반환해준다.
+		// 사용자 정보가 있을경우. DB에서 받은 userDetail에서의 사용자 객체를 반환해준다.
 		return User.builder()
 				.username(member.getEmail())
 				.password(member.getPassword())
