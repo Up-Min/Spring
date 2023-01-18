@@ -35,20 +35,14 @@ public class MemberService implements UserDetailsService {
 			// 멤버 값이 없는 경우 에러를 throw 해준다.
 			throw new UsernameNotFoundException(email);
 		}
-		
-		
 		// 사용자 정보가 있을경우. DB에서 받은 userDetail에서의 사용자 객체를 반환해준다.
 		return User.builder()
 				.username(member.getEmail())
 				.password(member.getPassword())
 				.roles(member.getRole().toString())
 				.build();
-		// 아 얘가 springsecuritycontext에 저장이 되는구나!하고 이해하면 된다.
-		
+		// 아 얘가 springsecuritycontext에 저장이 되는구나!하고 이해하면 된다.	
 	}
-	
-	
-	
 	public Member saveMember(Member member) {
 		validateDuplicateMember(member); // 이메일 중복체크 우선. 
 		// 만약 있을 경우 exception 날릴거임
