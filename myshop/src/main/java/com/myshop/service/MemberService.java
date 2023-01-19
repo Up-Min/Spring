@@ -1,5 +1,4 @@
 
-
 package com.myshop.service;
 
 import org.springframework.security.core.userdetails.User;
@@ -24,7 +23,7 @@ public class MemberService implements UserDetailsService {
 	// UserDetailsService : 로그인시 request에서 넘어온 사용자 정보를 받음.
 	
 	private final MemberRepository memberRepository; //의존성 주입.
-		
+	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		// String username -> String email : email에 대한 정보를 본인이 알아서 가져온다.
@@ -46,7 +45,7 @@ public class MemberService implements UserDetailsService {
 	public Member saveMember(Member member) {
 		validateDuplicateMember(member); // 이메일 중복체크 우선. 
 		// 만약 있을 경우 exception 날릴거임
-		return memberRepository.save(member); //member 테이블에 insert
+		return memberRepository.save(member); //영속성 컨텍스트 저장상태.
 	}
 	
 	// 이메일 중복체크 메소드

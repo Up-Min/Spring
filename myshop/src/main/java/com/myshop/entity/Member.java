@@ -16,7 +16,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Member {
+public class Member extends BaseEntity{
 	@Id
 	@Column(name = "member_id")
 	@GeneratedValue(strategy = GenerationType.AUTO) //Pk 생성 전략 : db에 맞춰서 알아서 해줌 (auto)

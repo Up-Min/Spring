@@ -53,7 +53,7 @@ class ItemRepositoryTest {
 			item.setItemSellstatus(ItemSellstatus.SELL);
 			item.setStockNumber(100);
 			item.setRegTime(LocalDateTime.now()); // 현재 시간 저장.
-			item.setUpdateTime(LocalDateTime.now());
+//			item.setUpdateTime(LocalDateTime.now());
 			Item savedItem = itemRepository.save(item);
 		}
 	}
@@ -67,7 +67,7 @@ class ItemRepositoryTest {
 			item.setItemSellstatus(ItemSellstatus.SELL);
 			item.setStockNumber(100);
 			item.setRegTime(LocalDateTime.now()); // 현재 시간 저장.
-			item.setUpdateTime(LocalDateTime.now());
+//			item.setUpdateTime(LocalDateTime.now());
 			Item savedItem = itemRepository.save(item);
 		}
 		for (int i=6; i<=10; i++) {
@@ -78,7 +78,7 @@ class ItemRepositoryTest {
 			item.setItemSellstatus(ItemSellstatus.SOLD_OUT);
 			item.setStockNumber(0);
 			item.setRegTime(LocalDateTime.now()); // 현재 시간 저장.
-			item.setUpdateTime(LocalDateTime.now());
+//			item.setUpdateTime(LocalDateTime.now());
 			Item savedItem = itemRepository.save(item);
 		}
 	}

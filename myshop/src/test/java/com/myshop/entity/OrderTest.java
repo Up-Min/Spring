@@ -53,7 +53,7 @@ class OrderTest {
 		item.setItemSellstatus(ItemSellstatus.SELL);
 		item.setStockNumber(100);
 		item.setRegTime(LocalDateTime.now()); // 현재 시간 저장.
-		item.setUpdateTime(LocalDateTime.now());
+//		item.setUpdateTime(LocalDateTime.now());
 		// Item savedItem = itemRepository.save(item); //save 여기서 안할거임.
 
 		return item;

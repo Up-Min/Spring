@@ -14,7 +14,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class Item {
+public class Item extends BaseEntity {
 	@Id
 	@Column (name = "item_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,9 +38,4 @@ public class Item {
 	@Enumerated(EnumType.STRING) // enum타입 구성요소 문자 그 자체로 저장.
 	private ItemSellstatus itemSellstatus; // 상품 판매상태
 	
-	
-	private LocalDateTime regTime; // 등록 시간
-	
-	
-	private LocalDateTime updateTime; // 수정 시간	
 }
