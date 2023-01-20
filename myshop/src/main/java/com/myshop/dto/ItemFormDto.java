@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 import org.modelmapper.ModelMapper;
 
-import com.myshop.constant.ItemSellstatus;
+import com.myshop.constant.ItemSellStatus;
 import com.myshop.entity.Item;
 
 import lombok.Getter;
@@ -36,7 +36,7 @@ public class ItemFormDto {
 	@NotBlank (message = "상품 상세설명은 필수 입력 값입니다.")	
 	private String itemDetail; // 상품 상세설명
 	
-	private ItemSellstatus itemSellStatus; // 상품 판매상태
+	private ItemSellStatus itemSellStatus; // 상품 판매상태
 	
 	
 

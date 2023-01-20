@@ -21,7 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.TestPropertySource;
 import org.thymeleaf.util.StringUtils;
 
-import com.myshop.constant.ItemSellstatus;
+import com.myshop.constant.ItemSellStatus;
 import com.myshop.entity.Item;
 import com.myshop.entity.QItem;
 import com.querydsl.core.BooleanBuilder;
@@ -50,7 +50,7 @@ class ItemRepositoryTest {
 			item.setItemNm("테스트 상품" + i);
 			item.setPrice(10000 + i);
 			item.setItemDetail("테스트 상품 상세 설명" + i);
-			item.setItemSellstatus(ItemSellstatus.SELL);
+			item.setItemSellStatus(ItemSellStatus.SELL);
 			item.setStockNumber(100);
 			item.setRegTime(LocalDateTime.now()); // 현재 시간 저장.
 //			item.setUpdateTime(LocalDateTime.now());
@@ -64,7 +64,7 @@ class ItemRepositoryTest {
 			item.setItemNm("테스트 상품" + i);
 			item.setPrice(10000 + i);
 			item.setItemDetail("테스트 상품 상세 설명" + i);
-			item.setItemSellstatus(ItemSellstatus.SELL);
+			item.setItemSellStatus(ItemSellStatus.SELL);
 			item.setStockNumber(100);
 			item.setRegTime(LocalDateTime.now()); // 현재 시간 저장.
 //			item.setUpdateTime(LocalDateTime.now());
@@ -75,7 +75,7 @@ class ItemRepositoryTest {
 			item.setItemNm("테스트 상품" + i);
 			item.setPrice(10000 + i);
 			item.setItemDetail("테스트 상품 상세 설명" + i);
-			item.setItemSellstatus(ItemSellstatus.SOLD_OUT);
+			item.setItemSellStatus(ItemSellStatus.SOLD_OUT);
 			item.setStockNumber(0);
 			item.setRegTime(LocalDateTime.now()); // 현재 시간 저장.
 //			item.setUpdateTime(LocalDateTime.now());
@@ -156,7 +156,7 @@ class ItemRepositoryTest {
 	//@DisplayName("문제 1")
 	public void findByItemNmAndItemSellstatus() {
 		this.createItemTest();
-		List<Item> itemList = itemRepository.findByItemNmAndItemSellstatus("테스트 상품1", ItemSellstatus.SELL);
+		List<Item> itemList = itemRepository.findByItemNmAndItemSellStatus("테스트 상품1", ItemSellStatus.SELL);
 		for (Item item : itemList) {
 			System.out.println(item.toString());
 		}
@@ -186,7 +186,7 @@ class ItemRepositoryTest {
 	//@DisplayName("문제 4")
 	public void findByitemSellstatusIsNotNull() {
 		this.createItemTest();
-		List<Item> itemList = itemRepository.findByitemSellstatusIsNotNull();
+		List<Item> itemList = itemRepository.findByitemSellStatusIsNotNull();
 		for (Item item : itemList) {
 			System.out.println(item.toString());
 		}	
@@ -238,7 +238,7 @@ class ItemRepositoryTest {
 	//@DisplayName("문제 2")
 	public void findAndByQuery() {
 		this.createItemTest();
-		List<Item> itemList = itemRepository.findAndByQuery("테스트 상품1", ItemSellstatus.SELL);
+		List<Item> itemList = itemRepository.findAndByQuery("테스트 상품1", ItemSellStatus.SELL);
 		for (Item item : itemList) {
 			System.out.println(item.toString());
 		}
@@ -257,7 +257,7 @@ class ItemRepositoryTest {
 		// Querydsl 환경만들면서 자동으로 생성한 QItem.java를 가져온다.
 		
 		JPAQuery<Item> query = qf.selectFrom(qItem)
-							.where(qItem.itemSellstatus.eq(ItemSellstatus.SELL))
+							.where(qItem.itemSellStatus.eq(ItemSellStatus.SELL))
 							.where(qItem.itemDetail.like("%테스트 상품 상세 설명%"))
 							.orderBy(qItem.price.desc());
 		// 우리가Item 엔티티를 사용하고 있기 때문에 <Item>을 넣어준다.
@@ -289,7 +289,7 @@ class ItemRepositoryTest {
 			QItem qItem = QItem.item; 
 			
 			JPAQuery<Item> query = qf.selectFrom(qItem)
-					.where(qItem.itemSellstatus.eq(ItemSellstatus.SELL))
+					.where(qItem.itemSellStatus.eq(ItemSellStatus.SELL))
 					.where(qItem.itemDetail.like("%테스트 상품 상세 설명%"))
 					.where(qItem.price.gt(10003))
 					.offset(page.getOffset()) //페이지에 대한 정보를 셋팅해준다.
@@ -312,7 +312,7 @@ class ItemRepositoryTest {
 			
 			JPAQuery<Item> query = qf.selectFrom(qitem)
 					.where(qitem.itemNm.eq("테스트 상품1"))
-					.where(qitem.itemSellstatus.eq(ItemSellstatus.SELL));
+					.where(qitem.itemSellStatus.eq(ItemSellStatus.SELL));
 			
 			List<Item> itemList = query.fetch();
 			for (Item item : itemList) {
@@ -358,7 +358,7 @@ class ItemRepositoryTest {
 			QItem qitem = QItem.item;
 			
 			JPAQuery<Item> query = qf.selectFrom(qitem)
-					.where(qitem.itemSellstatus.isNotNull());
+					.where(qitem.itemSellStatus.isNotNull());
 			List<Item> itemList = query.fetch();
 			for (Item item : itemList) {
 				System.out.println(item.toString());

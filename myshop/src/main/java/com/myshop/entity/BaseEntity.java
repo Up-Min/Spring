@@ -21,7 +21,7 @@ public class BaseEntity extends BaseTimeEntity{
 	
 	@CreatedBy // spring에서 등록자임을 인식시킴.
 	@Column (updatable = false)
-	private String createBy; // 등록자
+	private String createdBy; // 등록자
 	
 	@LastModifiedBy // spring에서 수정자임을 인식시킴.
 	private String modefiedBy; // 수정자

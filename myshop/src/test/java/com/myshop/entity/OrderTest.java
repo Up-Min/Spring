@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.myshop.constant.ItemSellstatus;
+import com.myshop.constant.ItemSellStatus;
 import com.myshop.repository.CartRepository;
 import com.myshop.repository.ItemRepository;
 import com.myshop.repository.MemberRepository;
@@ -50,7 +50,7 @@ class OrderTest {
 		item.setItemNm("테스트 상품");
 		item.setPrice(10000);
 		item.setItemDetail("테스트 상품 상세 설명");
-		item.setItemSellstatus(ItemSellstatus.SELL);
+		item.setItemSellStatus(ItemSellStatus.SELL);
 		item.setStockNumber(100);
 		item.setRegTime(LocalDateTime.now()); // 현재 시간 저장.
 //		item.setUpdateTime(LocalDateTime.now());

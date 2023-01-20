@@ -1,7 +1,7 @@
 package com.myshop.dto;
 
 import java.time.LocalDateTime;
-import com.myshop.constant.ItemSellstatus;
+import com.myshop.constant.ItemSellStatus;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +19,7 @@ public class ItemDto {
 	
 	private String itemDetail; // 상품 상세설명
 	
-	private ItemSellstatus itemSellstatus; // 상품 판매상태
+	private ItemSellStatus itemSellStatus; // 상품 판매상태
 		
 	private LocalDateTime regTime; // 등록 시간
 	

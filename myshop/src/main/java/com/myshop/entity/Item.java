@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
-import com.myshop.constant.ItemSellstatus;
+import com.myshop.constant.ItemSellStatus;
+import com.myshop.dto.ItemFormDto;
 
 import lombok.*;
 
@@ -36,6 +37,14 @@ public class Item extends BaseEntity {
 	private String itemDetail; // 상품 상세설명
 	
 	@Enumerated(EnumType.STRING) // enum타입 구성요소 문자 그 자체로 저장.
-	private ItemSellstatus itemSellstatus; // 상품 판매상태
+	private ItemSellStatus itemSellStatus; // 상품 판매상태
+	
+	public void updateItem(ItemFormDto itemFormDto) {
+		this.itemNm = itemFormDto.getItemNm();
+		this.price = itemFormDto.getPrice();
+		this.stockNumber = itemFormDto.getStockNumber();
+		this.itemDetail = itemFormDto.getItemDetail();
+		this.itemSellStatus = itemFormDto.getItemSellStatus();
+	}
 	
 }

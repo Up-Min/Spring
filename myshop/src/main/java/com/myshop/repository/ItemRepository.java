@@ -6,9 +6,11 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.repository.query.Param;
 
-import com.myshop.constant.ItemSellstatus;
+import com.myshop.constant.ItemSellStatus;
 import com.myshop.entity.Item;
 
 
@@ -20,7 +22,8 @@ import com.myshop.entity.Item;
 /* 아까 서비스에서 하나하나 팩토리를 만들어주고, try를 해서 일일이 만들고 했던거를 인터페이스를 이용해서 처리할 수 있다.
  * 
  */
-public interface ItemRepository extends JpaRepository<Item, Long>{ 
+public interface ItemRepository extends JpaRepository<Item, Long>,
+	QuerydslPredicateExecutor<Item>, ItemRepositoryCustom{ 
 
 	// 쿼리 메소드
 	// 사용할 find 메소드에 대한 정의 필요함.
@@ -38,13 +41,13 @@ public interface ItemRepository extends JpaRepository<Item, Long>{
 	// select * from item where price < ? order by price desc
 	// 단점.. 너무 길어진다...! 그래서 준비해둔게 있다!!
 	
-	List<Item> findByItemNmAndItemSellstatus(String itemNm, ItemSellstatus itemSellStatus);
+	List<Item> findByItemNmAndItemSellStatus(String itemNm, ItemSellStatus itemSellStatus);
 	
 	List<Item> findByPriceBetween(Integer price, Integer price2);
 	
 	List<Item> findByregTimeAfter(LocalDateTime date);
 	
-	List<Item> findByitemSellstatusIsNotNull();
+	List<Item> findByitemSellStatusIsNotNull();
 	
 	List<Item> findByItemDetailEndingWith(String itemDetail);
 	
@@ -76,8 +79,8 @@ public interface ItemRepository extends JpaRepository<Item, Long>{
 	@Query("select i from Item i where i.price >= :Price")
 	List<Item> findByprice(@Param("Price") int Price);
 	
-	@Query("select i from Item i where i.itemNm = :itemNm and i.itemSellstatus = :itemsellstatus")
-	List<Item> findAndByQuery(@Param("itemNm") String itemNm, @Param("itemsellstatus") ItemSellstatus itemSellStatus);
+	@Query("select i from Item i where i.itemNm = :itemNm and i.itemSellStatus = :itemsellStatus")
+	List<Item> findAndByQuery(@Param("itemNm") String itemNm, @Param("itemsellStatus") ItemSellStatus itemSellStatus);
 
 
 

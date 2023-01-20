@@ -42,7 +42,7 @@ class MemberTest {
 		
 		System.out.println("등록시간 : " + member.getRegTime());
 		System.out.println("수정시간 : " + member.getUpDateTime());
-		System.out.println("등록자 : " + member.getCreateBy());
+		System.out.println("등록자 : " + member.getCreatedBy());
 		System.out.println("수정자 : " + member.getModefiedBy());
 		// 매번 일일이 안넣어도 바로 가져올 수 있어진다.
 	}
