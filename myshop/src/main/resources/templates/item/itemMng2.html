@@ -63,8 +63,7 @@
 				      	<a th:href="'/admin/item/' + ${item.id}" th:text="${item.itemNm}"></a>
 				      	<!-- 수정하려는 상품의 수정페이지로 이동시킴 -->
 				      </td>
-				      <td
-							th:text="${item.itemSellStatus == T(com.myshop.constant.ItemSellStatus).SELL} ? '판매중' : '품절'"></td>
+				      <td th:text = "${item.itemSellStatus == T(com.myshop.constant.ItemSellStatus)}.SELL ? '판매중' : '품절'"></td>
 				      <!-- itemSellStatus enum의 전체를 다 작성해줘야한다. 
 				      T는 타임리프에서 제공, 클래스에 접근할 수 있게 되고, ItemSellStatus에 있는 상태 'SELL'을 가져올 수 있게 됨.-->
 				      <td th:text = "${item.createdBy}"></td>
@@ -80,18 +79,18 @@
 						추가 삼항연산자 사용하여 보여줄 페이지 수가 totalPage보다 작으면 지금 그 페이지를 보여주고, 
 						아니면 totalPage를 보여준다. -->
 				<nav th:with="start=${(items.number/maxPage)*maxPage + 1}, 
-							end=(${(items.totalPages == 0) ? 1 : (start+(maxPage-1) < items.totalPages ? 
-							start + (maxPage-1) : items.totalPages)})"
+							end=(${(items.totalPages == 0) ? 1 : (start+(maxPage-1) < items.totalPages) ? 
+							start + (maxPage-1) : items.totalPages})"
 				 				aria-label="Page navigation example">
 				  <ul class="pagination d-flex justify-content-center">
 				   <!-- 1번 페이지에서는 뒤로가는게 의미가 없게 하기 위해 처리한다. classappend가 첫번째인 경우 이 버튼을 비활성화 시킴.-->
 				    <li class="page-item" th:classappend="${items.first}?'disabled'">
-				    <a class="page-link" th:onclick = "'javascript:page(' + ${items.number-1} + ')'">Previous</a>
+				    <a class="page-link" th:onclick = "'javascript:page('+${items.number-1}+')'">Previous</a>
 				    </li>
 				    
-				    <li class="page-item" th:each = "page:${#numbers.sequence(start, end)}">
+				    <li class="page-item" th:each = "page:${#numbers.squence(start, end)}">
 				    <!-- page안에 시작, 마지막 페이지에 대한 시퀀스를 넣어준다. -->
-				    <a class="page-link" th:inline="text" th:onclick = "'javascript:page('+ ${page-1} +')'">[[${page}]]</a> <!-- 여기가 바뀌어야함. -->
+				    <a class="page-link" th:inline="text" th:onclick = "'javascript:page('+${page-1}+')'">[[${page}]]</a> <!-- 여기가 바뀌어야함. -->
 				     <!--th:inline = "text" : [[${page}]]를 띄워주기 위해 사용한다.
 				     
 				     	클릭하면 이동을 시킨다 - script이용 예정  page-1 : 인덱스 번호가 0부터 시작하기 때문에 -1 된 값을 보내줘야 한다. 
@@ -100,11 +99,10 @@
 				    </li>
 				    								<!-- classappend가 마지막인 경우 이 버튼을 비활성화 시킴. -->
 				    <li class="page-item" th:classappend="${items.last}?'disabled'"> <!-- 위에 있던 th:onclick 가져오기. -->
-				    <a class="page-link" th:onclick = "'javascript:page(' + ${items.number+1} + ')'">Next</a>
+				    <a class="page-link" th:onclick = "'javascript:page('+${items.number+1}+')'">Next</a>
 				    </li>
 				  </ul>
 				</nav>
-				
 				<!-- 검색창 구현 -->
 				<div class="d-flex justify-content-center" th:object="${itemSearchDto}" style="height: 40px;">
 					<!-- 상품 등록일 -->
