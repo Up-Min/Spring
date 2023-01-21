@@ -16,7 +16,8 @@ public class FileService {
 		UUID uuid = UUID.randomUUID(); //중복되지 않은 랜덤한 파일 이름 생성
 		
 		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-				//뒤의 확장자는 빼주기 위해 substring으로 좀 잘라준다.
+		System.out.println(extension);
+				//뒤의 확장자를 따로 빼주기 위해 substring으로 좀 잘라준다.
 		String savedFileName = uuid.toString() + extension; // 파일 이름 생성
 		String fileUploadFullUrl = uploadPath + "/" + savedFileName; // 절대경로 생성
 		

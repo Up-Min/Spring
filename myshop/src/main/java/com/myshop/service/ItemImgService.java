@@ -36,13 +36,17 @@ public class ItemImgService {
 		if(!StringUtils.isEmpty(oriImgName)) { 
 			//StringUtils - 문자열이 null이거나 빈 문자열을 잡아준다. 즉, 그게 아닐때!
 			//파일의 원본이름이 빈 문자열이나 null이 아니면 업로드를 진행한다.
+			// ITEM IMG SERVICE -> FILE SERVICE
 			imgName = fileService.uploadFile(itemImgLocation, oriImgName, itemImgFile.getBytes());
 			// 경로는 /Users/l/shop/item, 파일의 원래 이름, 파일의 데이터 (byte로 된) 자체를 넘겨준다.
 			imgUrl = "/images/item/" + imgName;
 		}
 		
 		// 상품 이미지 정보 저장
+		
+		// ENTITY
 		itemImg.updateItemImg(oriImgName, imgName, imgUrl); 
+		// SERVICE -> REPOSITORY
 		itemImgRepository.save(itemImg);
 	}
 	
@@ -51,12 +55,14 @@ public class ItemImgService {
 		// 이미지 파일이 비어있지 않으면, 뭔가 파일이 있으면!
 		if(!itemImgFile.isEmpty()) {
 			// itemImgId를 가져와서 itemImgRepository의 findById에 집어넣는다! (이미지 레코드를 찾아온다!)
+			// ITEM IMG SERVICE -> ITEM IMG REPOSITORY
 			ItemImg savedItemImg = itemImgRepository.findById(itemImgId)
 									.orElseThrow(EntityNotFoundException::new);
 			
 			// 기존 이미지 파일 삭제 /shop/item에 저장되었던 기존 이미지들을 삭제해준다.
 			if(!StringUtils.isEmpty(savedItemImg.getImgName())) {
 				// DB에 저장해뒀었던 getImgName가 비어있거나 null이 아니면 삭제한다!
+				// ITEM IMG SERVICE -> FILE SERVICE
 				fileService.deleteFile(itemImgLocation+"/"+savedItemImg.getImgName()); 
 				// 파일을 건드릴 수 있는 fileService를 통해 //Users/l/shop/item에 있는 
 				// 0b51e5b1-fbcb-436e-beee-64e3252fcd54.jpg를 지워준다.

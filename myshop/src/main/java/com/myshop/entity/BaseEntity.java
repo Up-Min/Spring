@@ -24,6 +24,6 @@ public class BaseEntity extends BaseTimeEntity{
 	private String createdBy; // 등록자
 	
 	@LastModifiedBy // spring에서 수정자임을 인식시킴.
-	private String modefiedBy; // 수정자
+	private String modifiedBy; // 수정자
 	
 }
