@@ -16,6 +16,7 @@ import com.myshop.entity.Item;
 import com.myshop.entity.QItem;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
@@ -81,7 +82,13 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 		 // 각 컬럼별로 기간 산정을 해줄 수 있는 필터? 같은걸 해줘야한다. 
 		 // 기간을 산정해서 날짜로 바꿔주는 메소드가 필요함. -> 날짜 리턴해주는 regDtsAfter
 		
-		long total = content.size(); // 전체 레코드의 사이즈를 가져옴.
+//		long total = content.size(); // 전체 레코드의 사이즈를 가져옴.
+	
+		long total = queryFactory.select(Wildcard.count).from(QItem.item)
+				.where(regDtsAfter(itemSearchDto.getSearchDateType()),
+				searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
+				searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery()))
+				.fetchOne();
 		
 		return new PageImpl<>(content, pageable, total);
 

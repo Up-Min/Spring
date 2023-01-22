@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -133,7 +134,9 @@ public class ItemController {
 		
 		Page<Item> items = itemService.getAdminItemPage(itemSearchDto, pageable);
 		// 페이징 처리를 한 pageable이기 때문에 List가 아닌 Page에 담아줘야 한다.
-		//
+		
+		int test = pageable.getPageSize();
+		model.addAttribute("test",test);
 		model.addAttribute("items", items);
 		model.addAttribute("itemSearchDto", itemSearchDto);
 		model.addAttribute("maxPage",5); // 상품 관리 메뉴 하단에 최대로 보여줄 페이지

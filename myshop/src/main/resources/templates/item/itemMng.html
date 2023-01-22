@@ -72,6 +72,7 @@
 				    </tr>
 				  </tbody>
 				</table>
+				
 				<!-- 페이징 버튼 -->
 				<!-- 변수값을 정의할 때 쓰는 th:with / start, end 쓸거임. -->
 				<!-- maxPage는 5, start = (현재 페이지 번호 / 보여줄 페이지 수) + 1, 페이지의 시작 번호
@@ -79,10 +80,18 @@
 						삼항연산자 사용하여 총 페이지의 수가 0이 아닐경우 (0이면 1반환) 위의 식 적용 +
 						추가 삼항연산자 사용하여 보여줄 페이지 수가 totalPage보다 작으면 지금 그 페이지를 보여주고, 
 						아니면 totalPage를 보여준다. -->
-				<nav th:with="start=${(items.number/maxPage)*maxPage + 1}, 
+<!-- 				<nav th:with="start=${(items.number/maxPage)*maxPage + 1}, 
 							end=(${(items.totalPages == 0) ? 1 : (start+(maxPage-1) < items.totalPages ? 
 							start + (maxPage-1) : items.totalPages)})"
 				 				aria-label="Page navigation example">
+ -->				<nav th:with="start=${(items.number/maxPage)*maxPage + 1}, 
+							end=(${(items.totalPages == 0) ? 1 : test})"
+				 				aria-label="Page navigation example">
+				 				<span> page.size </span> <p th:text = "${test}"> </p>
+				 				<span> items.number </span> <p th:text = "${items.number}"> items.number </p>
+				 				<span> start </span> <p th:text = "${start}"> start</p>
+				 				<span> end </span> <p th:text = "${end}"> end </p>
+				 				<span> is items.last? </span> <p th:text = "${items.last}"> is items.last? </p>
 				  <ul class="pagination d-flex justify-content-center">
 				   <!-- 1번 페이지에서는 뒤로가는게 의미가 없게 하기 위해 처리한다. classappend가 첫번째인 경우 이 버튼을 비활성화 시킴.-->
 				    <li class="page-item" th:classappend="${items.first}?'disabled'">
