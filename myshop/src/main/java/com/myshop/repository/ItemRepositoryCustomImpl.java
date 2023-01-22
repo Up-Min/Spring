@@ -21,6 +21,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 	
+	// Repository에서 선언한 쿼리문을 좀 더 명확하게 사용할 수 있게 세팅해주는 클래스 java.
+	// 아래 선언된 메소드들은 모두 'getAdminItemPage' 메소드에 사용된다.
+	
 	//쿼리 dsl을 쓰기위해 jpa 동적쿼리를 선언해준다.
 	private JPAQueryFactory queryFactory;
 
