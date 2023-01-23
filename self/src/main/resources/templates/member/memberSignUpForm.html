@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<th:block layout:fragment = "script">
+	<script th:inline="javascript">
+		$(document).ready(function(){
+			var error = [[${errorMessage}]];
+			if(error != null){
+				alert(error);
+			}
+		});
+	</script>
+</th:block>
+
+<th:block layout:fragment="css">
+	<style>
+		.fieldError {
+			color: #bd2130;
+		}
+	</style>
+</th:block>
+
+</head>
+<body>
+
+	<div layout:fragment="content">
+		<form role="form" action="/members/signup" method="post" th:object=${memberFormDto}>
+			<div>
+				<label th:for="name" class="col-sm-2 col-form-label">이름</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{name}" class="form-control" placeholder="이름을 입력해주세요.">
+					<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class = "fieldError">error</p>
+				</div>
+			</div>
+			<div>
+				<label th:for="email" class="col-sm-2 col-form-label">이메일</label>
+				<div class="col-sm-10">
+					<input type="email" th:field="*{email}" class="form-control" placeholder="이메일을 입력해주세요.">
+					<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class = "fieldError">error</p>
+				</div>
+			</div>
+			<div>
+				<label th:for="password" class="col-sm-2 col-form-label">비밀번호</label>
+				<div class="col-sm-10">
+					<input type="password" th:field="*{password}" class="form-control" placeholder="비밀번호를 입력해주세요.">
+					<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class = "fieldError">error</p>
+				</div>
+			</div>
+			<div>
+				<label th:for="address" class="col-sm-2 col-form-label">주소</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{address}" class="form-control" placeholder="주소를 입력해주세요.">
+					<p th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class = "fieldError">error</p>
+				</div>
+			</div>
+		<div style="margin: 5px">
+			<button type="submit" class="btn btn-primary mb-3"> 회원가입 </button>
+		</div>
+		</form>
+	</div>
+</body>
+</html>

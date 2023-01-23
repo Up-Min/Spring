@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+html{
+	position: relative;
+	min-height: 100%;
+	margin : 0;
+	padding: 0;
+	
+}
+
+body{
+	min-height: 100%;
+}
+
+footer{
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;a
+	padding : 15px 0;
+	text-align: center;
+	}
+	
+.content{ /* layout1.html에 있는 class = "content"에 적용할거임. */
+	margin: 50px 200px 100px 200px; /* 맨위, 오른쪽, 아래, 왼쪽 */
+}
+
+
+
