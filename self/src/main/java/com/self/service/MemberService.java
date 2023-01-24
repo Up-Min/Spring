@@ -34,6 +34,7 @@ public class MemberService implements UserDetailsService{
 	
 	private void chkEmail(Member member) {
 		Member getmember = memberRepository.findByEmail(member.getEmail());
+		System.out.println("getmember : " + getmember);
 		if(getmember != null) {
 			throw new IllegalStateException("이미 가입된 회원입니다.");
 		}

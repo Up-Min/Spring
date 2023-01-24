@@ -19,7 +19,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "member")
+@Table(name = "member_s")
 @Getter
 @Setter
 @ToString
@@ -43,9 +43,12 @@ public class Member {
 	private Role role;
 	
 	public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
+		System.out.println("Member CM DTO.getName = "+memberFormDto.getName());
+		
 		Member member = new Member();
 		member.setName(memberFormDto.getName());
 		member.setEmail(memberFormDto.getEmail());
+		member.setAddress(memberFormDto.getAddress());
 		
 		String password = passwordEncoder.encode(memberFormDto.getPassword());
 		member.setPassword(password);
