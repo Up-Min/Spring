@@ -2,11 +2,14 @@
 스프링 쇼핑몰 페이지 자체 만들기 
 
 1. 레이아웃 짜기 (헤더, 푸터, 페이지 레이아웃) + 메인페이지 적용
-	- header, footer, layout, main, Maincontroller
+- header, footer, layout, main, Maincontroller
 
 2. 회원가입 폼 제작
-	- memberFormDto, MemberController, Member, MemberRepository, SecurityConfig(passwordEncoder), MemberService
+- memberFormDto, MemberController, Member, MemberRepository, SecurityConfig(passwordEncoder), MemberService
 	
 	
 3. 로그인 폼 제작
+- memberLoginForm, SecurityConfig (fillerChain), CustomAuthenticationEntryPoint, MemberContoller(loginForm, loginError)
 
+4. 상품등록 페이지 제작
+- itemForm, itemController, 

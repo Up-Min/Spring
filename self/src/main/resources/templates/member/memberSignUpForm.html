@@ -60,6 +60,10 @@
 		<div style="margin: 5px">
 			<button type="submit" class="btn btn-primary mb-3"> 회원가입 </button>
 		</div>
+		<div>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+				<!-- 토큰! 내가 입력을 할 때 token의 value를 준다.  _csrf.token이 있으면, 반드시 토큰이 있어야 회원가입이 진행된다.-->
+			</div>
 		</form>
 	</div>
 </body>

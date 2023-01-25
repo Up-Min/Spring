@@ -14,6 +14,30 @@
 			}
 		});
 	</script>
+	<script th:inline = "javascript"> 
+	$(document).ready(function(){
+		var userId = getCookie("userId");
+		var setYN = getCookie("setYN")
+		
+		if(setYN == 'Y'){
+			$('#id_save').prop("checked", true);
+			$('#email').val(userId);
+		}else{
+			$('#id_save').prop("checked", false;			
+		}
+		
+		$('#loginbtn').click(function(){
+			if($('#id_save').is(":checked")){
+				var userId = $('#email').val();
+				setCookie("userId", userId, 60);
+				setCookie("setYN", "Y", 60);	
+			}else{
+				deleteCookie("userId");
+				deleteCookie("setYN");
+			}
+		})
+	});	
+	</script>
 </th:block>
 
 <th:block layout:fragment="css">
@@ -47,6 +71,10 @@
 			<button type="submit" class="btn btn-primary mb-3" id="loginbtn"> 로그인 </button>
 			<button type="button" class="btn btn-primary mb-3" onclick="location.href = '/members/signup'"> 회원가입 </button>
 		</div>
+		<div>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+				<!-- 토큰! 내가 입력을 할 때 token의 value를 준다.  _csrf.token이 있으면, 반드시 토큰이 있어야 회원가입이 진행된다.-->
+			</div>
 		</form>
 	</div>
 </body>
