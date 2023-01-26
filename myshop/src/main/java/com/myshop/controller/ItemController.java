@@ -144,4 +144,13 @@ public class ItemController {
 		return "item/itemMng";
 	}
 	
+	// 상품 상세 페이지
+	@GetMapping (value = "/item/{itemId}")
+	public String itemDtl(Model model, @PathVariable("itemId") Long itemId) {
+		//상품 수정 페이지 띄워주는거 가져오기, 그대로다!
+		ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
+		model.addAttribute("item",itemFormDto);
+		return "item/itemDtl";
+	}
+	
 }

@@ -70,7 +70,7 @@ class OrderTest {
 			OrderItem orderItem = new OrderItem();
 			orderItem.setItem(item);
 			orderItem.setCount(10);
-			orderItem.setOrder_price(1000);
+			orderItem.setOrderprice(1000);
 			orderItem.setOrder(order);
 			// 생성한 물건을 orderItem에 넣어준다. 즉, 주문한 물건이 된다.
 
@@ -99,7 +99,7 @@ class OrderTest {
 			OrderItem orderItem = new OrderItem();
 			orderItem.setItem(item);
 			orderItem.setCount(10);
-			orderItem.setOrder_price(1000);
+			orderItem.setOrderprice(1000);
 			orderItem.setOrder(order);
 
 			order.getOrderItems().add(orderItem);

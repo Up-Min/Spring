@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.myshop.dto.ItemFormDto;
 import com.myshop.dto.ItemImgDto;
 import com.myshop.dto.ItemSearchDto;
+import com.myshop.dto.MainItemDto;
 import com.myshop.entity.Item;
 import com.myshop.entity.ItemImg;
 import com.myshop.repository.ItemImgRepository;
@@ -145,5 +147,13 @@ public class ItemService {
 		// 상품 정보와 페이징 처리하는 애들을 가져와서 리포지토리에 넣어준다.
 		// ITEM SERVICE -> ITEM REPOSITORY
 		return itemRepository.getAdminItemPage(itemSearchDto, pageable);	
+	}
+	
+	//위의 상품리스트와 똑같이 할거다. 상품 리스트 가져오기.
+	@Transactional(readOnly = true) 
+	public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
+		// Page로 리턴된다. 실제로는 PageImpl<>(content, pageable, total); 얘가 리턴된다.
+		// 이제 서비스도 끝났다. 
+		return itemRepository.getMainItemPage(itemSearchDto, pageable);
 	}
 }

@@ -12,8 +12,11 @@ import org.thymeleaf.util.StringUtils;
 
 import com.myshop.constant.ItemSellStatus;
 import com.myshop.dto.ItemSearchDto;
+import com.myshop.dto.MainItemDto;
+import com.myshop.dto.QMainItemDto;
 import com.myshop.entity.Item;
 import com.myshop.entity.QItem;
+import com.myshop.entity.QItemImg;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
@@ -70,6 +73,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 		return null;
 	}
 	
+	
 	@Override
 	public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
 		List<Item> content = queryFactory
@@ -87,15 +91,51 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 		
 //		long total = content.size(); // 전체 레코드의 사이즈를 가져옴.
 	
-		long total = queryFactory.select(Wildcard.count).from(QItem.item)
+		// 토탈을 쿼리문으로 변경. 
+		long total = queryFactory.select(Wildcard.count).from(QItem.item) // wildCart.count -> count(*)와 동일.
 				.where(regDtsAfter(itemSearchDto.getSearchDateType()),
 				searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
 				searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery()))
-				.fetchOne();
+				.fetchOne(); // 조회 대상이 한건이면 반환, 이상이면 에러 발생 (4장 확인)
 		
 		return new PageImpl<>(content, pageable, total);
 
 	}
+
+	private BooleanExpression itemNmLike(String searchQuery) {
+		return StringUtils.isEmpty(searchQuery) ? null : QItem.item.itemNm.like("%"+searchQuery+"%");
+		// null이나 빈 문자열이 아니면 like 쿼리문을 사용시킴.
+	}
+	
+	@Override
+	public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+		QItem item = QItem.item; // 쿼리 dsl사용 위해 QItem 선언
+		QItemImg itemImg = QItemImg.itemImg; 
+		
+		// 쿼리 dsl 사용 MainItemDto로 쿼리 조회한 결과를 바로 보내줄거임. (MainItemDto에서 선언한 @쿼리프로젝션 으로 QMainItemDto.java 만들어져있음) 
+		//new MainItemDto로 바로 바꿔준다 (소괄호 안에 있는)
+		List<MainItemDto> content = queryFactory.select(
+				new QMainItemDto(item.id, item.itemNm, item.itemDetail, itemImg.imgUrl, item.price))
+				.from(itemImg).join(itemImg.item, item) //itemImg.item과 item엔티티를 join 시킨다.
+				.where(itemImg.repimgYn.eq("Y"))
+				.where(itemNmLike(itemSearchDto.getSearchQuery())) //itemNmLike 구현해줘야함.
+				.orderBy(item.id.desc())
+				.offset(pageable.getOffset())
+				.limit(pageable.getPageSize())
+				.fetch();
+			
+		// 전체 레코드 갯수 구하기
+		long total = queryFactory.select(Wildcard.count) 
+				.from(itemImg).join(itemImg.item, item) //itemImg.item과 item엔티티를 join 시킨다.
+				.where(itemImg.repimgYn.eq("Y"))
+				.where(itemNmLike(itemSearchDto.getSearchQuery())) //itemNmLike 구현해줘야함.
+				.fetchOne();
+		
+		// 페이지를 리턴해준다.
+		return new PageImpl<>(content, pageable, total); // 페이지 내용과, 페이징과, 전체 레코드 갯수만 넣으면 된다.
+	}
+	
+	
 	
 	
 }

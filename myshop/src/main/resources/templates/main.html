@@ -1,18 +1,117 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout1}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
 
-      
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+	<style>
+.carousel-inner>.item {
+	height: 350px;
+}
+
+.margin {
+	margin-bottom: 30px;
+}
+
+.banner {
+	height: 300px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.card-text {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.center {
+	text-align: center;
+}
+</style>
+</th:block>
 </head>
 <body>
 	<div layout:fragment="content">
-
-	메인페이지 입니다.
-
+		<div id="carouselControls" class="carousel slide margin"
+			data-ride="carousel">
+			<div class="carousel-inner">
+				<div class="carousel-item active item">
+					<img class="d-block w-100 banner"src="https://user-images.githubusercontent.com/13268420/112147492-1ab76200-8c20-11eb-8649-3d2f282c3c02.png"alt="First slide">
+				</div>
+			</div>
+		</div>
+		<input type="hidden" name="searchQuery"th:value="${itemSearchDto.searchQuery}" />
+		<!-- 검색 결과에 대한 글자를 보여주는 창 -->
+		<div th:if = "${not #strings.isEmpty(itemSearchDto.searchQuery)}" class = "center">
+			<p class = "h3 font-weight-bold" th:text = "${itemSearchDto.searchQuery} + ' 검색 결과'">  </p>
+		</div> 
+		
+		<!-- 상품 카드 -->
+		<div class = "row"> <!-- class = "row"에 대해 이해하기 -->
+			<th:block th:each="item, status: ${items.getContent}"> 
+			 <!-- div를 반복적으로 출력하고 싶을 떄 사용함, each와 연동 / DB에서 넘어온 item들에 대해 getContent를 해준다. -->
+				<div class = "col-md-4 margin" > <!-- 원래는 12grid이기에 2개를 더 만들어줘야 하지만, th:each를 통해 남겨둔다.  -->
+					<div class="card">
+					<a th:href = "'/item/' + ${item.id}" class = "text-dark"> <!-- 상세페이지로 이동. -->
+					  <img th:src="${item.imgUrl}" th:alt = "${item.itemNm}" height="400" class="card-img-top"> <!-- 이미지를 가져올 수 있게 이미지 url 가져옴. -->
+					  <div class="card-body">
+					    <h5 class="card-title">[[${item.itemNm}]]</h5>
+					    <p class="card-text">[[${item.itemDetail}]]</p>
+					    <h3 class="card-title text-danger" > [[${item.price}]]원 </h3>
+					  </div>					
+					</a>
+					</div>
+				</div>
+			</th:block>
+		</div>
+		
+		item.number = [[${items.number}]]
+		maxPage = [[${maxPage}]]
+		totalPages = [[${items.totalPages}]]
+		
+		<!-- 페이징 -->
+		<!-- start = (현재 페이지 번호 / 보여줄 페이지 수 ) + 1, 페이지 시작 번호 -->
+		<!-- end = start+(보여줄 페이지 수 -1), 페이지 끝 번호 -->
+		
+		
+		<nav th:with="start=${(items.number/maxPage)*maxPage + 1}, 
+							end=(${(items.totalPages == 0) ? 1 : (start+(maxPage-1) < items.totalPages ? 
+							start + (maxPage-1) : items.totalPages)})"
+				 				aria-label="Page navigation example">
+				  <ul class="pagination d-flex justify-content-center">
+				   <!-- 1번 페이지에서는 뒤로가는게 의미가 없게 하기 위해 처리한다. classappend가 첫번째인 경우 이 버튼을 비활성화 시킴.-->
+				    <li class="page-item" th:classappend="${items.first}?'disabled'">
+				    <!-- 페이지 버튼 일부 수정. 페이지 이동에 대한 쿼리 파라미터를 만들어줄거임. -->
+		                <a th:href="@{'/'+'?searchQuery = '+${itemSearchDto.searchQuery}+'&page='+${items.number-1}}" class="page-link">
+		                <!--  검색어랑, 페이지 번호를 쿼리 파라미터의 뒤에 붙여줄거임.  -->
+		                    <span>이전</span>
+		                </a>
+				    </li>
+				    
+				    <li class="page-item" th:each = "page:${#numbers.sequence(start, end)}"
+				    th:classappend="${items.number eq page-1}?'active':''">
+				    <a class="page-link" th:inline="text" th:href="@{'/'+'?searchQuery = ' + ${itemSearchDto.searchQuery} + '&page=' +${page-1}}">[[${page}]]</a> 
+				    <!-- 여기가 바뀌어야함. 페이징 객체는 0부터 시작하기 때문에 page-1을 해준다. -->
+				    </li>
+				    								<!-- classappend가 마지막인 경우 이 버튼을 비활성화 시킴. -->
+				    <li class="page-item" th:classappend="${items.last}?'disabled'"> <!-- 위에 있던 th:onclick 가져오기. -->
+				    <a class="page-link" th:href="@{'/'+'?searchQuery = '+${itemSearchDto.searchQuery}+'&page='+${items.number+1}}">다음</a>
+				    </li>
+				  </ul>
+				</nav>
 	</div>
 </body>
 </html>
