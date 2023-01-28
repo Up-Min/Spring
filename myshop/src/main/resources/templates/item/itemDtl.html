@@ -33,7 +33,7 @@
 		
 		
 		
-		function order(){
+		function cancelOrder(){
 			var token = $("meta[name = '_csrf']").attr("content");
 			var header = $("meta[name = '_csrf_header']").attr("content");
 			
@@ -62,7 +62,7 @@
 				cache : false,
 				success : function(result, status){
 				// 응답 성공시
-					alert("orderId : " + result);
+					//alert("orderId : " + result);
                     alert("주문이 완료 되었습니다.");
 					location.href = "/";
 				},
@@ -75,10 +75,9 @@
 						alert(jqXHR.responseText);
 					}
 				}
-			});
-			
+			});	
 		}
-		
+
 		
 	</script>
 </th:block>

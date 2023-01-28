@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.myshop.constant.ItemSellStatus;
 import com.myshop.constant.OrderStatus;
 
 import lombok.Getter;
@@ -77,4 +78,17 @@ public class Order {
 		}
 		return totalPrice;
 	}
+	
+	// 주문 취소
+	public void cancelOrder() {
+		// 주문 상태 변경 + 재고 증가
+		
+		this.orderStatus = OrderStatus.CANCEL;
+		
+		for(OrderItem orderItem : orderItems) {
+			orderItem.cancel(); // 재고 증가 (by.orderItem)
+		}
+		
+	}
+	
 }

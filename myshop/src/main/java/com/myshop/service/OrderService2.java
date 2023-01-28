@@ -27,75 +27,97 @@ import com.myshop.repository.OrderRepository;
 
 import lombok.RequiredArgsConstructor;
 
-@Service //service 클래스의 역할
-@Transactional //서비스 클래서에서 로직을 처리하다가 에러가 발생하면 로직을 수행하기 이전 상태로 되돌려 준다. 
+@Service
 @RequiredArgsConstructor
-public class OrderService {
+@Transactional
+public class OrderService2 {
+
 	private final ItemRepository itemRepository;
 	private final MemberRepository memberRepository;
 	private final OrderRepository orderRepository;
-	private final ItemImgRepository itemImgRepositorty;
+	private final ItemImgRepository itemImgRepository;
 	
 	public Long order(OrderDto orderDto, String email) {
+		// item table에 대한 item_id를 가져온다. (주문할 상품)
 		Item item = itemRepository.findById(orderDto.getItemId())
-                .orElseThrow(EntityNotFoundException::new);
+					.orElseThrow(EntityNotFoundException::new);
 		
+		// 매개변수 email을 이용하여 member table에서 회원정보를 가져온다.
 		Member member = memberRepository.findByEmail(email);
 		
-		List<OrderItem> orderItemList = new ArrayList<>(); 
-		OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
-		orderItemList.add(orderItem);
+		// 주문 정보 담을 List 선
+		List<OrderItem> orderItemList = new ArrayList<>();
 		
+		// 주문할 상품과, orderDto에서 받아온 주문량을 OrderItem에 요청한다.
+		OrderItem orderitem = OrderItem.createOrderItem(item, orderDto.getCount());
+		
+		// List에 item 추가 (item, orderitem 종료)
+		orderItemList.add(orderitem);
+		
+		//Order과 Member 이 연관관계이기 떄문에, member에 관한것도 order에 넣어준다.
 		Order order = Order.createOrder(member, orderItemList);
+		
+		// 데이터 저장
 		orderRepository.save(order);
 		
 		return order.getId();
 	}
 	
+	// 상품정보 + 상품이미지 페이징 가공
 	@Transactional(readOnly = true)
-	public Page<OrderHistDto> getOrderList(String email, Pageable pageable) {
+	public Page<OrderHistDto> getOrderList(String email, Pageable pageable){
 		
-		List<Order> orders = orderRepository.findOrders(email, pageable); //주문 목록
-		Long totalCount= orderRepository.countOrder(email); //총 주문 목록 갯수
+		// orderRepository에서 가져온 상품 정보 리스트에 저장.
+		List<Order> orders = orderRepository.findOrders(email, pageable);
 		
+		// 페이징 처리를 위해 orderRepository에서 상품 count 불러옴. (총 주문량)
+		Long totalCount = orderRepository.countOrder(email);
+		
+		// 주문 목록을 담을 List 선언. 
 		List<OrderHistDto> orderHistDtos = new ArrayList<>();
 		
 		for (Order order : orders) {
+			// OrderHistDto에 있는 생성자를 이용해 넘어온 order의 정보들을 적용한다.
 			OrderHistDto orderHistDto = new OrderHistDto(order);
 			List<OrderItem> orderItems = order.getOrderItems();
 			
-			for (OrderItem orderItem : orderItems) {
-				//상품의 대표 이미지
-				ItemImg itemImg = itemImgRepositorty.findByItemIdAndRepimgYn(orderItem.getItem().getId(), "Y");
+			for(OrderItem orderItem : orderItems) {
+				// 주문 목록에서 대표 이미지를 보여줄 거기 때문에, 이미지를 가져와야함.
+				ItemImg itemImg = itemImgRepository
+						.findByItemIdAndRepimgYn(orderItem.getItem().getId(), "Y");
+				// OrderItemDto 생성자에 item과 imgURL을 가져온다.
 				OrderItemDto orderItemDto = new OrderItemDto(orderItem, itemImg.getImgUrl());
+				// OrderItemDto를 orderHistDto에 add 해준다.
 				orderHistDto.addOrderItemDto(orderItemDto);
 			}
-			
+		// for 문 이후 list에 orderHistDto들을 넣어준다.
 			orderHistDtos.add(orderHistDto);
 		}
 		
-		return new PageImpl<OrderHistDto>(orderHistDtos, pageable, totalCount);
+		// 페이징 처리이기 떄문에 페이징 객체로 리턴한다.
+		return new PageImpl<OrderHistDto>(orderHistDtos,pageable,totalCount);
 	}
 	
-	//현재 로그인한 사용자와 주문데이터를 생성한 사용자가 같은지 검사
-	@Transactional(readOnly = true)
-	public boolean validateOrder(Long orderId, String email) {
-		Member curMember = memberRepository.findByEmail(email); //로그인한 사용자 찾기
+	// 현재 로그인한 사용자 == (취소)주문 요청한 사용자? 검증 필요. 통과하면 주문 status 변경.
+	
+	// 사용자 검증
+	public boolean ValidateOrder(Long orderId, String email) {
+		Member curMember = memberRepository.findByEmail(email); //로그인 한 사용자 찾기
 		Order order = orderRepository.findById(orderId)
-				                      .orElseThrow(EntityNotFoundException::new);
+					 .orElseThrow(EntityNotFoundException::new);
 		Member savedMember = order.getMember(); //주문한 사용자 찾기
 		
+		// 사용자 비교
 		if(!StringUtils.equals(curMember.getEmail(), savedMember.getEmail())) {
 			return false;
 		}
-		
 		return true;
 	}
 	
-	//주문 취소
+	// 주문 취소
 	public void cancelOrder(Long orderId) {
 		Order order = orderRepository.findById(orderId)
-				                      .orElseThrow(EntityNotFoundException::new);
+					  .orElseThrow(EntityNotFoundException::new);
 		order.cancelOrder();
 	}
 	

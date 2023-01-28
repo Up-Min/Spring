@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import com.myshop.constant.OrderStatus;
 
+import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -48,7 +49,7 @@ public class OrderItem extends BaseEntity {
 		
 		orderItem.setItem(item);
 		orderItem.setCount(count);
-		orderItem.setOrderPrice(count);
+		orderItem.setOrderPrice(item.getPrice());
 		
 		item.removeStock(count); //주문량 만큼 재고를 없앰.
 		
@@ -60,5 +61,11 @@ public class OrderItem extends BaseEntity {
 	public int getTotalPrice() {
 		return orderPrice * count;
 	}
+	
+	// 재고증가 
+	public void cancel() {
+		this.getItem().addStock(count);
+	}
+	
 	
 }
