@@ -5,6 +5,9 @@
     },
     {
       "path": "../boot1"
+    },
+    {
+      "path": "../trable"
     }
   ],
   "settings": {
