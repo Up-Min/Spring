@@ -1,29 +1,231 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
-
-      
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<meta charset="UTF-8" />
+<title>From U, TRABLE</title>
 <!-- THYMELEAF JS  -->
 <th:block layout:fragment="script">
-    <script th:inline="javascript">
-    </script>
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+	<script th:inline="javascript">
+		
+	</script>
 </th:block>
 
 <!-- THYMELEAF CSS -->
 <th:block layout:fragment="css">
-    <style>
-    </style>
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<style>
+.sec1 {
+	height: 200px;
+}
+
+.sec2 {
+	height: 500px;
+}
+
+.sec3 {
+	width: 1200px;
+	height: 300px;
+	align-items: center;
+	display: contents;
+}
+
+.con_center {
+	text-align: center;
+}
+
+.con_left {
+	text-align: left;
+}
+
+.con_right {
+	text-align: right;
+}
+</style>
 </th:block>
-
-
 </head>
 <body>
+
 	<div layout:fragment="content">
-		메인 페이지 입니다.
+
+		<div class="sec">
+			<div data-aos="fade-up" data-aos-duration="1000">
+				<div class="row">
+					<div class="col-md-12 align-self-center">
+						<img alt="logo" src="/images/Logo.png" width="100%">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="sec1">
+			<div data-aos="fade-up" data-aos-duration="1000">
+				<div class="row">
+					<div class="col-md-12 align-self-center">
+						<div class="con_left" style="font-size: 60px">share your
+							Travel</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="sec1">
+			<div data-aos="fade-up" data-aos-duration="1000">
+				<div class="row">
+					<div class="col-md-12 align-self-center">
+						<div class="con_center" style="font-size: 60px">share your
+							View</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="sec2">
+			<div data-aos="fade-up" data-aos-duration="1000">
+				<div class="row">
+					<div class="col-md-12 align-self-center">
+						<div class="con_right" style="font-size: 60px">share tour
+							TRABLE</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="sec2">
+			<div data-aos="fade-up" data-aos-duration="1000">
+				<div class="row">
+					<div class="col-md-12 align-self-center">
+						<div class="con_center" style="font-size: 60px">
+							EARTH, <br> Starts from U.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="sec1">
+			<div data-aos="fade-up" data-aos-duration="1000">
+				<div class="row">
+					<div class="col-md-12 align-self-center ">
+						<div class="con_right" style="font-size: 35px">sincerely
+							yours, TRABLE</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="con_center sec3">
+			<div data-aos="fade-up" data-aos-duration="1000">
+				<div class="row">
+
+
+					<div class="col-md-3 align-self-center ">
+						<div>
+							<a th:href="'/'"><img alt="1" src="/images/t1.jpeg"
+								width="390px"></a>
+						</div>
+					</div>
+
+
+
+
+
+					<div class="col-md-3 align-self-center ">
+						<div>
+							<img alt="2" src="/images/t2.jpeg" width="390px">
+						</div>
+					</div>
+					<div class="col-md-3 align-self-center ">
+						<div>
+							<img alt="3" src="/images/t3.jpeg" width="390px">
+						</div>
+					</div>
+					<div class="col-md-3 align-self-center ">
+						<div>
+							<img alt="4" src="/images/t4.jpeg" width="390px">
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div data-aos="fade-up" data-aos-duration="1000">
+				<div class="row">
+					<div class="col-md-3 align-self-center ">
+						<div>
+							<img alt="1" src="/images/t5.jpeg" width="390px">
+						</div>
+					</div>
+					<div class="col-md-3 align-self-center ">
+						<div>
+							<img alt="2" src="/images/t6.jpeg" width="390px">
+						</div>
+					</div>
+					<div class="col-md-3 align-self-center ">
+						<div>
+							<img alt="3" src="/images/t7.jpeg" width="390px">
+						</div>
+					</div>
+					<div class="col-md-3 align-self-center ">
+						<div>
+							<img alt="4" src="/images/t8.jpeg" width="390px">
+						</div>
+					</div>
+				</div>
+				
+				<div data-aos="fade-up" data-aos-duration="1000">
+				<div class="row">
+					<div class="col-md-3 align-self-center ">
+						<div>
+							<img alt="1" src="/images/t9.jpeg" width="390px">
+						</div>
+					</div>
+					<div class="col-md-3 align-self-center ">
+						<div>
+							<img alt="2" src="/images/t10.jpeg" width="390px">
+						</div>
+					</div>
+					<div class="col-md-3 align-self-center ">
+						<div>
+							<img alt="3" src="/images/t11.jpeg" width="390px">
+						</div>
+					</div>
+					<div class="col-md-3 align-self-center ">
+						<div>
+							<img alt="4" src="/images/t12.jpeg" width="390px">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3 align-self-center ">
+						<div>
+							<img alt="1" src="/images/1.jpg" width="390px">
+						</div>
+					</div>
+					<div class="col-md-3 align-self-center ">
+						<div>
+							<img alt="2" src="/images/1.jpg" width="390px">
+						</div>
+					</div>
+					<div class="col-md-3 align-self-center ">
+						<div>
+							<img alt="3" src="/images/1.jpg" width="390px">
+						</div>
+					</div>
+					<div class="col-md-3 align-self-center ">
+						<div>
+							<img alt="4" src="/images/1.jpg" width="390px">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+
+
+
+
+		<script>
+			AOS.init();
+		</script>
 	</div>
+
 </body>
 </html>

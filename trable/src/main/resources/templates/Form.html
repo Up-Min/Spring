@@ -1,30 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
 
-      
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <!-- THYMELEAF JS  -->
+    <th:block layout:fragment="script">
+      <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+      <script th:inline="javascript"></script>
+    </th:block>
 
-<!-- THYMELEAF JS  -->
-<th:block layout:fragment="script">
-    <script th:inline="javascript">
-    </script>
-</th:block>
+    <!-- THYMELEAF CSS -->
+    <th:block layout:fragment="css">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+      <style></style>
+    </th:block>
+  </head>
+  <body>
+    <div layout:fragment="content">본문 영역입니다.
 
-<!-- THYMELEAF CSS -->
-<th:block layout:fragment="css">
-    <style>
-    </style>
-</th:block>
-
-
-</head>
-<body>
-	<div layout:fragment="content">
-	 본문 영역입니다.
-	</div>
-</body>
+        <script>
+			AOS.init();
+		</script>
+    </div>
+  </body>
 </html>
