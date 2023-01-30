@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8" />
+<title>TRABLE welcomes U!</title>
+
+<!-- THYMELEAF JS  -->
+<th:block layout:fragment="script">
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script th:inline="javascript"></script>
+</th:block>
+
+<!-- THYMELEAF CSS -->
+<th:block layout:fragment="css">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<style>
+	*{
+	 	margin: 0 auto;
+	 	padding: 0;
+	}
+	
+.content {
+	justify-content: center;
+	display: flex;
+	position: relative;
+	top: 150px;
+}
+
+.loginform {
+	width: 500px;
+	height: 500px;
+	background-color: #D9D9D9;
+	vertical-align: middle;
+	display: grid;
+	align-content: center;
+}
+
+.loginform1 {
+	padding: 10px;
+	margin: 10px;
+}
+
+.row1 {
+	justify-content: center;
+	text-align: center;
+}
+
+.btnsec {
+	text-align: right;
+}
+
+.btn {
+	background-color: #271598;
+	color: white;
+	border: 1px;
+	width: 170px;
+	height: 50px;
+}
+
+.signupform {
+	width: 500px;
+	height: 500px;
+	background-color: #D9D9D9;
+	vertical-align: middle;
+	display: grid;
+	align-content: center;
+}
+
+.signupform1 {
+	padding: 10px;
+	margin: 10px;
+}
+
+.imginput{
+	width: 380px;
+}
+
+.btn1 {
+	background-color: #271598;
+	color: white;
+	border: 1px;
+	width: 400px;
+	height: 50px;
+}
+
+
+</style>
+</th:block>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="loginform">
+			<form class="loginform1">
+				<div class="row mb-3 row1">
+					<div class="col-sm-10">
+						<img alt="logo" src="/images/Logo.png" width="70%">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="inputEmail3">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control" id="inputPassword3">
+					</div>
+				</div>
+
+				<div class="row mb-3">
+					<div class="col-sm-10 offset-sm-2">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="gridCheck1">
+							<label class="form-check-label" for="gridCheck1">
+								Remember id </label>
+						</div>
+					</div>
+				</div>
+				<div class="btnsec">
+					<button type="submit" class="btn btn-primary">Sign Up</button>
+					<button type="submit" class="btn btn-primary">Log In</button>
+				</div>
+			</form>
+		</div>
+		<div class="signupform">
+			<form class="signupform1">
+				<div class="row mb-3">
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="inputEmail3">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control" id="inputPassword3">
+					</div>
+				</div>
+				<div class="input-group mb-3">
+				 <label for="inputuserimg" class="col-sm-2 col-form-label">UserImage</label>
+				  <input type="file" class="form-control" id="inputGroupFile01">
+				</div>
+
+				<div class="btnsec">
+					<button type="submit" class="btn1 btn-primary">Travel with
+						TRABLE</button>
+				</div>
+			</form>
+		</div>
+
+		<script>
+			AOS.init();
+		</script>
+	</div>
+</body>
+</html>
