@@ -16,6 +16,12 @@ public class MainController {
 		return "main";
 
 	}
+	
+	@GetMapping(value = "/new")
+	public String login() {
+		
+		return "/member/loginpage";
+	}
 
 }
 
