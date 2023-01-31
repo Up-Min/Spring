@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8" />
+<title>What's your TRABLE?</title>
+
+<!-- THYMELEAF JS  -->
+<th:block layout:fragment="script">
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script th:inline="javascript">
+	function mainImg(input) {
+ 		var id = $(input).attr('name');
+	    var reader = new FileReader();
+	    reader.onload = function(e) {
+	      document.getElementById('preview0').src = e.target.result;
+	    };
+	    reader.readAsDataURL(input.files[0]);
+	} 
+	
+	function readURL(input) {
+ 		var id = $(input).attr('name');
+	    var reader = new FileReader();
+	    reader.onload = function(e) {
+	      document.getElementById('preview'+id).src = e.target.result;
+	    };
+	    reader.readAsDataURL(input.files[0]);
+/* 		$(input).css('display','none');
+		
+    	
+		if(document.getElementById('preview'+id).click()){
+			$(input).click();
+		} */
+	} 
+
+	</script>
+</th:block>
+
+<!-- THYMELEAF CSS -->
+<th:block layout:fragment="css">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<style>
+body {
+	/* background: linear-gradient(180deg, #714503, #017C57); */
+background: darkgray;
+}
+
+.wrap {
+	position: relative;
+	top: 100px;
+	width: 1000px;
+	height: 1000px;
+	margin: 0 auto;
+	padding: 0;
+	text-align: center;
+}
+
+.writingbox {
+	margin: 10px;
+	height: 95%;
+	width: 95%;
+	background-color: #D9D9D9;
+}
+
+.head{
+	margin: 10px;
+	padding: 10px;
+}
+
+.fileinputs{
+	text-align: left;
+}
+
+
+
+.c_body{
+	margin: 0 auto;
+	padding : 7px;
+	height: 95%;
+	width: 95%;
+	background-color: #CDCDCD;
+	margin-bottom: 10px;
+}
+
+.cont_img{
+width: 44%;
+margin-bottom: 10px;
+text-align: center;
+}
+
+.fileinputs{
+	text-align: center;
+}
+
+.button{
+	background-color: #271598;
+	border: 0px;
+	color: white;
+	width: 200px;
+}
+
+/* 	div.fileinputs {
+	position: relative;
+		border: 1px solid black;
+}
+
+div.fakefile {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+
+}
+
+input.file {
+	position: relative;
+	text-align: right;
+	-moz-opacity:0 ;
+	filter:alpha(opacity: 0);
+	opacity: 0;
+	z-index: 2;
+	
+} */
+
+</style>
+</th:block>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="wrap">
+		<div class="writingbox">
+			<form action="">
+					<div class="row">
+						<div class="col-md-12">
+							<h3 style="margin-top: 15px;"> what's your <img alt="logo" src="/images/Logo.png" width="10%">? </h3>
+						</div>
+					</div>
+				<div class="head">
+					<div class="mb-3 row">
+						<label for="inputname" class="col-sm-2 col-form-label">Post
+							Name</label>
+						<div class="col-md-10">
+							<input type="text" class="form-control" id="inputPostname">
+						</div>
+					</div>
+					<div class="mb-3 row">
+						<label for="inputimg" class="col-sm-2 col-form-label">Main
+							Image</label>
+						<div class="col-md-10 row">
+							<div class="fileinputs">
+								<input type="file" class="file form-control" id="MainImgFile" name="0" onchange="mainImg(this)" style="margin-bottom: 10px;"/>
+							</div>
+						</div>
+							<label for="seeimg" class="col-sm-2 col-form-label">preview <br> image</label>
+						<div class="col-md-10 row">
+								<img id = "preview0" style="width: 30%">
+							</div>
+						</div>
+					<div class="mb-3 row">
+						<label for="inputtag" class="col-sm-2 col-form-label">Tag</label>
+						<div class="col-md-10">
+							<input type="text" class="form-control" id="inputPostname">
+						</div>
+					</div>
+				</div>
+				<div class="cont">
+					<div class="c_body">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="fileinputs">
+								<input type="file" class="file form-control" id="MainImgFile" name="1" onchange="readURL(this)" style="margin-bottom: 10px;"/>
+								<div class="fakefile">
+								<img id = "preview1" name = "1" class="cont_img" onclick="change(this)">								
+								</div>
+							</div>
+						</div>	
+						<div class="col-md-4">
+							<div class="fileinputs">
+								<input type="file" class="file form-control" id="MainImgFile" name="2" onchange="readURL(this)" style="margin-bottom: 10px;"/>
+								<img id = "preview2" name = "2" class="cont_img" onclick="change(this)">
+							</div>
+						</div>	
+						<div class="col-md-4">
+							<div class="fileinputs">
+								<input type="file" class="file form-control" id="MainImgFile" name="3" onchange="readURL(this)" style="margin-bottom: 10px;"/>
+								<img id = "preview3" name = "3" class="cont_img" onclick="change(this)">
+							</div>
+						</div>													
+						<div class="col-md-4">
+							<div class="fileinputs">
+								<input type="file" class="file form-control" id="MainImgFile" name="4" onchange="readURL(this)" style="margin-bottom: 10px;"/>
+								<img id = "preview4" name = "4" class="cont_img" onclick="change(this)">
+							</div>
+						</div>						
+						<div class="col-md-4">
+							<div class="fileinputs">
+								<input type="file" class="file form-control" id="MainImgFile" name="5" onchange="readURL(this)" style="margin-bottom: 10px;"/>
+								<img id = "preview5" name="5" class="cont_img" onclick="change(this)" >
+							</div>
+						</div>	
+						<div class="col-md-4">
+							<div class="fileinputs">
+								<input type="file" class="file form-control" id="MainImgFile" name="6" onchange="readURL(this)" style="margin-bottom: 10px;"/>
+								<img id = "preview6" name = "6" class="cont_img" onclick="change(this)">
+							</div>
+						</div>												
+					</div>
+					</div>
+				</div>
+			<input type="submit" class="button" value="Travel with TRABLE" style="margin: 0 auto; height: 50px; ">
+		</form>
+			</div>
+		</div>
+
+		<script>
+			AOS.init();
+		</script>
+	</div>
+</body>
+</html>

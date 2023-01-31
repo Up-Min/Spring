@@ -23,5 +23,16 @@ public class MainController {
 		return "/member/loginpage";
 	}
 
+	@GetMapping(value = "/write")
+	public String write() {
+		
+		return "/user/writingpage";
+	}
+	
+	@GetMapping(value = "/view")
+	public String dtlpage() {
+		return "/travel/dtlpage";
+	}
+	
 }
 
