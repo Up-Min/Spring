@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>looking for TRABLE?</title>
+
+    <!-- THYMELEAF JS  -->
+    <th:block layout:fragment="script">
+      <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+      <script th:inline="javascript">
+      $(document).ready(function(){
+    	  var currentPosition = parseInt($(".array").css("top"));
+    	  $(window).scroll(function() {
+    	    var position = $(window).scrollTop(); 
+    	    $(".array").stop().animate({"top":position+currentPosition+"px"},500);
+    	  });
+    	});
+      </script>
+    </th:block>
+
+    <!-- THYMELEAF CSS -->
+    <th:block layout:fragment="css">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+      <style>
+      
+      *{
+      	margin: 0 auto;
+      	padding: 0;
+      }
+      
+      .content{
+      	padding : 10px;
+      }
+      
+      .search{
+      margin-top: 50px;
+      }
+      
+      .row{
+      text-align: center;
+      }
+      
+      .select{
+      border: 0px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      }
+      
+ .array{
+	position: absolute;
+	right: 3%;
+	top: 50%;
+}
+      
+      .uparrow{
+      	transform : rotate(-90deg);
+      }
+      
+      .downarrow{
+      	transform : rotate(90deg);
+      }
+      
+      .a1 {
+		
+      }
+      
+      .a2{
+
+      }
+.a img {
+  transition: all 0.2s linear;
+  background-color: black;
+}
+.a:hover img {
+  transform: scale(0.8);
+}
+
+.a:hover .a2{
+	color: black;
+}
+
+.select{
+	visibility: hidden;
+}
+
+.select:hover {
+	visibility: visible;
+}
+
+      
+      </style>
+    </th:block>
+  </head>
+  <body>
+    <div layout:fragment="content">
+		<div class="row gx-3 gy-2 align-items-center search">
+		  <div class="col-sm-3">
+		    <label class="visually-hidden" for="keywords" onchange="AJAX">keywords</label>
+		    <input type="text" class="form-control" id="keywords" placeholder="We Found TRABLE you will like!" readonly="readonly" autocomplete="off">
+		  </div>
+<!-- 		  <div class="col-sm-3">
+		    <button type="submit" class="btn btn-primary">Submit</button>
+		  </div> -->
+    	</div>
+    	<div class="array"> 
+    		<div class="arrayup"> <img class="uparrow" alt="" src="/images/double_arrows.png" width="50px"> </div>
+    		<div class="select1">
+    		    <label class="visually-hidden" for="specificSizeSelect">Preference</label>
+    			<select class="select" id="specificSizeSelect">
+      			<option selected>select </option>
+     			<option value="1">like</option>
+     			<option value="2">created-date</option>
+     			<option value="3">upload-date</option>
+   				 </select>
+    		
+    		</div>
+    		<div class="arraydown"> <img class="downarrow" alt="" src="/images/double_arrows.png" width="50px"> </div>
+    	</div>
+    
+ 		<div class="con_center section" id = "section3" style="margin-top: 50px;">
+			<div data-aos="fade-up" data-aos-duration="1000">
+				<div class="row" style="">
+					<div class="col-md-3 align-self-center ">
+						<div style="position: relative; z-index: 1;">
+							<a class="a" th:href="'/'"><img class="a1" alt="1" src="/images/t1.jpeg" width="390px" ></a>
+							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.2);" >  
+								<div><img alt="heart" src="/images/flatheart.png" width="30px">
+								<span> 200 </span>
+								</div>
+							</div>								
+						</div>
+					</div>	
+					<div class="col-md-3 align-self-center ">
+						<div style="position: relative; z-index: 1;">
+							<a class="a" th:href="'/'"><img class="a1" alt="1" src="/images/t1.jpeg" width="390px" ></a>
+							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.1);" >  
+								<div><img alt="heart" src="/images/flatheart.png" width="30px">
+								<span> 200 </span>
+								</div>
+							</div>								
+						</div>
+					</div>	
+					<div class="col-md-3 align-self-center ">
+						<div style="position: relative; z-index: 1;">
+							<a class="a" th:href="'/'"><img class="a1" alt="1" src="/images/t1.jpeg" width="390px" ></a>
+							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.1);" >  
+								<div><img alt="heart" src="/images/flatheart.png" width="30px">
+								<span> 200 </span>
+								</div>
+							</div>								
+						</div>
+					</div>	
+					<div class="col-md-3 align-self-center ">
+						<div style="position: relative; z-index: 1;">
+							<a class="a" th:href="'/'"><img class="a1" alt="1" src="/images/t1.jpeg" width="390px" ></a>
+							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.1);" >  
+								<div><img alt="heart" src="/images/flatheart.png" width="30px">
+								<span> 200 </span>
+								</div>
+							</div>								
+						</div>
+					</div>	
+					<div class="col-md-3 align-self-center ">
+						<div style="position: relative; z-index: 1;">
+							<a class="a" th:href="'/'"><img class="a1" alt="1" src="/images/t1.jpeg" width="390px" ></a>
+							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.1);" >  
+								<div><img alt="heart" src="/images/flatheart.png" width="30px">
+								<span> 200 </span>
+								</div>
+							</div>								
+						</div>
+					</div>	
+					<div class="col-md-3 align-self-center ">
+						<div style="position: relative; z-index: 1;">
+							<a class="a" th:href="'/'"><img class="a1" alt="1" src="/images/t1.jpeg" width="390px" ></a>
+							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.1);" >  
+								<div><img alt="heart" src="/images/flatheart.png" width="30px">
+								<span> 200 </span>
+								</div>
+							</div>								
+						</div>
+					</div>	
+					<div class="col-md-3 align-self-center ">
+						<div style="position: relative; z-index: 1;">
+							<a class="a" th:href="'/'"><img class="a1" alt="1" src="/images/t1.jpeg" width="390px" ></a>
+							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.1);" >  
+								<div><img alt="heart" src="/images/flatheart.png" width="30px">
+								<span> 200 </span>
+								</div>
+							</div>								
+						</div>
+					</div>	
+					<div class="col-md-3 align-self-center ">
+						<div style="position: relative; z-index: 1;">
+							<a class="a" th:href="'/'"><img class="a1" alt="1" src="/images/t1.jpeg" width="390px" ></a>
+							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.1);" >  
+								<div><img alt="heart" src="/images/flatheart.png" width="30px">
+								<span> 200 </span>
+								</div>
+							</div>								
+						</div>
+					</div>	
+					
+					
+					
+					
+					
+				</div>
+			</div>
+			
+			
+	
+			</div>
+    	
+    
+    
+        <script>AOS.init();</script>
+    </div>
+  </body>
+</html>
