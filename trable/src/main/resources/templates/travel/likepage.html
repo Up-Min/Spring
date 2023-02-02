@@ -6,7 +6,7 @@
 >
   <head>
     <meta charset="UTF-8" />
-    <title>looking for TRABLE?</title>
+    <title>How about this?</title>
 
     <!-- THYMELEAF JS  -->
     <th:block layout:fragment="script">
@@ -19,6 +19,12 @@
     	    $(".array").stop().animate({"top":position+currentPosition+"px"},500);
     	  });
     	});
+  	function test(){
+		$('.sidemenu').css('visibility','visible');
+	}
+	function test1(){
+			$('.sidemenu').css('visibility','hidden');
+	}
       </script>
     </th:block>
 
@@ -31,6 +37,16 @@
       	margin: 0 auto;
       	padding: 0;
       }
+      
+      .sidemenu{
+	width: 150px;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top : 0%;
+	background-color: rgba(205,205,205, 1);
+	visibility: hidden;
+}
       
       .content{
       	padding : 10px;
@@ -97,10 +113,11 @@
   </head>
   <body>
     <div layout:fragment="content">
+
 		<div class="row gx-3 gy-2 align-items-center search">
-		  <div class="col-sm-3">
+		  <div class="col-lg-3">
 		    <label class="visually-hidden" for="keywords" onchange="AJAX">keywords</label>
-		    <input type="text" class="form-control" id="keywords" placeholder="We Found TRABLE you will like!" readonly="readonly" autocomplete="off">
+		    <input type="text" class="form-control" id="keywords" placeholder="We Found TRABLE you will like!" readonly="readonly" autocomplete="off" aria-describedby="inputGroup-sizing-lg">
 		  </div>
 <!-- 		  <div class="col-sm-3">
 		    <button type="submit" class="btn btn-primary">Submit</button>
@@ -137,7 +154,7 @@
 					<div class="col-md-3 align-self-center ">
 						<div style="position: relative; z-index: 1;">
 							<a class="a" th:href="'/'"><img class="a1" alt="1" src="/images/t1.jpeg" width="390px" ></a>
-							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.1);" >  
+							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.2);" >  
 								<div><img alt="heart" src="/images/flatheart.png" width="30px">
 								<span> 200 </span>
 								</div>
@@ -147,7 +164,7 @@
 					<div class="col-md-3 align-self-center ">
 						<div style="position: relative; z-index: 1;">
 							<a class="a" th:href="'/'"><img class="a1" alt="1" src="/images/t1.jpeg" width="390px" ></a>
-							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.1);" >  
+							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.2);" >  
 								<div><img alt="heart" src="/images/flatheart.png" width="30px">
 								<span> 200 </span>
 								</div>
@@ -157,7 +174,7 @@
 					<div class="col-md-3 align-self-center ">
 						<div style="position: relative; z-index: 1;">
 							<a class="a" th:href="'/'"><img class="a1" alt="1" src="/images/t1.jpeg" width="390px" ></a>
-							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.1);" >  
+							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.2);" >  
 								<div><img alt="heart" src="/images/flatheart.png" width="30px">
 								<span> 200 </span>
 								</div>
@@ -167,7 +184,7 @@
 					<div class="col-md-3 align-self-center ">
 						<div style="position: relative; z-index: 1;">
 							<a class="a" th:href="'/'"><img class="a1" alt="1" src="/images/t1.jpeg" width="390px" ></a>
-							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.1);" >  
+							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.2);" >  
 								<div><img alt="heart" src="/images/flatheart.png" width="30px">
 								<span> 200 </span>
 								</div>
@@ -177,7 +194,7 @@
 					<div class="col-md-3 align-self-center ">
 						<div style="position: relative; z-index: 1;">
 							<a class="a" th:href="'/'"><img class="a1" alt="1" src="/images/t1.jpeg" width="390px" ></a>
-							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.1);" >  
+							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.2);" >  
 								<div><img alt="heart" src="/images/flatheart.png" width="30px">
 								<span> 200 </span>
 								</div>
@@ -187,7 +204,7 @@
 					<div class="col-md-3 align-self-center ">
 						<div style="position: relative; z-index: 1;">
 							<a class="a" th:href="'/'"><img class="a1" alt="1" src="/images/t1.jpeg" width="390px" ></a>
-							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.1);" >  
+							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.2);" >  
 								<div><img alt="heart" src="/images/flatheart.png" width="30px">
 								<span> 200 </span>
 								</div>
@@ -197,7 +214,7 @@
 					<div class="col-md-3 align-self-center ">
 						<div style="position: relative; z-index: 1;">
 							<a class="a" th:href="'/'"><img class="a1" alt="1" src="/images/t1.jpeg" width="390px" ></a>
-							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.1);" >  
+							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.2);" >  
 								<div><img alt="heart" src="/images/flatheart.png" width="30px">
 								<span> 200 </span>
 								</div>

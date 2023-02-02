@@ -8,9 +8,15 @@
     },
     {
       "path": "../trable"
+    },
+    {
+      "path": "../../FE/HTML/study/study/burgerking"
+    },
+    {
+      "path": "../../FE/HTML/study/study/SHAKESHACK"
     }
   ],
   "settings": {
-    "liveServer.settings.multiRootWorkspaceName": "trable"
+    "liveServer.settings.multiRootWorkspaceName": "SHAKESHACK"
   }
 }

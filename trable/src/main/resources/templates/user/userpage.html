@@ -6,12 +6,19 @@
 >
   <head>
     <meta charset="UTF-8" />
-    <title>so, take a Look!</title>
+    <title>this is your TRABLE</title>
 
     <!-- THYMELEAF JS  -->
     <th:block layout:fragment="script">
       <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-      <script th:inline="javascript"></script>
+      <script th:inline="javascript">
+  	function test(){
+		$('.sidemenu').css('visibility','visible');
+	}
+	function test1(){
+			$('.sidemenu').css('visibility','hidden');
+	}
+      </script>
     </th:block>
 
     <!-- THYMELEAF CSS -->
@@ -31,6 +38,16 @@ background: darkgray;
 	margin: 0 auto;
 	padding: 0;
 	text-align: center;
+}
+
+.sidemenu{
+	width: 150px;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top : 0%;
+	background-color: rgba(205,205,205, 1);
+	visibility: hidden;
 }
 
 .writingbox {
@@ -105,6 +122,8 @@ margin: 0 auto; height: 50px; margin-top:20px; margin-bottom: 20px;
   </head>
   <body>
    	<div layout:fragment="content">
+
+   	
 		<div class="wrap">
 		<div class="writingbox">
 			<form action="">

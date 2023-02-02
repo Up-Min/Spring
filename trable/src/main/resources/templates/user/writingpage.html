@@ -8,6 +8,7 @@
 
 <!-- THYMELEAF JS  -->
 <th:block layout:fragment="script">
+
 	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 	<script th:inline="javascript">
 	function mainImg(input) {
@@ -26,6 +27,7 @@
 	      document.getElementById('preview'+id).src = e.target.result;
 	    };
 	    reader.readAsDataURL(input.files[0]);
+	   
 /* 		$(input).css('display','none');
 		
     	
@@ -33,6 +35,13 @@
 			$(input).click();
 		} */
 	} 
+	
+	function test(){
+			$('.sidemenu').css('visibility','visible');
+		}
+		function test1(){
+				$('.sidemenu').css('visibility','hidden');
+		}
 
 	</script>
 </th:block>
@@ -44,6 +53,18 @@
 body {
 	/* background: linear-gradient(180deg, #714503, #017C57); */
 background: darkgray;
+}
+
+
+
+.sidemenu{
+	width: 150px;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top : 0%;
+	background-color: rgba(205,205,205, 1);
+	visibility: hidden;
 }
 
 .wrap {
@@ -128,6 +149,11 @@ input.file {
 </head>
 <body>
 	<div layout:fragment="content">
+		
+
+		
+	
+		<!-- WRITING MAIN -->
 		<div class="wrap">
 		<div class="writingbox">
 			<form action="">
@@ -136,6 +162,8 @@ input.file {
 							<h3 style="margin-top: 15px;"> what's your <img alt="logo" src="/images/Logo.png" width="10%">? </h3>
 						</div>
 					</div>
+					
+		<!-- NAME, MAIN IMAGE(PREVIEW) -->
 				<div class="head">
 					<div class="mb-3 row">
 						<label for="inputname" class="col-sm-2 col-form-label">Post
@@ -164,6 +192,8 @@ input.file {
 						</div>
 					</div>
 				</div>
+				
+				<!-- PHOTO INSERT  -->
 				<div class="cont">
 					<div class="c_body">
 					<div class="row">

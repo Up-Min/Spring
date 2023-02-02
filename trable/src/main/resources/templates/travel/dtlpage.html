@@ -11,7 +11,14 @@
     <!-- THYMELEAF JS  -->
     <th:block layout:fragment="script">
       <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-      <script th:inline="javascript"></script>
+      <script th:inline="javascript">
+  	function test(){
+		$('.sidemenu').css('visibility','visible');
+	}
+	function test1(){
+			$('.sidemenu').css('visibility','hidden');
+	}
+      </script>
     </th:block>
 
     <!-- THYMELEAF CSS -->
@@ -29,6 +36,16 @@
 		background: darkgray;
 		margin-top: 50px;
 		}
+
+.sidemenu{
+	width: 150px;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top : 0%;
+	background-color: rgba(205,205,205, 1);
+	visibility: hidden;
+}
 
 		.wrap{
 		}
@@ -68,6 +85,7 @@
   </head>
   <body>
     	<div layout:fragment="content">
+
     	<div class="wrap">
     		<div class="cont">
     			<div class="row head" style="margin: 0 auto">
