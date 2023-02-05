@@ -266,7 +266,7 @@ a.button:hover {
     -moz-box-sizing: border-box;
     color: inherit;
     font-family: inherit;
-    color: #666;
+    color: black;
 }
 .recovery form .button {
     margin: 1em 0;
@@ -560,7 +560,7 @@ input {
     -moz-box-sizing: border-box;
     color: inherit;
     font-family: inherit;
-    color: #fff;
+    color: black;
 }
 .form-wrap form .button {
     margin: 1em 0;

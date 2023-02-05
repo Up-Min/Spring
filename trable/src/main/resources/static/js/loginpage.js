@@ -1,6 +1,6 @@
 
 // LOGIN TABS
-$(function() {
+/*$(function() {
   tab = $('.tabs h3 a');
   tab.on('click', function(event) {
     event.preventDefault();
@@ -10,7 +10,8 @@ $(function() {
     $('div[id$="tab-content"]').removeClass('active');
     $(tab_content).addClass('active');
   });
-});
+});*/
+
 
 // SLIDESHOW
 $(function() {

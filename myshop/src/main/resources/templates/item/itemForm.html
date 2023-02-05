@@ -57,8 +57,7 @@
 	<div layout:fragment="content">
     	<form class="row g-3" role="form" method="post" enctype="multipart/form-data" th:object="${itemFormDto}">
 			<p class="h2">상품 등록</p>
-			<input type="hidden" th:field="*{id}" />
-			
+			<input type="hidden" th:field="*{id}" />	
 			<div>
 				<select class="form-select" th:field="*{itemSellStatus}">
   					<option value="SELL">판매중</option>

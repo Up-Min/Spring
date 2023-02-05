@@ -1,6 +1,7 @@
 package com.trable.controller;
 
 import java.io.File;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -11,12 +12,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.trable.dto.MemberFormDto;
+import com.trable.dto.PostFormDto;
 import com.trable.entity.Member;
 import com.trable.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -31,38 +35,10 @@ public class MainController {
 		return "main";
 	}
 	
-	// OPEN LOGINPAGE
-	@GetMapping(value = "/new")
-	public String login(Model model) {
-		model.addAttribute("memberFormDto", new MemberFormDto());
-		return "/member/loginpage";
-	}
-	
-	// CLICK SIGNUP
-	@PostMapping(value = "/new")
-	public String signup(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model, 
-			@RequestParam("user_img") File file) {
-		
-		if(bindingResult.hasErrors()) {
-			return "/member/loginpage";
-		}
-		
-		System.out.println(file.exists());
-		
-		if(file.exists()) {
-			try {
-				Member member = Member.createMember(memberFormDto, passwordEncoder);
-				memberService.saveMember(member,file);
-			} catch (IllegalStateException e) {
-				model.addAttribute("errorMessage", e.getMessage());
-				return "/member/loginpage";
-			}
-		}
-		return "/travel/searchpage";
-	}
 
 	@GetMapping(value = "/write")
-	public String write() {
+	public String write(Model model) {
+		model.addAttribute("postFormDto", new PostFormDto());
 		return "/user/writingpage";
 	}
 	

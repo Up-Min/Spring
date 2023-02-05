@@ -7,7 +7,7 @@
 //import javax.persistence.GenerationType;
 //import javax.persistence.Id;
 //import javax.persistence.JoinColumn;
-//import javax.persistence.OneToOne;
+//import javax.persistence.ManyToOne;
 //import javax.persistence.Table;
 //
 //import lombok.Getter;
@@ -15,34 +15,28 @@
 //import lombok.ToString;
 //
 //@Entity
+//@Table (name = "postimg")
 //@Getter
 //@Setter
 //@ToString
-//@Table(name = "memberimg") 
-//public class MemberImg {
+//public class PostImg {
 //	
 //	@Id
-//	@Column(name = "memberimg_id")
+//	@Column(name="postimg_id")
 //	@GeneratedValue(strategy = GenerationType.AUTO)
 //	private Long id;
 //	
-//	private String img_name;
+//	@Column(name = "img_name")
+//	private String imgname;
 //	
-//	private String img_url;
+//	@Column(name = "img_url")
+//	private String imgurl;
 //	
-//	private String img_ori;
+//	@Column(name = "rep_yn")
+//	private String repyn;
 //	
-//	// ONE TO ONE WITH MEMBER DTO
-//	@OneToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "member_id")
-//	private Member member;
-//	
-//	//UPDATE USER IMAGE
-//	public void updateMemberImg(String imgname, String imgurl, String imgori) {
-//		this.img_name = imgname;
-//		this.img_url = imgurl;
-//		this.img_ori = imgori;
-//				
-//	}
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "post_id")
+//	private Post post;
 //	
 //}

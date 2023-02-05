@@ -40,6 +40,30 @@
     		}
     	})
     	
+    	var W3CDOM = (document.createElement && document.getElementsByTagName);
+
+		function initFileUploads() {
+			if (!W3CDOM) return;
+			var fakeFileUpload = document.createElement('div');
+			fakeFileUpload.className = 'fakefile';
+			fakeFileUpload.appendChild(document.createElement('input'));
+			var image = document.createElement('img');
+			image.src='pix/button_select.gif';
+			fakeFileUpload.appendChild(image);
+			var x = document.getElementsByTagName('input');
+			for (var i=0;i<x.length;i++) {
+				if (x[i].type != 'file') continue;
+				if (x[i].parentNode.className != 'fileinputs') continue;
+				x[i].className = 'file hidden';
+				var clone = fakeFileUpload.cloneNode(true);
+				x[i].parentNode.appendChild(clone);
+				x[i].relatedElement = clone.getElementsByTagName('input')[0];
+				x[i].onchange = x[i].onmouseout = function () {
+					this.relatedElement.value = this.value;
+				}
+			}
+		}
+    	
 	});
 	
 	
@@ -99,10 +123,9 @@ background: darkgray;
     background-color: #04B5B5;
 }
 
-.error{
+.fieldError{
 	color: red;
 }
-
 </style>
 </th:block>
 </head>
@@ -123,7 +146,7 @@ background: darkgray;
 					<div class="logo">
 						<a href="/"><img src="/images/Logo.png" alt="logo"
 							width="100px"></a>
-					</div>
+					</div>	
 					<!-- TOGGLE -->
 					<div id="toggle-wrap">
 						<div id="toggle-terms">
@@ -263,25 +286,36 @@ background: darkgray;
 						</div>
 						<!-- TABS CONTENT -->
 						<div class="tabs-content">
-							<!-- TABS CONTENT LOGIN -->
-							<div id="login-tab-content" class="active">
-								<form class="login-form" role="form" action="/members/login" method="post">
-									<input type="text" class="input form-floating" id="email" name="email" autocomplete="off" placeholder="Email"> 
-									<input type="password" class="input form-floating" id="password" name="password" autocomplete="off" placeholder="Password"> 
-									<p th:if = "${loginErrorMsg}" class="error" th:text = "${loginErrorMsg}"></p>
-									<input type="checkbox" class="checkbox" name="remember_me" id="remember_me">
-									<label id="label_rem" for="remember_me">Remember me</label>
-									<button type="submit" class="bt" id="loginbtn" style="margin: 0 auto; height: 50px;"> Login </button>
+							<!-- TABS CONTENT SIGNUP -->
+							<div id="signup-tab-content" class="active">
+								<form class="signup-form" role = "form" action="/members/new" method="post" th:object=${memberFormDto} enctype="multipart/form-data">
+									<input type="email" class="input form-floating" th:field = "*{email}" id="user_email" autocomplete="off" placeholder="Email"> 
+									<!-- <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect Data</p> -->
+									<input type="password" class="input form-floating" th:field = "*{password}" id="user_pass" autocomplete="off" placeholder="Password"> 
+									<!-- <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect Data</p> -->
+									<div class="fileinputs">
+										<input type="file" class="file input" id="user_img" name="user_img" style="margin-bottom: 20px;" />
+										<div class="fakefile">
+										<!-- <input /> -->
+										<input class="input" id="user_fakeimg" autocomplete="off" placeholder="Set User Image" style="width: 293px;">
+										</div>
+									</div>
 									<div>
 									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 									</div>
+									<button type="submit" class="bt" style="margin: 0 auto; height: 50px;"> Travel with TRABLE </button>
 								</form>
+								<!--  <div class="help-action">
+                            <p>By signing up, you agree to our</p>
+                            <p><i class="fa fa-arrow-left" aria-hidden="true"></i><a class="agree" href="#">Terms of service</a></p>
+                          </div> -->
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-</div>
+
 		<script>
 			AOS.init();
 		</script>

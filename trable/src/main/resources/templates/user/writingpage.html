@@ -36,11 +36,11 @@
 		} */
 	} 
 	
-	function test(){
+		function test(){
 			$('.sidemenu').css('visibility','visible');
 		}
 		function test1(){
-				$('.sidemenu').css('visibility','hidden');
+			$('.sidemenu').css('visibility','hidden');
 		}
 
 	</script>
@@ -156,7 +156,7 @@ input.file {
 		<!-- WRITING MAIN -->
 		<div class="wrap">
 		<div class="writingbox">
-			<form action="">
+			<form action="/trable/write" method="post" role="form" enctype="multipart/form-data" th:object="${postFormDto}">
 					<div class="row">
 						<div class="col-md-12">
 							<h3 style="margin-top: 15px;"> what's your <img alt="logo" src="/images/Logo.png" width="10%">? </h3>
@@ -166,15 +166,13 @@ input.file {
 		<!-- NAME, MAIN IMAGE(PREVIEW) -->
 				<div class="head">
 					<div class="mb-3 row">
-						<label for="inputname" class="col-sm-2 col-form-label">Post
-							Name</label>
+						<label for="inputname" class="col-sm-2 col-form-label">PostName</label>
 						<div class="col-md-10">
-							<input type="text" class="form-control" id="inputPostname">
+							<input type="text" th:field = "*{postname}" class="form-control" id="inputPostname">
 						</div>
 					</div>
 					<div class="mb-3 row">
-						<label for="inputimg" class="col-sm-2 col-form-label">Main
-							Image</label>
+						<label for="inputimg" class="col-sm-2 col-form-label">MainImage</label>
 						<div class="col-md-10 row">
 							<div class="fileinputs">
 								<input type="file" class="file form-control" id="MainImgFile" name="0" onchange="mainImg(this)" style="margin-bottom: 10px;"/>
@@ -197,6 +195,7 @@ input.file {
 				<div class="cont">
 					<div class="c_body">
 					<div class="row">
+					<!-- should check img list (none) -->
 						<div class="col-md-4">
 							<div class="fileinputs">
 								<input type="file" class="file form-control" id="MainImgFile" name="1" onchange="readURL(this)" style="margin-bottom: 10px;"/>
@@ -205,36 +204,7 @@ input.file {
 								</div>
 							</div>
 						</div>	
-						<div class="col-md-4">
-							<div class="fileinputs">
-								<input type="file" class="file form-control" id="MainImgFile" name="2" onchange="readURL(this)" style="margin-bottom: 10px;"/>
-								<img id = "preview2" name = "2" class="cont_img" onclick="change(this)">
-							</div>
-						</div>	
-						<div class="col-md-4">
-							<div class="fileinputs">
-								<input type="file" class="file form-control" id="MainImgFile" name="3" onchange="readURL(this)" style="margin-bottom: 10px;"/>
-								<img id = "preview3" name = "3" class="cont_img" onclick="change(this)">
-							</div>
-						</div>													
-						<div class="col-md-4">
-							<div class="fileinputs">
-								<input type="file" class="file form-control" id="MainImgFile" name="4" onchange="readURL(this)" style="margin-bottom: 10px;"/>
-								<img id = "preview4" name = "4" class="cont_img" onclick="change(this)">
-							</div>
-						</div>						
-						<div class="col-md-4">
-							<div class="fileinputs">
-								<input type="file" class="file form-control" id="MainImgFile" name="5" onchange="readURL(this)" style="margin-bottom: 10px;"/>
-								<img id = "preview5" name="5" class="cont_img" onclick="change(this)" >
-							</div>
-						</div>	
-						<div class="col-md-4">
-							<div class="fileinputs">
-								<input type="file" class="file form-control" id="MainImgFile" name="6" onchange="readURL(this)" style="margin-bottom: 10px;"/>
-								<img id = "preview6" name = "6" class="cont_img" onclick="change(this)">
-							</div>
-						</div>												
+											
 					</div>
 					</div>
 				</div>

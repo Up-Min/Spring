@@ -11,7 +11,6 @@ import javax.persistence.Table;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
 import com.trable.constant.UserGrade;
 import com.trable.dto.MemberFormDto;
 
@@ -38,7 +37,16 @@ public class Member {
 	
 	@Enumerated(EnumType.STRING)
 	private UserGrade usergrade;
+
+	@Column(name = "img_ori")
+	private String imgori;
 	
+	@Column(name = "img_name")
+	private String imgname;
+	
+	@Column(name = "img_url")
+	private String imgurl;
+
 	
 	public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
 		Member member = new Member(); // 생성자 member를 가져옴.
@@ -48,7 +56,14 @@ public class Member {
 		String password = passwordEncoder.encode(memberFormDto.getPassword());
 		member.setPassword(password);
 		member.setUsergrade(UserGrade.ONE);
-			
+		
 		return member;
 	}
+	
+	public void updateImg(String imgori, String imgname, String imgurl) {
+		this.imgori = imgori;
+		this.imgname = imgname;
+		this.imgurl = imgurl;
+	}
+	
 }
