@@ -115,7 +115,7 @@
   <body>
     <div layout:fragment="content">
 
-
+		<!-- SEARCH DIV -->
 		<form class="row gx-3 gy-2 align-items-center search">
 		  <div class="col-lg-3">
 		    <label class="visually-hidden" for="keywords" onchange="AJAX">keywords</label>
@@ -126,6 +126,7 @@
 		  </div> -->
 		</form>
     
+    	<!-- ARRAY LIST -->
     	<div class="array"> 
     		<div class="arrayup"> <img class="uparrow" alt="" src="/images/double_arrows.png" width="50px"> </div>
     		<div class="select1">
@@ -141,10 +142,11 @@
     		<div class="arraydown"> <img class="downarrow" alt="" src="/images/double_arrows.png" width="50px"> </div>
     	</div>
     
+    	<!-- IMG SECTION -->
  		<div class="con_center section" id = "section3" style="margin-top: 50px;">
 			<div data-aos="fade-up" data-aos-duration="1000">
 				<div class="row" style="">
-					<div class="col-md-3 align-self-center ">
+					<div class="col-md-3 align-self-center" th:each>
 						<div style="position: relative; z-index: 1;">
 							<a class="a" th:href="'/'"><img class="a1" alt="1" src="/images/t1.jpeg" width="390px" ></a>
 							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.2);" >  
@@ -154,6 +156,11 @@
 							</div>								
 						</div>
 					</div>	
+					
+					
+					
+					
+					
 					<div class="col-md-3 align-self-center ">
 						<div style="position: relative; z-index: 1;">
 							<a class="a" th:href="'/'"><img class="a1" alt="1" src="/images/t1.jpeg" width="390px" ></a>

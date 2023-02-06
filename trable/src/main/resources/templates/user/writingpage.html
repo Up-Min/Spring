@@ -206,8 +206,8 @@ input.file {
 					<div class="c_body">
 					<div class="row">
 					<!-- should check img list (none) -->
-					<div th:each="num:${#numbers.sequence(1,6)}">
-						<div class="col-md-4">
+					<div class="col-md-4" th:each="num:${#numbers.sequence(1,6)}">
+						<div class="">
 							<div class="fileinputs">
 								<!-- SHOULD ACTIVATE -->
 								<!-- <input type = "hidden" name = "itemImgIds" th:value="${postImgDto.id}"> -->

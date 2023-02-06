@@ -49,15 +49,15 @@ public class Post {
 	private String imgurl;
 	
 	@ManyToOne (fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id")
+	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
 	
-//	public static Post createPost(PostFormDto postFormDto) {
-//		Post post = new Post();	
-//		post.setPostname(postFormDto.getPostname());
-//		post.setHeart(postFormDto.getHeart());
-//		return post;
-//	}
+	public static Post createPost(PostFormDto postFormDto) {
+		Post post = new Post();	
+		post.setPostname(postFormDto.getPostname());
+		post.setHeart(postFormDto.getHeart());
+		return post;
+	}
 	
 	public void updatePostImg(String imgori, String imgname, String imgurl) {
 		this.imgori = imgori;

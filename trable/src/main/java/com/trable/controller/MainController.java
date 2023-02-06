@@ -62,9 +62,7 @@ public class MainController {
 		}
 		// INPUT MAIN POSTIMG
 		try {
-			Long MemberId = postservice.savePost(postFormDto, postImgFileList);
-			postImgService.savePostImg(MemberId, postMainImg);
-			
+			postservice.savePost(postFormDto, postImgFileList, postMainImg);
 		}catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "게시물 업로드 중 에러가 발생했습니다!");
@@ -85,8 +83,12 @@ public class MainController {
 		return "/user/userpage";
 	}
 	
+	// SEARCH PAGE
 	@GetMapping(value = "/find")
-	public String searchpage(PostSearchDto postSearchDto, Model model) {	
+	public String searchpage(PostSearchDto postSearchDto, Model model) {
+		
+		Page<Post> post = postservi
+		
 		return "/travel/searchpage";
 	}
 	@GetMapping(value = "/like")
