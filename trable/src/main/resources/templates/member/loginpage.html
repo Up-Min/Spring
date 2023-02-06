@@ -272,9 +272,8 @@ background: darkgray;
 									<input type="checkbox" class="checkbox" name="remember_me" id="remember_me">
 									<label id="label_rem" for="remember_me">Remember me</label>
 									<button type="submit" class="bt" id="loginbtn" style="margin: 0 auto; height: 50px;"> Login </button>
-									<div>
-									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-									</div>
+
+									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> 
 								</form>
 						</div>
 					</div>

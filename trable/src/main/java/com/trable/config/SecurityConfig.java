@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.AnyRequestMatcher;
 
 import com.trable.service.MemberService;
 
@@ -33,7 +34,11 @@ public class SecurityConfig {
 		
 		http.authorizeRequests()
 		.mvcMatchers("/css/**","/js/**","/img/**").permitAll()
-		.mvcMatchers("/","/member/**","/item/**","/images/**").permitAll();
+		.mvcMatchers("/","/members/**","/item/**","/images/**").permitAll()
+		.anyRequest().authenticated();
+		
+		http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+		
 		return http.build();
 	}
 	

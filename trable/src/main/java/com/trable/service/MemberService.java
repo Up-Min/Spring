@@ -52,6 +52,5 @@ public class MemberService implements UserDetailsService{
 		checkemail(member);
 		return memberRepository.save(member);
 	}
-	
-	
+
 }

@@ -8,8 +8,5 @@ import com.trable.entity.PostImg;
 
 public interface PostImgRepository extends JpaRepository<PostImg, Long>{
 
-		List<PostImg> findByPostId(Long postid);
-	
-		PostImg findByPostIdAndrepyn(Long postid, String repyn);
-		
+		List<PostImg> findByPostId(Long postid);	
 }

@@ -2,6 +2,7 @@ package com.trable.service;
 
 import java.io.IOException;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.apache.groovy.parser.antlr4.util.StringUtils;
@@ -24,7 +25,7 @@ public class PostImgService {
 	private final PostImgRepository postImgRepository;
 	private final FileService fileService;
 	
-	public void savepostImg(PostImg postImg, MultipartFile postimgfile) throws Exception {
+	public void savePostImg(PostImg postImg, MultipartFile postimgfile) throws Exception {
 		
 		String oriImgName = postimgfile.getOriginalFilename();
 		String imgName = "";
@@ -39,4 +40,17 @@ public class PostImgService {
 		postImgRepository.save(postImg);	
 	}
 	
+	public void updatePostImg(Long postImgid, MultipartFile postimgfile) throws Exception {
+		
+		if(!postimgfile.isEmpty()) {
+			PostImg savedPostImg = postImgRepository.findById(postImgid)
+					.orElseThrow(EntityNotFoundException::new);
+			
+			if(!StringUtils.isEmpty(savedPostImg.getImgname())) {
+				fileService.deleteFile(postImgLocation+"/"+savedPostImg.getImgname());
+			}
+			
+			
+		}
+	}
 }

@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.trable.dto.PostFormDto;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -31,31 +33,37 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@Column(nullable = false)
 	private String postname;
 	
-	private int like;
+	@Column(nullable = false)
+	private int heart;
 	
-	@CreatedDate
-	@Column(name = "created_date", updatable = false)
-	private LocalDateTime createdate;
-	
-	@LastModifiedDate
-	@Column(name = "modified_date")
-	private LocalDateTime modifieddate;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id")
-	private Member memberid;
-	
-	@Column(name = "mainimg_ori")
+	@Column(name = "mainimg_ori", nullable = false)
 	private String imgori;
 	
-	@Column(name = "mainimg_name")
+	@Column(name = "mainimg_name", nullable = false)
 	private String imgname;
 	
-	@Column(name = "mainimg_url")
+	@Column(name = "mainimg_url", nullable = false)
 	private String imgurl;
-
+	
+	@ManyToOne (fetch = FetchType.LAZY)
+	@JoinColumn(name = "member_id")
+	private Member member;
+	
+//	public static Post createPost(PostFormDto postFormDto) {
+//		Post post = new Post();	
+//		post.setPostname(postFormDto.getPostname());
+//		post.setHeart(postFormDto.getHeart());
+//		return post;
+//	}
+	
+	public void updatePostImg(String imgori, String imgname, String imgurl) {
+		this.imgori = imgori;
+		this.imgname = imgname;
+		this.imgurl = imgurl;
+	}
 	
 	
 }

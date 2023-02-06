@@ -59,7 +59,8 @@ public class MemberController {
 					model.addAttribute("errorMessage", e.getMessage());
 					return "member/signuppage";
 				}
-			return "redirect:/";
+			return "/";
+
 		}
 		
 		// LOGIN ERROR

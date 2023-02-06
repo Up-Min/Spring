@@ -35,8 +35,6 @@ public class PostImg {
 	@Column(name = "img_ori")
 	private String imgori;
 	
-	@Column(name = "rep_yn")
-	private String repyn;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "post_id")

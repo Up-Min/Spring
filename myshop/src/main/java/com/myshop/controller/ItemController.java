@@ -35,7 +35,7 @@ public class ItemController {
 	// 상품등록 페이지를 보여주는 메소드
 	@GetMapping(value = "/admin/item/new")
 	public String itemForm(Model model) {
-		model.addAttribute("itemFormDto", new ItemFormDto()); 
+		model.addAttribute("itemFormDto", new ItemFormDto());
 		//itemForm.html에서 넘어온 "itemFormDto" 를 받아서 저장.
 		return "item/itemForm";
 	}

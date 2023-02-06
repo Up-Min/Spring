@@ -1,30 +1,29 @@
 package com.trable.dto;
 
-
 import org.modelmapper.ModelMapper;
 
-import com.trable.entity.Post;
+import com.trable.entity.PostImg;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class PostFormDto {
-	
-	private String postname;
-	
-	private int heart;
-	
-	private String imgori;
+public class PostImgDto {
+
+	private Long id;
 	
 	private String imgname;
 	
 	private String imgurl;
-	
+
+	private String imgori;
+
 	private static ModelMapper modelMapper = new ModelMapper();
 	
-	public Post createPost() {
-		return modelMapper.map(this, Post.class);
+	private static PostImgDto of (PostImg postImg) {
+		return modelMapper.map(postImg, PostImgDto.class);
 	}
+	
+	
 }
