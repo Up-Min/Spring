@@ -29,17 +29,39 @@ public class MainController {
 	private final MemberService memberService;
 	private final PasswordEncoder passwordEncoder;
 	
-	//MAINPAGE
+	// MAINPAGE
 	@GetMapping(value = "/")
 	public String main() {
 		return "main";
 	}
 	
-
+	// OPEN WRITING PAGE
 	@GetMapping(value = "/write")
 	public String write(Model model) {
 		model.addAttribute("postFormDto", new PostFormDto());
 		return "/user/writingpage";
+	}
+	
+	// CLICK WRITING BUTTON
+	@PostMapping(value = "/write")
+	public String writenew(@Valid PostFormDto postFormDto, BindingResult bindingResult, Model model,
+			@RequestParam("PostImgFile") List<MultipartFile> postImgFileList) {
+		
+		if(bindingResult.hasErrors()) {
+			return "/write";
+		}
+		
+		if(postImgFileList.get(0).isEmpty() && postFormDto.getPostname() == null) {
+			model.addAttribute("errorMessage", "게시글에 최소 1장의 사진을 업로드 해주세요.");
+		}
+		
+		// INPUT MAIN POSTIMG
+		
+		
+		
+		// INPUT POSTIMG LIST
+		
+		return "redirect:find";
 	}
 	
 	@GetMapping(value = "/view")

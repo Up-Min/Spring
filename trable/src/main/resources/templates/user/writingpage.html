@@ -196,14 +196,18 @@ input.file {
 					<div class="c_body">
 					<div class="row">
 					<!-- should check img list (none) -->
+					<div th:each="num: ${#numbers.sequence(1,6)}">
 						<div class="col-md-4">
 							<div class="fileinputs">
-								<input type="file" class="file form-control" id="MainImgFile" name="1" onchange="readURL(this)" style="margin-bottom: 10px;"/>
+								<!-- SHOULD ACTIVATE -->
+								<!-- <input type = "hidden" name = "itemImgIds" th:value="${postImgDto.id}"> -->
+								<input type="file" class="file form-control" id="PostImgFile" name="${num}" onchange="readURL(this)" style="margin-bottom: 10px;"/>
 								<div class="fakefile">
-								<img id = "preview1" name = "1" class="cont_img" onclick="change(this)">								
+								<img id = "preview+${num}" name = "${num}" class="cont_img" onclick="change(this)">								
 								</div>
 							</div>
-						</div>	
+						</div>						
+					</div>
 											
 					</div>
 					</div>
