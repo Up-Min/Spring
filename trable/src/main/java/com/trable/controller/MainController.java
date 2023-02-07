@@ -2,16 +2,20 @@ package com.trable.controller;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +25,7 @@ import com.trable.dto.PostFormDto;
 import com.trable.dto.PostSearchDto;
 import com.trable.entity.Member;
 import com.trable.entity.Post;
+import com.trable.entity.PostImg;
 import com.trable.service.MemberService;
 import com.trable.service.PostImgService;
 import com.trable.service.PostService;
@@ -50,6 +55,7 @@ public class MainController {
 	// OPEN WRITING PAGE
 	@GetMapping(value = "/write")
 	public String write(Model model) {
+
 		model.addAttribute("postFormDto", new PostFormDto());
 		return "/user/writingpage";
 	}
@@ -60,6 +66,7 @@ public class MainController {
 			@RequestParam("PostImgFile") List<MultipartFile> postImgFileList,
 			@RequestParam("MainImgFile") MultipartFile postMainImg) {
 		
+		String email = SecurityContextHolder.getContext().getAuthentication().getName();
 		if(bindingResult.hasErrors()) {
 			return "/user/writingpage";
 		}
@@ -68,7 +75,7 @@ public class MainController {
 		}
 		// INPUT MAIN POSTIMG
 		try {
-			postservice.savePost(postFormDto, postImgFileList, postMainImg);
+			postservice.savePost(postFormDto, postImgFileList, postMainImg, email);
 		}catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "게시물 업로드 중 에러가 발생했습니다!");
@@ -76,16 +83,39 @@ public class MainController {
 		} 
 		return "redirect:/";
 	}
-	
-	@GetMapping(value = "/view")
-	public String dtlpage() {
+	// OPEN DTL POSTPAGE
+	@GetMapping(value = {"/view", "/view/{id}"})
+	public String dtlpage(@PathVariable("id") Long postid, Model model) {
+		
+		String id = SecurityContextHolder.getContext().getAuthentication().getName();
+		UserDetails user = memberService.loadUserByUsername(id);
+		Member member = memberService.findMember(user.getUsername());	
+		Post post = postservice.getPostbyid(postid);
+		List<PostImg> postimgs = postImgService.getPostimg(postid);
+		
+		model.addAttribute("member", member);
+		model.addAttribute("post", post);
+		model.addAttribute("postimgs",postimgs);
+		
 		return "/travel/dtlpage";
 	}
 	
+	// OPEN USERPAGE
 	@GetMapping(value = "/user")
 	public String userpage(Model model) {
 		String id = SecurityContextHolder.getContext().getAuthentication().getName();
-		model.addAttribute("id", id);
+		UserDetails user = memberService.loadUserByUsername(id);
+		Member member = memberService.findMember(user.getUsername());	
+		List<Post> memberpost = postservice.getUserPost(member);
+		int heart = 0;
+		
+		for(int i =0; i<memberpost.size(); i++) {
+			heart += memberpost.get(i).getHeart();
+		}
+		
+		model.addAttribute("heart", heart);
+		model.addAttribute("member", member);
+		model.addAttribute("posts", memberpost);
 		return "/user/userpage";
 	}
 	

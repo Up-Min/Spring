@@ -53,4 +53,8 @@ public class MemberService implements UserDetailsService{
 		return memberRepository.save(member);
 	}
 
+	public Member findMember(String email) {
+		return memberRepository.findByEmail(email);
+	}
+	
 }

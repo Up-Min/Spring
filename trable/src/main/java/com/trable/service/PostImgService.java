@@ -1,6 +1,7 @@
 package com.trable.service;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
@@ -33,7 +34,7 @@ public class PostImgService {
 		
 		if(!StringUtils.isEmpty(oriImgName)) {
 			imgName = fileService.uploadFile(postImgLocation, oriImgName, postimgfile.getBytes());
-			imgUrl = "/images/"+imgName;
+			imgUrl = "/image/data/img/"+imgName;
 		}
 		
 		postImg.updateImg(oriImgName, imgName, imgUrl);
@@ -53,4 +54,9 @@ public class PostImgService {
 			
 		}
 	}
+	
+	public List<PostImg> getPostimg(Long postid) {
+		return postImgRepository.findByPostId(postid);
+	}
+	
 }

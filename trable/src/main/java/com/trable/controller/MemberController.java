@@ -52,14 +52,18 @@ public class MemberController {
 				return "member/signuppage";
 			}
 				try {
-					Member member = Member.createMember(memberFormDto, passwordEncoder);
+					// SAVE HALF (pureinfo of member)
+					Member member = Member.createMember(memberFormDto, passwordEncoder); //
 					Member member1 = memberService.saveMember(member);
+					
+					// SAVE OTHER HALF (IMG of member)
 					userImgService.savememberImg(member1, file);
+
 				} catch (Exception e) {
 					model.addAttribute("errorMessage", e.getMessage());
 					return "member/signuppage";
 				}
-			return "/";
+			return "main";
 
 		}
 		

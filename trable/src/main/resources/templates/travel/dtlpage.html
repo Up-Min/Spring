@@ -88,43 +88,25 @@
 
     	<div class="wrap">
     		<div class="cont">
-    			<div class="row head" style="margin: 0 auto">
+    			<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
 					<div class="col-md-6">
-						<img alt="테스트" src="/images/t3.jpeg" width="90%">
+						<img th:alt="${post.imgname}" th:src="${post.imgurl}" width="90%">
 					</div>
 					<div class="col-md-6">
 						<div class="row-md-4">
-							<h1> write by : user </h1>
+							<h1> write by : [[${member.email}]] </h1>
 						</div>
 						<div class="row-md-4">
 							<h1> tag <br> #seoul, #food, #korea </h1>
 						</div>
 						<div class="row-md-4">
-							<h1> hearts : 50 </h1>
+							<h1> hearts : [[${post.heart}]] </h1>
 						</div>												
 					</div>
     			</div>
     			
-    			<div class="row row_left" style="margin-top: 200px">
-					<img alt="테스트" src="/images/t3.jpeg" >
-    			</div>
-    			<div class="row row_right">
-					<img alt="테스트" src="/images/t3.jpeg" >
-    			</div>
-    			<div class="row row_left">
-					<img alt="테스트" src="/images/t3.jpeg" >
-    			</div>
-    			<div class="row row_right">
-					<img alt="테스트" src="/images/t3.jpeg" >
-    			</div>
-    			<div class="row row_left">
-					<img alt="테스트" src="/images/t3.jpeg" >
-    			</div>
-    			<div class="row row_right">
-					<img alt="테스트" src="/images/t3.jpeg" >
-    			</div>
-    			<div class="row row_final">
-					<img alt="테스트" src="/images/t3.jpeg" >
+    			<div class="row row_left" th:each="postimg : ${postimgs}">
+					<img th:alt="${postimg.imgname}" th:src="${postimg.imgurl}" >
     			</div>
     		</div>
     	</div>

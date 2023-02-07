@@ -56,8 +56,7 @@ public class ItemImgService {
 		if(!itemImgFile.isEmpty()) {
 			// itemImgId를 가져와서 itemImgRepository의 findById에 집어넣는다! (이미지 레코드를 찾아온다!)
 			// ITEM IMG SERVICE -> ITEM IMG REPOSITORY
-			ItemImg savedItemImg = itemImgRepository.findById(itemImgId)
-									.orElseThrow(EntityNotFoundException::new);
+			ItemImg savedItemImg = itemImgRepository.findById(itemImgId).orElseThrow(EntityNotFoundException::new);
 			
 			// 기존 이미지 파일 삭제 /shop/item에 저장되었던 기존 이미지들을 삭제해준다.
 			if(!StringUtils.isEmpty(savedItemImg.getImgName())) {

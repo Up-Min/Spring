@@ -30,7 +30,7 @@ public class UserImgService {
 		
 		if(!StringUtils.isEmpty(oriImgName)) {
 			imgName = fileService.uploadFile(imgLocation, oriImgName, imgfile.getBytes());
-			imgUrl = "/images/"+imgName;
+			imgUrl = "/image/data/img/"+imgName;
 		}
 		
 		member.updateImg(oriImgName, imgName, imgUrl);

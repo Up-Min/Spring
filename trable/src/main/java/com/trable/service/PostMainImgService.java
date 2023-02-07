@@ -28,7 +28,7 @@ public class PostMainImgService {
 		
 		if(!StringUtils.isEmpty(oriImgName)) {
 			imgName = fileService.uploadFile(imgLocation, oriImgName, imgfile.getBytes());
-			imgUrl = "/images/"+imgName;
+			imgUrl = "/image/data/img/"+imgName;
 		}
 		post.updatePostImg(oriImgName, imgName, imgUrl);	
 	}

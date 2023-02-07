@@ -40,7 +40,6 @@ public class PostImg {
 	@JoinColumn(name = "post_id")
 	private Post post;
 	
-	
 	public void updateImg(String imgori, String imgname, String imgurl) {
 		this.imgori = imgori;
 		this.imgname = imgname;

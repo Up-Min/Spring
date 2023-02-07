@@ -103,7 +103,18 @@ text-align: center;
 .usercontent{
 	width: 250px;
 	height: 250px;
-	border: 1px solid black;
+	position: relative;
+	z-index: 1;
+}
+
+.contentheart{
+	position: absolute;
+	z-index: 2;
+	background-color : darkgray;
+	color: white;
+	top: 85%;
+	right: 0%
+	
 }
 
 .button{
@@ -116,6 +127,11 @@ text-align: center;
 
 .ending{
 margin: 0 auto; height: 50px; margin-top:20px; margin-bottom: 20px;
+}
+
+a{
+text-decoration: none;
+color: black;
 }
       </style>
     </th:block>
@@ -132,12 +148,12 @@ margin: 0 auto; height: 50px; margin-top:20px; margin-bottom: 20px;
 					<div class="row head1">
 						<div class="col-md-4">
 							<div class="userimg">
-							<img alt="userimg" src="/images/1.jpg" width="300px;">							
+							<img alt="userimg" th:src="${member.imgurl}" width="300px;">							
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="row-md-4">
-								<h1 th:text = "${id}"></h1>
+								<h1 th:text = "${member.email}"></h1>
 							</div>
 							<div class="row-md-4">
 								<h1> userMosttag </h1>
@@ -146,7 +162,7 @@ margin: 0 auto; height: 50px; margin-top:20px; margin-bottom: 20px;
 								<h1> tag example </h1>
 							</div>
 							<div class="row-md-4">
-								<h1> manage userinfo </h1>
+								<a href="/setting"><h1> manage userinfo </h1></a> 
 							</div>
 							
 						</div>
@@ -154,42 +170,29 @@ margin: 0 auto; height: 50px; margin-top:20px; margin-bottom: 20px;
 					</div>
 
 					<div class="row head2">
-						<div class="col-md-2"></div>
+						<div class="col-md-1"></div>
 						<div class="col-md-2"><img alt="heart" src="/images/flatheart.png" width="75px"></div>
-						<div class="col-md-2"><p> heart number</p></div>
+						<div class="col-md-2"><span>user heart</span><br><h1>[[${heart}]]</h1> </div>
+						<div class="col-md-1"></div>
 						<div class="col-md-2"><img alt="trophy" src="/images/trophy.png" width="75px">	</div>
-						<div class="col-md-2"><p> grade point </p></div>
-						<div class="col-md-2"></div>
+						<div class="col-md-2"> <span>user grade</span> <br> <h1> [[${member.usergrade}]] </h1></div>
+						<div class="col-md-1"></div>
 						
 					</div>
 				</div>
 				<div class="cont">
 					<div class="c_body">
 					<div class="row">
+						<th:block th:each = "post : ${posts}">
 						<div class="col-md-4 usercontent">
-							<p> 이미지 영역입니다. </p>
-							<p> 하트 영역입니다.</p>
-						</div>	
-						<div class="col-md-4 usercontent">
-							<p> 이미지 영역입니다. </p>
-							<p> 하트 영역입니다.</p>							
-						</div>	
-						<div class="col-md-4 usercontent">
-							<p> 이미지 영역입니다. </p>
-							<p> 하트 영역입니다.</p>							
-						</div>													
-						<div class="col-md-4 usercontent">
-							<p> 이미지 영역입니다. </p>
-							<p> 하트 영역입니다.</p>							
-						</div>						
-						<div class="col-md-4 usercontent">
-							<p> 이미지 영역입니다. </p>
-							<p> 하트 영역입니다.</p>							
-						</div>	
-						<div class="col-md-4 usercontent">
-							<p> 이미지 영역입니다. </p>
-							<p> 하트 영역입니다.</p>							
-						</div>												
+							<a th:href="'view/'+${post.id}"><img class="usercontent" th:alt="${post.imgname}" th:src="${post.imgurl}"></a> 
+							<div class="contentheart">
+							<img alt="heart" src="/images/flatheart.png" width="30px">						
+							<span> [[${post.heart}]] </span>
+							</div>
+						</div>							
+						</th:block>
+																	
 					</div>
 					</div>
 				</div>

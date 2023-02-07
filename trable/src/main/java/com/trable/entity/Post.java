@@ -52,10 +52,11 @@ public class Post {
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
 	
-	public static Post createPost(PostFormDto postFormDto) {
+	public static Post createPost(Member member, PostFormDto postFormDto) {
 		Post post = new Post();	
 		post.setPostname(postFormDto.getPostname());
 		post.setHeart(postFormDto.getHeart());
+		post.setMember(member);
 		return post;
 	}
 	

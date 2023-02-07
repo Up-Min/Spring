@@ -19,6 +19,8 @@ public class WebMvcConfig implements WebMvcConfigurer{
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/images/**")
 				.addResourceLocations(uploadPath);
+		// /images = file:///Users/l/shop/
+		
 		// img 폴더의 logo.png 확인해보면 localhost/images/logo.png가 원래 뜨는데,
 		// images로 시작하는 폴더의 파일들은 uploadPath에 있는 걸로 가져오겠다는 의미.
 		// properties의 uploadPath=file:///Users/l/shop/에 의해, shop폴더에서 사진을 가져오겠다는 의미가 된다.
