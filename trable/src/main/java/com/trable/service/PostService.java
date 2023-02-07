@@ -40,8 +40,8 @@ public class PostService {
 	}
 
 	
-	public Page<Item> getPostPage(PostSearchDto postSearchDto, Pageable pageable){
-		return postRepository
+	public List<Post> getPostPage(){
+		return postRepository.findAll();
 	}
 	
 }

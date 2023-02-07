@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import com.trable.dto.MemberFormDto;
 import com.trable.dto.PostFormDto;
 import com.trable.dto.PostSearchDto;
 import com.trable.entity.Member;
+import com.trable.entity.Post;
 import com.trable.service.MemberService;
 import com.trable.service.PostImgService;
 import com.trable.service.PostService;
@@ -30,10 +32,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MainController {
 
+	
 	private final MemberService memberService;
 	private final PasswordEncoder passwordEncoder;
 	private final PostService postservice;
 	private final PostImgService postImgService;
+	
+	@Value("${ImgLocation}")
+	private String imgLocation;
 	
 	// MAINPAGE
 	@GetMapping(value = "/")
@@ -87,8 +93,10 @@ public class MainController {
 	@GetMapping(value = "/find")
 	public String searchpage(PostSearchDto postSearchDto, Model model) {
 		
-		Page<Post> post = postservi
+		List<Post> post = postservice.getPostPage();
 		
+		model.addAttribute("posts",post);
+		model.addAttribute("imgLocation",imgLocation);
 		return "/travel/searchpage";
 	}
 	@GetMapping(value = "/like")
