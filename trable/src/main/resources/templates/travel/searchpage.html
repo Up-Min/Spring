@@ -13,6 +13,13 @@
       <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
       <script th:inline="javascript">
       $(document).ready(function(){
+    	  
+    	  var errorMessage = [[${errorMessage}]];
+      	if(errorMessage != null){
+          	alert(errorMessage);
+      	}
+
+    	  
     	  var currentPosition = parseInt($(".array").css("top"));
     	  $(window).scroll(function() {
     	    var position = $(window).scrollTop(); 
@@ -23,8 +30,15 @@
 		$('.sidemenu').css('visibility','visible');
 	}
 	function test1(){
-			$('.sidemenu').css('visibility','hidden');
+		$('.sidemenu').css('visibility','hidden');
 	}
+	
+	function search(target){
+		
+		var searchword
+		
+	}
+	
       </script>
     </th:block>
 
@@ -145,6 +159,7 @@
  		<div class="con_center section" id = "section3" style="margin-top: 50px;">
 			<div data-aos="fade-up" data-aos-duration="1000">
 				<div class="row" style="">
+				
 					<th:block th:each="post : ${posts}">
 					<div class="col-md-3 align-self-center">
 						<div style="position: relative; z-index: 1;">
@@ -157,6 +172,7 @@
 						</div>
 					</div>						
 					</th:block>
+					
 				</div>
 			</div>
 			</div>

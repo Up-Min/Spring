@@ -80,6 +80,14 @@
 			height: 50%;
 		}
 
+	.likesection{
+		text-align: center;
+	}
+	
+	.updateANDdelete{
+		text-align: center;
+	}
+
       </style>
     </th:block>
   </head>
@@ -88,23 +96,50 @@
 
     	<div class="wrap">
     		<div class="cont">
+    			<!-- USER INFO, POST INFO  -->
     			<div class="row head" style="margin: 0 auto; margin-bottom: 150px">
 					<div class="col-md-6">
 						<img th:alt="${post.imgname}" th:src="${post.imgurl}" width="90%">
 					</div>
 					<div class="col-md-6">
-						<div class="row-md-4">
-							<h1> write by : [[${member.email}]] </h1>
+						<div class="row-md-3">
+							<h2> write by : [[${member.email}]] </h2>
 						</div>
-						<div class="row-md-4">
-							<h1> tag <br> #seoul, #food, #korea </h1>
+						<div class="row-md-3">
+							<h2> tag <br> #seoul, #food, #korea </h2>
 						</div>
-						<div class="row-md-4">
-							<h1> hearts : [[${post.heart}]] </h1>
-						</div>												
+						<div class="row-md-3">
+							<h2> hearts : [[${post.heart}]] </h2>
+						</div>	
+						<div class="row-md-3 likesection">
+							<div class="row-md-6">
+								<span> I like this TRABLE! </span>
+							</div>
+							<div class="row-md-6">
+								<button class="" onclick=""><img alt="heart" src="/images/flatheart.png" width="50px"> </button>
+							</div>
+						</div>											
 					</div>
+					<!-- UPDATE, DELETE POST -->
+					<div th:if="${id} == ${member.email}">					
+						<div class="updateANDdelete">
+								<div class="row center">
+									<div class="col-md-3">
+									<p> UPDATE POST </p>
+									<a th:href = "'/update/'+${post.id}"><img alt="update" src="/images/refresh.png" width="50px"></a>						
+									</div>
+									<div class="col-md-3">
+									<p> DELETE POST </p>
+									<a th:href = "'/delete/'+${post.id}"><img alt="delete" src="/images/delete.png" width="50px">  </a>															
+									</div>
+								</div>
+						</div>
+					</div>
+					
     			</div>
     			
+    			
+    			<!-- POST IMG -->
     			<div class="row row_left" th:each="postimg : ${postimgs}">
 					<img th:alt="${postimg.imgname}" th:src="${postimg.imgurl}" >
     			</div>

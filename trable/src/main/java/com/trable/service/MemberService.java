@@ -3,6 +3,7 @@ package com.trable.service;
 import java.io.File;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.apache.groovy.parser.antlr4.util.StringUtils;
@@ -55,6 +56,11 @@ public class MemberService implements UserDetailsService{
 
 	public Member findMember(String email) {
 		return memberRepository.findByEmail(email);
+	}
+	
+	public Member findMemberbyId(Long Memberid) {
+		Member member =  memberRepository.findById(Memberid).orElseThrow(EntityNotFoundException::new);
+		return member;
 	}
 	
 }

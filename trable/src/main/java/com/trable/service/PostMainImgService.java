@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.trable.entity.Member;
 import com.trable.entity.Post;
 
 import lombok.RequiredArgsConstructor;
@@ -31,5 +32,25 @@ public class PostMainImgService {
 			imgUrl = "/image/data/img/"+imgName;
 		}
 		post.updatePostImg(oriImgName, imgName, imgUrl);	
+	}
+	
+	
+	public void updatePostMainImg(Post post, MultipartFile imgfile) throws Exception {
+		
+		if(!StringUtils.isEmpty(post.getImgname())) {
+			fileService.deleteFile(imgLocation+"/"+post.getImgname());
+		}
+		
+		String oriImgName = imgfile.getOriginalFilename();
+		String imgName = "";
+		String imgUrl = "";
+		
+		if(!StringUtils.isEmpty(oriImgName)) {
+			imgName = fileService.uploadFile(imgLocation, oriImgName, imgfile.getBytes());
+			imgUrl = "/image/data/img/"+imgName;
+		}
+		post.updatePostImg(oriImgName, imgName, imgUrl);	
+		
+		
 	}
 }

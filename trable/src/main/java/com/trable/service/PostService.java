@@ -1,6 +1,7 @@
 package com.trable.service;
 
 import java.awt.print.Pageable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.trable.dto.PostFormDto;
+import com.trable.dto.PostImgDto;
 import com.trable.dto.PostSearchDto;
 import com.trable.entity.Member;
 import com.trable.entity.Post;
@@ -34,7 +36,9 @@ public class PostService {
 	
 	public Long savePost(PostFormDto postFormDto, List<MultipartFile> postImgFileList, MultipartFile postMainImg, String email) throws Exception {
 		Member member = memberRepository.findByEmail(email);
+		
 		Post post = Post.createPost(member, postFormDto);
+		
 		postMainImgService.savememberImg(post, postMainImg);
 		postRepository.save(post);
 		for(int i=0; i<postImgFileList.size(); i++) {
@@ -45,6 +49,28 @@ public class PostService {
 		return post.getId();
 	}
 	
+	public Long updatePost(PostFormDto postFormDto, List<MultipartFile> postImgFileList, 
+			MultipartFile postMainImg, String email, Long postid) throws Exception {
+		Member member = memberRepository.findByEmail(email);
+		Post post = postRepository.findById(postid).orElseThrow(EntityNotFoundException::new);
+		List<PostImg> postimglist = postImgRepository.findByPostId(postid);
+		
+		post.updatePost(member, postFormDto);
+		postMainImgService.updatePostMainImg(post, postMainImg);
+		
+		for(int i=0; i<postImgFileList.size(); i++) {
+			postImgService.updatePostImg(postimglist.get(i),postimglist.get(i).getId(),postImgFileList.get(i));
+		}
+		
+		return post.getId();
+	}
+	
+	
+	public PostFormDto getPostDto(Long postId) {
+		Post post = getPostbyid(postId);
+		PostFormDto postFormDto = PostFormDto.of(post);
+		return postFormDto;
+	}
 	public List<Post> getPostPage(){
 		return postRepository.findAll();
 	}
@@ -52,7 +78,6 @@ public class PostService {
 	public List<Post> getUserPost(Member member){
 		return postRepository.findByMember(member);
 	}
-	
 	public Post getPostbyid(Long postid){
 		 Post post = postRepository.findById(postid).orElseThrow(EntityNotFoundException::new);
 		 return post;

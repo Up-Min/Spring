@@ -208,13 +208,13 @@ transform : rotate(90deg);
 		  <li class="nav-item" >
 		    <a class="nav-link" href="/find"><img src="/images/search.png" alt="tosearch" width="70px"></a>
 		  </li>
-		  <li class="nav-item" >
+		  <li class="nav-item" sec:authorize="isAuthenticated()">
 		    <a class="nav-link" href="/like"><img src="/images/userheart.png" alt="tolike" width="70px"></a>
 		  </li>
-		  <li class="nav-item" >
+		  <li class="nav-item" sec:authorize="isAuthenticated()">
 		    <a class="nav-link" href="/user"><img src="/images/user.png" alt="touser" width="70px"></a>
 		  </li>
-		  <li class="nav-item" >
+		  <li class="nav-item" sec:authorize="isAuthenticated()">
 		    <a class="nav-link" href="/setting"><img src="/images/settings.png" alt="tosetting" width="70px"></a>
 		  </li>
 		  

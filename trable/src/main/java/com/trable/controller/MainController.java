@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
@@ -57,10 +58,10 @@ public class MainController {
 	public String write(Model model) {
 
 		model.addAttribute("postFormDto", new PostFormDto());
-		return "/user/writingpage";
+		return "/travel/writingpage";
 	}
 	
-	// CLICK WRITING BUTTON
+	// WRITING POST
 	@PostMapping(value = "/write")
 	public String writenew(@Valid PostFormDto postFormDto, BindingResult bindingResult, Model model,
 			@RequestParam("PostImgFile") List<MultipartFile> postImgFileList,
@@ -68,7 +69,7 @@ public class MainController {
 		
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
 		if(bindingResult.hasErrors()) {
-			return "/user/writingpage";
+			return "/travel/writingpage";
 		}
 		if(postImgFileList.get(0).isEmpty() && postFormDto.getPostname() == null) {
 			model.addAttribute("errorMessage", "게시글에 최소 1장의 사진을 업로드 해주세요.");
@@ -79,26 +80,74 @@ public class MainController {
 		}catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "게시물 업로드 중 에러가 발생했습니다!");
-			return "/user/writingpage";
+			return "/travel/writingpage";
 		} 
 		return "redirect:/";
 	}
-	// OPEN DTL POSTPAGE
+	// OPEN DTL POSTPAGE 
 	@GetMapping(value = {"/view", "/view/{id}"})
 	public String dtlpage(@PathVariable("id") Long postid, Model model) {
 		
-		String id = SecurityContextHolder.getContext().getAuthentication().getName();
-		UserDetails user = memberService.loadUserByUsername(id);
-		Member member = memberService.findMember(user.getUsername());	
-		Post post = postservice.getPostbyid(postid);
-		List<PostImg> postimgs = postImgService.getPostimg(postid);
-		
-		model.addAttribute("member", member);
-		model.addAttribute("post", post);
-		model.addAttribute("postimgs",postimgs);
-		
+		String id = SecurityContextHolder.getContext().getAuthentication().getName(); 
+//		UserDetails user = memberService.loadUserByUsername(id);
+//		Member member = memberService.findMember(user.getUsername());	
+		try {
+			Post post = postservice.getPostbyid(postid);
+			Member member = memberService.findMemberbyId(post.getMember().getId());
+			List<PostImg> postimgs = postImgService.getPostimg(postid);
+			
+			model.addAttribute("id", id);
+			model.addAttribute("member", member);
+			model.addAttribute("post", post);
+			model.addAttribute("postimgs",postimgs);			
+		} catch (EntityNotFoundException e) {
+			model.addAttribute("errorMessage", "게시물 / 사용자를 불러올 수 없습니다.");
+			return "/travel/searchpage";
+		}
 		return "/travel/dtlpage";
 	}
+	
+	// OPEN UPDATEPAGE
+	@GetMapping(value = "/update/{id}")
+	public String updatepage(@PathVariable("id") Long postid, Model model) {
+		
+		try {
+			PostFormDto postFormDto = postservice.getPostDto(postid);
+			List<PostImg> postimgs = postImgService.getPostimg(postid);
+			model.addAttribute("postFormDto",postFormDto);
+			model.addAttribute("postimgs",postimgs);
+			model.addAttribute("id",postid);
+		} catch (EntityNotFoundException e) {
+			model.addAttribute("errorMessage", "존재하지 않는 게시물입니다.");
+			return "/view/{id}";
+		}
+		return "/travel/updatepage";
+	}
+	
+	// UPDATE POST
+	@PostMapping(value = "/update/{id}")
+	public String updatepost(@PathVariable("id") Long postid, Model model, @Valid PostFormDto postFormDto,
+			BindingResult bindingResult, @RequestParam("PostImgFile") List<MultipartFile> postImgFileList,
+			@RequestParam("MainImgFile") MultipartFile postMainImg) {
+		
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("errorMessage", "데이터를 정상적으로 가져오지 못했습니다.");
+		}
+		
+		if(postImgFileList.get(0).isEmpty() && postFormDto.getPostname() == null) {
+			model.addAttribute("errorMessage", "게시글에 최소 1장의 사진을 업로드 해주세요.");
+		}
+		
+		try {
+			String email = SecurityContextHolder.getContext().getAuthentication().getName();
+			postservice.updatePost(postFormDto, postImgFileList, postMainImg, email, postid);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "데이터 수정 중 오류가 발생했습니다.");
+		}
+		return "redirect:/";
+	}
+	
 	
 	// OPEN USERPAGE
 	@GetMapping(value = "/user")
@@ -126,9 +175,13 @@ public class MainController {
 		List<Post> post = postservice.getPostPage();
 		
 		model.addAttribute("posts",post);
+		
 		model.addAttribute("imgLocation",imgLocation);
 		return "/travel/searchpage";
 	}
+	
+	
+	
 	@GetMapping(value = "/like")
 	public String likepage() {
 		return "/travel/likepage";

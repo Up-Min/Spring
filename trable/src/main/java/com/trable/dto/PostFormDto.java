@@ -22,9 +22,13 @@ public class PostFormDto {
 	
 	private String imgurl;
 	
-//	private static ModelMapper modelMapper = new ModelMapper();
-//	
-//	public Post createPost() {
-//		return modelMapper.map(this, Post.class);
-//	}
+	private static ModelMapper modelMapper = new ModelMapper();
+	
+	public Post createPost() {
+		return modelMapper.map(this, Post.class);
+	}
+	
+	public static PostFormDto of(Post post) {
+		return modelMapper.map(post, PostFormDto.class);
+	}
 }

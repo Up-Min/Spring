@@ -60,6 +60,13 @@ public class Post {
 		return post;
 	}
 	
+	public void updatePost(Member member, PostFormDto postFormDto) {
+		this.postname = postFormDto.getPostname();
+		this.heart = postFormDto.getHeart();
+		this.member = member;
+		
+	}
+	
 	public void updatePostImg(String imgori, String imgname, String imgurl) {
 		this.imgori = imgori;
 		this.imgname = imgname;
