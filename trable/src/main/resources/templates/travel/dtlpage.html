@@ -18,6 +18,18 @@
 	function test1(){
 			$('.sidemenu').css('visibility','hidden');
 	}
+	
+	function deletepost(value){
+		var confir = confirm("게시물을 삭제하시겠습니까?");
+		if(confir){
+			alert("삭제가 완료되었습니다.");
+			location.href = "/delete/"+value;
+		}else{
+			alert("삭제를 취소합니다.")
+			return false;
+		}
+	}
+	
       </script>
     </th:block>
 
@@ -106,7 +118,11 @@
 							<h2> write by : [[${member.email}]] </h2>
 						</div>
 						<div class="row-md-3">
-							<h2> tag <br> #seoul, #food, #korea </h2>
+							<h2> tag </h2><br> 
+								<div th:each = "tag : ${tags}">
+									<h2> #[[${tag.tagname}]] </h2>
+								</div>
+
 						</div>
 						<div class="row-md-3">
 							<h2> hearts : [[${post.heart}]] </h2>
@@ -128,10 +144,20 @@
 									<p> UPDATE POST </p>
 									<a th:href = "'/update/'+${post.id}"><img alt="update" src="/images/refresh.png" width="50px"></a>						
 									</div>
+									<div th:if="${post.showPost} == 'SHOW'"></div>
+									<div class="col-md-3">
+									<p> HIDE POST </p>
+									<a th:href = "'/hide/'+${post.id}"><img alt="hide" src="/images/eyeclosed.png" width="55px"> </a>
+									</div>									
+									<div class="col-md-3">
+									<p> SHOW POST </p>
+									<a th:href = "'/show/'+${post.id}"><img alt="hide" src="/images/eyeopen.png" width="55px"> </a>
+									</div>									
 									<div class="col-md-3">
 									<p> DELETE POST </p>
-									<a th:href = "'/delete/'+${post.id}"><img alt="delete" src="/images/delete.png" width="50px">  </a>															
-									</div>
+									<a type="button" th:onclick="deletepost([[${post.id}]])"><img alt="delete" src="/images/delete.png" width="50px">  </a>															
+<!-- 									<a th:href = "'/delete/'+${post.id}" onclick="delete()"><img alt="delete" src="/images/delete.png" width="50px">  </a>															
+ -->									</div>
 								</div>
 						</div>
 					</div>

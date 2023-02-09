@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.trable.constant.ShowPost;
 import com.trable.dto.PostFormDto;
 import com.trable.dto.PostImgDto;
 import com.trable.dto.PostSearchDto;
@@ -50,7 +51,7 @@ public class PostService {
 	}
 	
 	public Long updatePost(PostFormDto postFormDto, List<MultipartFile> postImgFileList, 
-			MultipartFile postMainImg, String email, Long postid) throws Exception {
+		MultipartFile postMainImg, String email, Long postid) throws Exception {
 		Member member = memberRepository.findByEmail(email);
 		Post post = postRepository.findById(postid).orElseThrow(EntityNotFoundException::new);
 		List<PostImg> postimglist = postImgRepository.findByPostId(postid);
@@ -65,6 +66,15 @@ public class PostService {
 		return post.getId();
 	}
 	
+	public void deletePost(Long postid) {
+		Post post = postRepository.findById(postid).orElseThrow(EntityNotFoundException::new);
+		List<PostImg> postimglist = postImgRepository.findByPostId(postid);
+		
+		postRepository.delete(post);
+		for (PostImg postimg : postimglist) {
+			postImgRepository.delete(postimg);			
+		}
+	}
 	
 	public PostFormDto getPostDto(Long postId) {
 		Post post = getPostbyid(postId);
@@ -75,6 +85,11 @@ public class PostService {
 		return postRepository.findAll();
 	}
 	
+	public List<Post> getPostShowPage(ShowPost showpost){
+		return postRepository.findByMemberNotshow(showpost);
+	}
+	
+	
 	public List<Post> getUserPost(Member member){
 		return postRepository.findByMember(member);
 	}
@@ -82,4 +97,5 @@ public class PostService {
 		 Post post = postRepository.findById(postid).orElseThrow(EntityNotFoundException::new);
 		 return post;
 	}
+	
 	}

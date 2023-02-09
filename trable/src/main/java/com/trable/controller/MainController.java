@@ -1,6 +1,7 @@
 package com.trable.controller;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,15 +22,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.trable.constant.ShowPost;
 import com.trable.dto.MemberFormDto;
 import com.trable.dto.PostFormDto;
 import com.trable.dto.PostSearchDto;
 import com.trable.entity.Member;
 import com.trable.entity.Post;
 import com.trable.entity.PostImg;
+import com.trable.entity.Tag;
+import com.trable.repository.PostRepository;
 import com.trable.service.MemberService;
 import com.trable.service.PostImgService;
 import com.trable.service.PostService;
+import com.trable.service.TagService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -43,6 +48,8 @@ public class MainController {
 	private final PasswordEncoder passwordEncoder;
 	private final PostService postservice;
 	private final PostImgService postImgService;
+	private final TagService tagService;
+	private final PostRepository postRepository;
 	
 	@Value("${ImgLocation}")
 	private String imgLocation;
@@ -65,7 +72,8 @@ public class MainController {
 	@PostMapping(value = "/write")
 	public String writenew(@Valid PostFormDto postFormDto, BindingResult bindingResult, Model model,
 			@RequestParam("PostImgFile") List<MultipartFile> postImgFileList,
-			@RequestParam("MainImgFile") MultipartFile postMainImg) {
+			@RequestParam("MainImgFile") MultipartFile postMainImg, 
+			@RequestParam("Tag") String tag) {
 		
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
 		if(bindingResult.hasErrors()) {
@@ -74,9 +82,20 @@ public class MainController {
 		if(postImgFileList.get(0).isEmpty() && postFormDto.getPostname() == null) {
 			model.addAttribute("errorMessage", "게시글에 최소 1장의 사진을 업로드 해주세요.");
 		}
+		if(tag == null) {
+			model.addAttribute("errorMessage", "태그를 작성해주세요.");
+		}
 		// INPUT MAIN POSTIMG
 		try {
-			postservice.savePost(postFormDto, postImgFileList, postMainImg, email);
+			// CREATE & SAVE POST
+			Long postid = postservice.savePost(postFormDto, postImgFileList, postMainImg, email);
+			
+			// GET POST BY POSTID
+			Post post = postservice.getPostbyid(postid);
+			
+			// CREATE & SAVE TAG, POSTTAG
+			tagService.saveTag(tag, post);
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "게시물 업로드 중 에러가 발생했습니다!");
@@ -95,11 +114,13 @@ public class MainController {
 			Post post = postservice.getPostbyid(postid);
 			Member member = memberService.findMemberbyId(post.getMember().getId());
 			List<PostImg> postimgs = postImgService.getPostimg(postid);
+			List<Tag> tags = tagService.findbypostid(postid);
 			
 			model.addAttribute("id", id);
 			model.addAttribute("member", member);
 			model.addAttribute("post", post);
-			model.addAttribute("postimgs",postimgs);			
+			model.addAttribute("postimgs",postimgs);		
+			model.addAttribute("tags", tags);
 		} catch (EntityNotFoundException e) {
 			model.addAttribute("errorMessage", "게시물 / 사용자를 불러올 수 없습니다.");
 			return "/travel/searchpage";
@@ -170,9 +191,9 @@ public class MainController {
 	
 	// SEARCH PAGE
 	@GetMapping(value = "/find")
-	public String searchpage(PostSearchDto postSearchDto, Model model) {
+	public String searchpage(PostSearchDto postSearchDto, Model model, Post posttest) {
 		
-		List<Post> post = postservice.getPostPage();
+		List<Post> post = postservice.getPostShowPage(posttest.getShowPost());
 		
 		model.addAttribute("posts",post);
 		
@@ -180,7 +201,25 @@ public class MainController {
 		return "/travel/searchpage";
 	}
 	
+	// HIDE POST
+	@GetMapping(value = "/hide/{id}")
+	public String hidepost(@PathVariable("id") Long postid, Member member) {
+		postservice.getPostbyid(postid).updatePostHide();
+		return "redirect:/";
+	}
+	// SHOW POST
+	@GetMapping(value = "/show/{id}")
+	public String showpost(@PathVariable("id") Long postid, Member member) {
+		postservice.getPostbyid(postid).updatePostShow();
+		return "redirect:/";
+	}
 	
+	// DELETE POST
+	@GetMapping(value = "/delete/{id}")
+	public String deletepost(@PathVariable("id") Long postid, Member member) {
+		postservice.deletePost(postid);
+		return "redirect:/";
+	}
 	
 	@GetMapping(value = "/like")
 	public String likepage() {

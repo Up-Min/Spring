@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +17,7 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.trable.constant.ShowPost;
 import com.trable.dto.PostFormDto;
 
 import lombok.Getter;
@@ -39,6 +42,9 @@ public class Post {
 	@Column(nullable = false)
 	private int heart;
 	
+	@Enumerated(EnumType.STRING)
+	private ShowPost showPost; 
+	
 	@Column(name = "mainimg_ori", nullable = false)
 	private String imgori;
 	
@@ -57,6 +63,7 @@ public class Post {
 		post.setPostname(postFormDto.getPostname());
 		post.setHeart(postFormDto.getHeart());
 		post.setMember(member);
+		post.setShowPost(ShowPost.SHOW);
 		return post;
 	}
 	
@@ -64,7 +71,14 @@ public class Post {
 		this.postname = postFormDto.getPostname();
 		this.heart = postFormDto.getHeart();
 		this.member = member;
-		
+	}
+	
+	public void updatePostShow() {
+		this.showPost = ShowPost.SHOW;
+	}
+	
+	public void updatePostHide() {
+		this.showPost = ShowPost.HIDE;
 	}
 	
 	public void updatePostImg(String imgori, String imgname, String imgurl) {
