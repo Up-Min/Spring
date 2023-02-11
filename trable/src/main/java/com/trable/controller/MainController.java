@@ -20,11 +20,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.trable.dto.PostFormDto;
+import com.trable.entity.BlockMembers;
+import com.trable.entity.BlockTags;
 import com.trable.entity.Member;
 import com.trable.entity.Post;
 import com.trable.entity.PostImg;
 import com.trable.entity.Tag;
+import com.trable.repository.BlockMembersRepository;
+import com.trable.repository.BlockTagsRepository;
 import com.trable.repository.PostRepository;
+import com.trable.service.BlockService;
 import com.trable.service.MemberService;
 import com.trable.service.PostImgService;
 import com.trable.service.PostService;
@@ -44,6 +49,7 @@ public class MainController {
 	private final PostImgService postImgService;
 	private final TagService tagService;
 	private final PostRepository postRepository;
+	private final BlockService blockService;
 	
 	@Value("${ImgLocation}")
 	private String imgLocation;
@@ -243,10 +249,26 @@ public class MainController {
 	}
 	
 	// SEARCH PAGE
-	@GetMapping(value = {"/find","/find/{tag}"})
-	public String searchpage(Model model, Post posttest, @RequestParam("tag") String tag) {
+	@GetMapping(value = "/find")
+	public String searchpage(Model model, Post posttest) {
 		
 		List<Post> post = postservice.getPostShowPage(posttest.getShowPost());
+		String id = SecurityContextHolder.getContext().getAuthentication().getName();
+		UserDetails user = memberService.loadUserByUsername(id);
+		Member member = memberService.findMember(user.getUsername());	
+		
+		// CHECK HAS BLOCK Member LIST
+		
+		//List<BlockTags> Taglist = blockTagsRepository.findbymemid(member.getId());
+		List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
+		
+		for(int i=0; i<post.size(); i++) {
+			for(int j=0; j<Memlist.size(); j++) {
+				if(post.get(i).getMember().getEmail().equals(Memlist.get(j).getBlockmembername())) {
+					post.remove(post.get(i));
+				}
+			}
+		}
 		model.addAttribute("posts",post);
 		model.addAttribute("imgLocation",imgLocation);
 		return "/travel/searchpage";

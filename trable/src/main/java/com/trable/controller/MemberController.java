@@ -1,5 +1,7 @@
 package com.trable.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,10 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.trable.dto.MemberFormDto;
+import com.trable.entity.BlockTags;
 import com.trable.entity.Member;
+import com.trable.repository.BlockTagsRepository;
+import com.trable.service.BlockService;
 import com.trable.service.MemberService;
 import com.trable.service.UserImgService;
 
+import groovyjarjarantlr4.v4.parse.ANTLRParser.finallyClause_return;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/members")
@@ -28,7 +34,10 @@ import lombok.RequiredArgsConstructor;
 public class MemberController {
 	private final MemberService memberService;
 	private final UserImgService userImgService;
+	private final BlockService blockService;
 	private final PasswordEncoder passwordEncoder;
+	private final BlockTagsRepository blockTagsRepository;
+
 	
 		// OPEN SIGNUPPAGE
 		@GetMapping(value = "/new")
@@ -78,7 +87,7 @@ public class MemberController {
 			System.out.println(memberid);
 			System.out.println(pw);
 			memberService.updateMemberpwd(memberid, pw, passwordEncoder);
-			return "main";
+			return "redirect:/";
 		}
 		
 		// SETTING PAGE
@@ -91,4 +100,33 @@ public class MemberController {
 			return "/user/usersettingpage";
 		}
 		
+		// BLOCK USER
+		@PostMapping(value = "/userblock/{id}")
+		public String userblock(@PathVariable("id") Long memberid, Model model,
+				@RequestParam("blockuser") List<String> blockuser) {
+			String id = SecurityContextHolder.getContext().getAuthentication().getName();
+			Member member = memberService.findMemberbyId(memberid);
+			for(String user : blockuser) {
+				if(user == id) {
+					model.addAttribute("errorMessage", "자기 자신은 차단할 수 없습니다!");
+					return "/setting/{id}";
+				}
+				blockService.createBlockMember(member, user);
+			}
+			return "redirect:/";
+		}
+		
+		// BLOCK TAG
+		@PostMapping(value = "/tagblock/{id}")
+		public String tagblock(@PathVariable("id") Long memberid, Model model,
+				@RequestParam("blocktag") List<String> blocktag) {
+			Member member = memberService.findMemberbyId(memberid);
+			System.out.println("member : "+member);
+			System.out.println("blocktag : "+blocktag);
+			for(String tag : blocktag) {
+				System.out.println("tag" + tag);
+				blockService.createBlockTag(member, tag);
+			}
+			return "redirect:/";
+		}
 }

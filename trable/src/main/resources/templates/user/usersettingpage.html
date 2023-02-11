@@ -11,6 +11,13 @@
 
 	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 	<script th:inline="javascript">
+	$(document).ready(function(){
+    	var errorMessage = [[${errorMessage}]];
+    	if(errorMessage != null){
+        	alert(errorMessage);
+    	}
+
+	});
 		function test(){
 			$('.sidemenu').css('visibility','visible');
 		}
@@ -22,8 +29,29 @@
 			var confir = confirm("비밀번호를 변경하시겠습니까?");
 			
 			if(confir){
-				alert = ("비밀번호가 변경됐습니다. 다시 로그인 해주세요.")
+				alert = ("비밀번호가 변경됐습니다.")
 				location.href = "/members/changepw/"+e+'/'+pw;
+			}else{
+				return false;
+			}
+		}
+		
+		function checkub(){
+			var confir = confirm("해당 유저를 차단하시겠습니까?");
+			
+			if(confir){
+				alert = ("차단이 완료되었습니다. 해당 유저의 게시물을 조회하지 않습니다.");
+				document.getElementById('blockuserform').submit();
+			}else{
+				return false;
+			}
+		}
+		
+		function checktb(){
+			var confir = confirm("해당 태그를 제외하시겠습니까?");
+			if(confir){
+				alert = ("완료되었습니다. 해당 태그가 포함된 게시물을 조회하지 않습니다.");
+				document.getElementById('blocktagform').submit();
 			}else{
 				return false;
 			}
@@ -176,6 +204,8 @@ input.file {
 					
 		<!-- NAME, MAIN IMAGE(PREVIEW) -->
 				<div class="head">
+				
+				<form th:action="'/'+'members/userblock/'+${member.id}" method="post" id="blockuserform"role="form">
 					<div class="mb-3 row setsession">
 						<div class="col-md-1"></div>
 						<div class="col-md-10">
@@ -183,32 +213,36 @@ input.file {
 						</div>
 						<div class="col-md-1"></div>
 						<div class="col-md-4">
-							<input type="text" class="form-control setin" id="blockuser" placeholder="차단할 사용자의 이메일을 입력하세요.">
+							<input type="text" class="form-control setin" id="blockuser" name="blockuser" placeholder="ex) test@test.com / test@test.com,test1@test1.com">
 						</div>
 						<div class="col-md-4">
 
 						</div>
 						<div class="col-md-1">
-							<button class="setbutton" type="submit"> 적용 </button>							
-						</div>
-						
-					</div>
+							<button class="setbutton" type="button" onclick="checkub()"> 적용 </button>							
+						</div>						
+					</div>				
+				</form>
+				
+				<form th:action="'/'+'members/tagblock/'+${member.id}" method="post" id="blocktagform" role="form">
 					<div class="mb-3 row setsession">
 						<div class="col-md-1"></div>
 						<div class="col-md-10">
-							<p class="conhead"> 특정 태그 검색에서 제외 </p>
+							<p class="conhead"> 특정 태그 검색 제외 </p>
 						</div>
 						<div class="col-md-1"></div>
 						<div class="col-md-4">
-							<input type="text" class="form-control setin" id="blocktag" placeholder="제외할 태그를 입력하세요.">
+							<input type="text" class="form-control setin" id="blocktag" name = "blocktag" placeholder="ex) 테스트 / 테스트,테스트1">
 						</div>
 						<div class="col-md-4">
 
 						</div>
 						<div class="col-md-1">
-							<button class="setbutton" type="submit"> 적용 </button>
+							<button class="setbutton" type="button" onclick="checktb()"> 적용 </button>
 						</div>
 					</div>
+				</form>
+				
 					<div class="mb-3 row setsession">
 						<div class="col-md-1"></div>
 						<div class="col-md-10">
