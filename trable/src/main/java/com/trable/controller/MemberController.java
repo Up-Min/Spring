@@ -2,11 +2,14 @@ package com.trable.controller;
 
 import javax.validation.Valid;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,11 +42,6 @@ public class MemberController {
 		public String login() {
 			return "member/loginpage";
 		}
-		
-//		@PostMapping(value = "/login")
-//		public String loginMember1() {
-//			return "/main";
-//		}
 
 		// CLICK SIGNUP
 		@PostMapping(value = "/new")
@@ -74,5 +72,23 @@ public class MemberController {
 			return "member/loginpage";
 		}
 		
+		// CHANGE PWD
+		@GetMapping(value = "/changepw/{id}/{pw}")
+		public String changepwd(@PathVariable("id") Long memberid, @PathVariable("pw") String pw) {
+			System.out.println(memberid);
+			System.out.println(pw);
+			memberService.updateMemberpwd(memberid, pw, passwordEncoder);
+			return "main";
+		}
+		
+		// SETTING PAGE
+		@GetMapping(value = "/setting/{id}")
+		public String settingpage(@PathVariable("id") Long memberid, Model model) {
+			String id = SecurityContextHolder.getContext().getAuthentication().getName();
+			UserDetails user = memberService.loadUserByUsername(id);
+			Member member = memberService.findMember(user.getUsername());	
+			model.addAttribute("member",member);
+			return "/user/usersettingpage";
+		}
 		
 }

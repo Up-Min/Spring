@@ -46,13 +46,15 @@
 		function test1(){
 			$('.sidemenu').css('visibility','hidden');
 		}
-		function arraytest(){
+/* 		function arraytest(){
 			$('.select1').css('visibility','visible');
 		}
 		function arraytest1(){
 			$('.select1').css('visibility','hidden');
-		}
+		} */
 
+		
+		
 		function checkVisible( element, check = 'above' ) {
    		 const viewportHeight = $(window).height(); // Viewport Height
    		 const scrolltop = $(window).scrollTop(); // Scroll Top
@@ -190,6 +192,14 @@ transform : rotate(-90deg);
 transform : rotate(90deg);
 }	
 
+.a img {
+  transition: all 0.2s linear;
+  background-color: black;
+}
+.a:hover img {
+  transform: scale(0.8);
+}
+
 </style>
 </th:block>
 </head>
@@ -286,127 +296,35 @@ transform : rotate(90deg);
 
 		<div class="con_center section" id ="section3" style="position: relative;">
 			<!-- PHOTO ARRAY -->
-			<div class="array" onmouseover="arraytest()" onmouseout="arraytest1()" style="visibility: hidden;" > 
+<!-- 			<div class="array" onmouseover="arraytest()" onmouseout="arraytest1()" style="" > 
     		<div class="arrayup"> <img class="uparrow" alt="" src="/images/double_arrows.png" width="50px"> </div>
     		<div class="select1" data-aos="zoom-in" style="visibility: hidden;">
     		    <label class="visually-hidden" for="specificSizeSelect">Preference</label>
     			<select class="select" id="specificSizeSelect">
       			<option selected>select </option>
-     			<option value="1">like</option>
-     			<option value="2">created-date</option>
-     			<option value="3">upload-date</option>
+     			<option value="1">by like</option>
+     			<option value="2">by createdtime</option>
+     			<option value="3">by recently created</option>
+     			<option value="4">by updatedtime</option>
+     			<option value="5">by recently updated</option>
    				 </select>
-    		
     		</div>
     		<div class="arraydown"> <img class="downarrow" alt="" src="/images/double_arrows.png" width="50px"> </div>
-    		</div>
+    		</div> -->
 
 			<!-- PHOTOS -->
 			<div data-aos="fade-up" data-aos-duration="1000">
-				<div class="row" style="">
-					<div class="col-md-3 align-self-center ">
+				<div class="row">
+					<div class="col-md-3 align-self-center" th:each = "post : ${posts}">
 						<div>
-							<a class="a" th:href="'/'"><img alt="1" src="/images/t1.jpeg"
-								width="100%"></a>
-						</div>
-					</div>
-					<div class="col-md-3 align-self-center ">
-						<div>
-							<img alt="2" src="/images/t2.jpeg" width="100%">
-						</div>
-					</div>
-					<div class="col-md-3 align-self-center ">
-						<div>
-							<img alt="3" src="/images/t3.jpeg" width="100%">
-						</div>
-					</div>
-					<div class="col-md-3 align-self-center ">
-						<div>
-							<img alt="4" src="/images/t4.jpeg" width="100%">
+							<a class="a" th:href="'/view/'+${post.id}"><img th:alt="${post.id}" th:src="${post.imgurl}" width="100%"></a> 
 						</div>
 					</div>
 				</div>
-			</div>
-			
-			<div data-aos="fade-up" data-aos-duration="1000">
-				<div class="row">
-					<div class="col-md-3 align-self-center ">
-						<div>
-							<img alt="1" src="/images/t5.jpeg" width="100%">
-						</div>
-					</div>
-					<div class="col-md-3 align-self-center ">
-						<div>
-							<img alt="2" src="/images/t6.jpeg" width="100%">
-						</div>
-					</div>
-					<div class="col-md-3 align-self-center ">
-						<div>
-							<img alt="3" src="/images/t7.jpeg" width="100%">
-						</div>
-					</div>
-					<div class="col-md-3 align-self-center ">
-						<div>
-							<img alt="4" src="/images/t8.jpeg" width="100%">
-						</div>
-					</div>
-				</div>
-				
-				<div data-aos="fade-up" data-aos-duration="1000">
-				<div class="row">
-					<div class="col-md-3 align-self-center ">
-						<div>
-							<img alt="1" src="/images/t9.jpeg" width="100%">
-						</div>
-					</div>
-					<div class="col-md-3 align-self-center ">
-						<div>
-							<img alt="2" src="/images/t10.jpeg" width="100%">
-						</div>
-					</div>
-					<div class="col-md-3 align-self-center ">
-						<div>
-							<img alt="3" src="/images/t11.jpeg" width="100%">
-						</div>
-					</div>
-					<div class="col-md-3 align-self-center ">
-						<div>
-							<img alt="4" src="/images/t12.jpeg" width="100%">
-						</div>
-					</div>
-				</div>
-				<div data-aos="fade-up" data-aos-duration="1000">
-				<div class="row">
-					<div class="col-md-3 align-self-center ">
-						<div>
-							<img alt="1" src="/images/1.jpg" width="100%">
-						</div>
-					</div>
-					<div class="col-md-3 align-self-center ">
-						<div>
-							<img alt="2" src="/images/1.jpg" width="100%">
-						</div>
-					</div>
-					<div class="col-md-3 align-self-center ">
-						<div>
-							<img alt="3" src="/images/1.jpg" width="100%">
-						</div>
-					</div>
 					<div class="col-md-3 align-self-center" style="margin-bottom: 100px">
-						<div>
-							<img alt="4" src="/images/1.jpg" width="100%">
-						</div>
 					</div>
 				</div>
-				
 				</div>
-			</div>
-		</div>
-		</div>
-
-
-
-
 		<script>
 			AOS.init();
 		</script>

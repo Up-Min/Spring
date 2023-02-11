@@ -25,6 +25,12 @@
 	function test1(){
 		$('.sidemenu').css('visibility','hidden');
 	}
+	function arraytest(){
+		$('.select1').css('visibility','visible');
+	}
+	function arraytest1(){
+		$('.select1').css('visibility','hidden');
+	}
 	
 	/* function search(target){
 		
@@ -48,7 +54,6 @@
 			}
 		}) */
 
-	}
 	
       </script>
     </th:block>
@@ -94,7 +99,7 @@
  .array{
 	position: absolute;
 	right: 3%;
-	top: 50%;
+	top: 30%;
 }
       
       .uparrow{
@@ -125,13 +130,13 @@
 	color: black;
 }
 
-.select{
+/* .select{
 	visibility: hidden;
 }
 
 .select:hover {
 	visibility: visible;
-}
+} */
 
       
       </style>
@@ -150,21 +155,22 @@
 		    <button type="submit" class="btn btn-primary">Submit</button>
 		  </div> -->
 		</form>
-    
-    	<!-- ARRAY LIST -->
-    	<div class="array"> 
+			<!-- PHOTO ARRAY -->
+			<div class="array" onmouseover="arraytest()" onmouseout="arraytest1()" style="text-align: center;" > 
     		<div class="arrayup"> <img class="uparrow" alt="" src="/images/double_arrows.png" width="50px"> </div>
-    		<div class="select1">
+    		<div class="select1" data-aos="zoom-in" style="visibility: hidden;">
     		    <label class="visually-hidden" for="specificSizeSelect">Preference</label>
     			<select class="select" id="specificSizeSelect">
-      			<option selected>select </option>
-     			<option value="1">like</option>
-     			<option value="2">created-date</option>
-     			<option value="3">upload-date</option>
-   				</select>	
+      			<option selected class="change" onchange="select()">Array TRABLES </option>
+     			<option value="1">by like</option>
+     			<option value="2">by createdtime</option>
+     			<option value="3">by recently created</option>
+     			<option value="4">by updatedtime</option>
+     			<option value="5">by recently updated</option>
+   				 </select>
     		</div>
     		<div class="arraydown"> <img class="downarrow" alt="" src="/images/double_arrows.png" width="50px"> </div>
-    	</div>
+    		</div>
     
     	<!-- IMG SECTION -->
  		<div class="con_center section" id = "section3" style="margin-top: 50px;">

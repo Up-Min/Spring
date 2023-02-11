@@ -25,6 +25,36 @@
 	function test1(){
 			$('.sidemenu').css('visibility','hidden');
 	}
+	function arraytest(){
+		$('.select1').css('visibility','visible');
+	}
+	function arraytest1(){
+		$('.select1').css('visibility','hidden');
+	}
+	
+	function select(){
+		var selectval = $('.select').val();
+		
+		switch (selectval) {
+			case "1":
+				location.href = "/selects/bylike";
+				break;
+			case "2":
+				location.href = "/selects/byctime";				
+				break;
+			case "3":
+				location.href = "/selects/byrctime";				
+				break;
+			case "4":
+				location.href = "/selects/byutime";				
+				break;
+			case "5":
+				location.href = "/selects/byrutime";				
+				break;	
+		}
+	}
+	
+	
       </script>
     </th:block>
 
@@ -69,7 +99,7 @@
  .array{
 	position: absolute;
 	right: 3%;
-	top: 50%;
+	top: 30%;
 }
       
       .uparrow{
@@ -99,13 +129,13 @@
 	color: black;
 }
 
-.select{
+/* .select{
 	visibility: hidden;
 }
 
 .select:hover {
 	visibility: visible;
-}
+} */
 
       
       </style>
@@ -125,20 +155,22 @@
     	</div>
 
 
-    	<!-- ARRAY LIST -->
-    	<div class="array"> 
+			<!-- PHOTO ARRAY -->
+			<div class="array" onmouseover="arraytest()" onmouseout="arraytest1()" style="text-align: center;" > 
     		<div class="arrayup"> <img class="uparrow" alt="" src="/images/double_arrows.png" width="50px"> </div>
-    		<div class="select1">
+    		<div class="select1" data-aos="zoom-in" style="visibility: hidden;">
     		    <label class="visually-hidden" for="specificSizeSelect">Preference</label>
-    			<select class="select" id="specificSizeSelect">
-      			<option selected>select </option>
-     			<option value="1">like</option>
-     			<option value="2">created-date</option>
-     			<option value="3">upload-date</option>
-   				</select>	
+     			<select class="select" id="specificSizeSelect" onchange="select()">
+      			<option selected class="change" value="0">Array TRABLES </option>
+     			<option class="soption" value="1">by like</option>
+     			<option class="soption" value="2">by createdtime</option>
+     			<option class="soption" value="3">by recently created</option>
+     			<option class="soption" value="4">by updatedtime</option>
+     			<option class="soption" value="5">by recently updated</option>
+   				 </select>
     		</div>
     		<div class="arraydown"> <img class="downarrow" alt="" src="/images/double_arrows.png" width="50px"> </div>
-    	</div>
+    		</div>
     
     	<!-- IMG SECTION -->
  		<div class="con_center section" id = "section3" style="margin-top: 50px;">
@@ -147,7 +179,7 @@
 					<th:block th:each="post : ${posts}">
 					<div class="col-md-3 align-self-center">
 						<div style="position: relative; z-index: 1;">
-							<a class="a" th:href="'view/'+${post.id}"><img class="a1" alt="1" th:src="${post.imgurl}" width="390px" ></a>
+							<a class="a" th:href="'/'+'view/'+${post.id}"><img class="a1" alt="1" th:src="${post.imgurl}" width="390px" ></a>
 							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.2);" >  
 								<div><img alt="heart" src="/images/flatheart.png" width="30px">
 								<span> [[${post.heart}]] </span>

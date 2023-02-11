@@ -66,4 +66,13 @@ public class Member {
 		this.imgurl = imgurl;
 	}
 	
+	public void updatepwd(String pwd, PasswordEncoder passwordEncoder) {
+		String password = passwordEncoder.encode(pwd);
+		this.password = password;
+	}
+	
+	public void updategrade(UserGrade userg) {
+		this.usergrade = userg;
+	}
+	
 }

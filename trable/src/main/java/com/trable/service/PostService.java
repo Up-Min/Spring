@@ -90,7 +90,10 @@ public class PostService {
 	}
 	
 	public List<Post> getPostShowPage(ShowPost showpost){
-		return postRepository.findByMemberNotshow(showpost);
+		List<Post> post = postRepository.findByMemberNotshow();
+		
+		
+		return post;
 	}
 	
 	public List<Post> getPostTagnamecount(Member member){
@@ -127,7 +130,7 @@ public class PostService {
 	
 	public Post updatePostHeart(Post post) {
 		post.updatePostHeart(); 
-		postRepository.save(post);
+		postRepository.save(post);	
 		return post;
 	}
 	

@@ -11,38 +11,24 @@
 
 	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 	<script th:inline="javascript">
-	function mainImg(input) {
- 		var id = $(input).attr('name');
-	    var reader = new FileReader();
-	    reader.onload = function(e) {
-	      document.getElementById('preview0').src = e.target.result;
-	    };
-	    reader.readAsDataURL(input.files[0]);
-	} 
-	
-	function readURL(input) {
- 		var id = $(input).attr('name');
-	    var reader = new FileReader();
-	    reader.onload = function(e) {
-	      document.getElementById('preview'+id).src = e.target.result;
-	    };
-	    reader.readAsDataURL(input.files[0]);
-	   
-/* 		$(input).css('display','none');
-		
-    	
-		if(document.getElementById('preview'+id).click()){
-			$(input).click();
-		} */
-	} 
-	
-	function test(){
+		function test(){
 			$('.sidemenu').css('visibility','visible');
 		}
 		function test1(){
-				$('.sidemenu').css('visibility','hidden');
+			$('.sidemenu').css('visibility','hidden');
 		}
-
+		function changepw(e){
+			var pw = $('#changepw').val();
+			var confir = confirm("비밀번호를 변경하시겠습니까?");
+			
+			if(confir){
+				alert = ("비밀번호가 변경됐습니다. 다시 로그인 해주세요.")
+				location.href = "/members/changepw/"+e+'/'+pw;
+			}else{
+				return false;
+			}
+		}
+		
 	</script>
 </th:block>
 
@@ -197,7 +183,7 @@ input.file {
 						</div>
 						<div class="col-md-1"></div>
 						<div class="col-md-4">
-							<input type="text" class="form-control setin" id="inputblockuser">
+							<input type="text" class="form-control setin" id="blockuser" placeholder="차단할 사용자의 이메일을 입력하세요.">
 						</div>
 						<div class="col-md-4">
 
@@ -214,7 +200,7 @@ input.file {
 						</div>
 						<div class="col-md-1"></div>
 						<div class="col-md-4">
-							<input type="text" class="form-control setin" id="inputblocktag">
+							<input type="text" class="form-control setin" id="blocktag" placeholder="제외할 태그를 입력하세요.">
 						</div>
 						<div class="col-md-4">
 
@@ -226,11 +212,28 @@ input.file {
 					<div class="mb-3 row setsession">
 						<div class="col-md-1"></div>
 						<div class="col-md-10">
+							<p class="conhead"> 비밀번호 재설정 </p>
+						</div>
+						<div class="col-md-1"></div>
+						<div class="col-md-4">
+							<input type="password" class="form-control setin" id="changepw" placeholder="변경할 비밀번호를 입력하세요">
+						</div>
+						<div class="col-md-4">
+
+						</div>
+						<div class="col-md-1">
+							<button class="setbutton" type="button" th:onclick="changepw([[${member.id}]])"> 적용 </button>
+						</div>
+					</div>
+
+					<div class="mb-3 row setsession">
+						<div class="col-md-1"></div>
+						<div class="col-md-10">
 							<p class="conhead"> 회원탈퇴 </p>
 						</div>
 						<div class="col-md-1"></div>
 						<div class="col-md-4">
-							<input type="password" class="form-control setin" id="inputpassword" placeholder="비밀번호를 입력하세요">
+							<input type="password" class="form-control setin" id="outpw" placeholder="회원탈퇴를 위해 비밀번호를 입력하세요">
 						</div>
 						<div class="col-md-4">
 

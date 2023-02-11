@@ -30,6 +30,28 @@
 		}
 	}
 	
+	function hidepost(value){
+		var confir = confirm("게시물을 숨기시겠습니까?");
+		if(confir){
+			alert("게시물이 숨김처리 되었습니다.");
+			location.href = "/hide/"+value;
+		}else{
+			alert("현재 상태를 유지합니다.")
+			return false;
+		}
+	}
+	function showpost(value){
+		var confir = confirm("게시물을 공개하시겠습니까?");
+		if(confir){
+			alert("게시물이 공개상태로 전환되었습니다.");
+			location.href = "/show/"+value;
+		}else{
+			alert("현재 상태를 유지합니다.")
+			return false;
+		}
+	}
+	
+	
 	function giveheart(value){
 		alert("하트를 눌렀습니다!");
 		location.href = "/heart/"+value;
@@ -127,17 +149,14 @@
 								<div th:each = "tag : ${tags}">
 									<span> #[[${tag.tagname}]] </span>
 								</div>
-
-						</div>
+						</div>						
 						<div class="row-md-3">
 							<h2> hearts : [[${post.heart}]] </h2>
 						</div>	
 						<div class="row-md-3 likesection">
-							<div class="row-md-6">
+							<div class="row-md-6" style="text-align: left;">							
+								<button class="button" th:onclick="giveheart([[${post.id}]])" style="background: transparent; border: 0"><img alt="heart" src="/images/flatheart.png" width="50px"> </button>
 								<span> I like this TRABLE! </span>
-							</div>
-							<div class="row-md-6">
-								<button class="button" th:onclick="giveheart([[${post.id}]])"><img alt="heart" src="/images/flatheart.png" width="50px"> </button>
 							</div>
 						</div>											
 					</div>
@@ -152,11 +171,11 @@
 									<div th:if="${post.showPost} == 'SHOW'"></div>
 									<div class="col-md-3">
 									<p> HIDE POST </p>
-									<a th:href = "'/hide/'+${post.id}"><img alt="hide" src="/images/eyeclosed.png" width="55px"> </a>
+									<a type="button" th:onclick="hidepost([[${post.id}]])"><img alt="hide" src="/images/eyeclosed.png" width="55px"> </a>
 									</div>									
 									<div class="col-md-3">
 									<p> SHOW POST </p>
-									<a th:href = "'/show/'+${post.id}"><img alt="hide" src="/images/eyeopen.png" width="55px"> </a>
+									<a type="button" th:onclick="showpost([[${post.id}]])"><img alt="hide" src="/images/eyeopen.png" width="55px"> </a>
 									</div>									
 									<div class="col-md-3">
 									<p> DELETE POST </p>

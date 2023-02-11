@@ -29,7 +29,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Post {
+public class Post extends BaseTimeEntity{
 
 	@Id
 	@Column(name="post_id")

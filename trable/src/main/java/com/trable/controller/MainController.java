@@ -1,14 +1,10 @@
 package com.trable.controller;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,15 +16,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.trable.constant.ShowPost;
-import com.trable.dto.MemberFormDto;
 import com.trable.dto.PostFormDto;
-import com.trable.dto.PostSearchDto;
 import com.trable.entity.Member;
 import com.trable.entity.Post;
 import com.trable.entity.PostImg;
@@ -59,7 +50,9 @@ public class MainController {
 	
 	// MAINPAGE
 	@GetMapping(value = "/")
-	public String main() {
+	public String main(Model model, Post posttest) {
+		List<Post> post = postservice.getPostShowPage(posttest.getShowPost());
+		model.addAttribute("posts",post);
 		return "main";
 	}
 	
@@ -140,6 +133,7 @@ public class MainController {
 			Post post1 = postservice.updatePostHeart(post);
 			Member member = memberService.findMemberbyId(post1.getMember().getId());
 			
+			
 			List<PostImg> postimgs = postImgService.getPostimg(postid);
 			List<Tag> tags = tagService.findbypostid(postid);
 			
@@ -207,9 +201,11 @@ public class MainController {
 		List<Post> memberpost = postservice.getUserPost(member);
 		int heart = 0;
 		
+		// GET TOTAL MEMBER HEARTS, CALCULATE USER GRADE BY HEARTS
 		for(int i =0; i<memberpost.size(); i++) {
 			heart += memberpost.get(i).getHeart();
 		}
+		Member member1 = memberService.updateMembergrade(member.getId(), heart);
 		
 		// GET TAGS WHAT USER USED LEAST 2 TIMES.
 		List<Tag> tag = tagService.getTagnamebycount(member.getId());
@@ -241,14 +237,14 @@ public class MainController {
 		// ADD ATTRIBUTE
 		model.addAttribute("tags",finaltag);
 		model.addAttribute("heart", heart);
-		model.addAttribute("member", member);
+		model.addAttribute("member", member1);
 		model.addAttribute("posts", memberpost);
 		return "/user/userpage";
 	}
 	
 	// SEARCH PAGE
-	@GetMapping(value = "/find")
-	public String searchpage(Model model, Post posttest) {
+	@GetMapping(value = {"/find","/find/{tag}"})
+	public String searchpage(Model model, Post posttest, @RequestParam("tag") String tag) {
 		
 		List<Post> post = postservice.getPostShowPage(posttest.getShowPost());
 		model.addAttribute("posts",post);
@@ -339,13 +335,5 @@ public class MainController {
 		return "redirect:/";
 	}
 	
-	// SETTING PAGE
-	@GetMapping(value = "/setting/{id}")
-	public String settingpage(@PathVariable("id") Long memberid, Model model) {
-		String id = SecurityContextHolder.getContext().getAuthentication().getName();
-		UserDetails user = memberService.loadUserByUsername(id);
-		Member member = memberService.findMember(user.getUsername());	
-		return "/user/usersettingpage";
-	}
 }
 
