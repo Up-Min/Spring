@@ -2,6 +2,7 @@ package com.trable.service;
 
 import java.awt.print.Pageable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,9 +19,11 @@ import com.trable.dto.PostSearchDto;
 import com.trable.entity.Member;
 import com.trable.entity.Post;
 import com.trable.entity.PostImg;
+import com.trable.entity.Tag;
 import com.trable.repository.MemberRepository;
 import com.trable.repository.PostImgRepository;
 import com.trable.repository.PostRepository;
+import com.trable.repository.TagRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,6 +37,7 @@ public class PostService {
 	private final PostImgService postImgService;
 	private final PostMainImgService postMainImgService;
 	private final MemberRepository memberRepository;
+	private final TagRepository tagRepository;
 	
 	public Long savePost(PostFormDto postFormDto, List<MultipartFile> postImgFileList, MultipartFile postMainImg, String email) throws Exception {
 		Member member = memberRepository.findByEmail(email);
@@ -89,6 +93,22 @@ public class PostService {
 		return postRepository.findByMemberNotshow(showpost);
 	}
 	
+	public List<Post> getPostTagnamecount(Member member){
+		List<Tag> taglist = tagRepository.getTagnamebycount(member.getId());
+		List<Post> postlist = new ArrayList<Post>();
+		
+		for(int i=0; i<taglist.size(); i++) {		
+			List<Post> testlist = postRepository.findByTag1(taglist.get(i).toString());
+			for(int j = 0; j<testlist.size(); j++) {
+				if(postlist.get(i) != testlist.get(j)) {
+					postlist.add(testlist.get(j));
+				}
+			}
+		}
+		return postlist;
+	}
+	
+	
 	
 	public List<Post> getUserPost(Member member){
 		return postRepository.findByMember(member);
@@ -97,5 +117,19 @@ public class PostService {
 		 Post post = postRepository.findById(postid).orElseThrow(EntityNotFoundException::new);
 		 return post;
 	}
+	public List<Post> getPostbyTag(Tag tag) {
+		return postRepository.findByTag(tag);
+	}
+	
+	public List<Post> getPostbyTagname(String tagname) {
+		return postRepository.findByTag1(tagname);
+	}
+	
+	public Post updatePostHeart(Post post) {
+		post.updatePostHeart(); 
+		postRepository.save(post);
+		return post;
+	}
+	
 	
 	}

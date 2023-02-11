@@ -73,6 +73,10 @@ public class Post {
 		this.member = member;
 	}
 	
+	public void updatePostHeart() {
+		this.heart = this.heart+1;
+	}
+	
 	public void updatePostShow() {
 		this.showPost = ShowPost.SHOW;
 	}

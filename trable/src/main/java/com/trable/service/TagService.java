@@ -51,5 +51,9 @@ public class TagService {
 		return tagRepository.findBypostid(postid);
 	}
 	
+	public List<Tag> getTagnamebycount(Long memberid){
+		return tagRepository.getTagnamebycount(memberid);
+	}
+	
 	
 }

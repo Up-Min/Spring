@@ -30,6 +30,11 @@
 		}
 	}
 	
+	function giveheart(value){
+		alert("하트를 눌렀습니다!");
+		location.href = "/heart/"+value;
+	}
+	
       </script>
     </th:block>
 
@@ -118,9 +123,9 @@
 							<h2> write by : [[${member.email}]] </h2>
 						</div>
 						<div class="row-md-3">
-							<h2> tag </h2><br> 
+							<h2> tags </h2><br> 
 								<div th:each = "tag : ${tags}">
-									<h2> #[[${tag.tagname}]] </h2>
+									<span> #[[${tag.tagname}]] </span>
 								</div>
 
 						</div>
@@ -132,7 +137,7 @@
 								<span> I like this TRABLE! </span>
 							</div>
 							<div class="row-md-6">
-								<button class="" onclick=""><img alt="heart" src="/images/flatheart.png" width="50px"> </button>
+								<button class="button" th:onclick="giveheart([[${post.id}]])"><img alt="heart" src="/images/flatheart.png" width="50px"> </button>
 							</div>
 						</div>											
 					</div>

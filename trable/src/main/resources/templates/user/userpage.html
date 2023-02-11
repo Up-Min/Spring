@@ -156,13 +156,14 @@ color: black;
 								<h1 th:text = "${member.email}"></h1>
 							</div>
 							<div class="row-md-4">
-								<h1> userMosttag </h1>
+								<h4> most used tag </h4>
 							</div>
 							<div class="row-md-4">
-								<h1> tag example </h1>
+								<span th:each = "tag : ${tags}"> #[[${tag}]] </span>
 							</div>
 							<div class="row-md-4">
-								<a href="/setting"><h1> manage userinfo </h1></a> 
+								<span class="setting"> user setting </span>
+								<a th:href="'/setting/'+${member.id}"><img alt="setting" src="/images/settings.png" width="50px">  </a> 
 							</div>
 							
 						</div>

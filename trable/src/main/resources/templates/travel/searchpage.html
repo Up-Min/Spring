@@ -13,13 +13,6 @@
       <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
       <script th:inline="javascript">
       $(document).ready(function(){
-    	  
-    	  var errorMessage = [[${errorMessage}]];
-      	if(errorMessage != null){
-          	alert(errorMessage);
-      	}
-
-    	  
     	  var currentPosition = parseInt($(".array").css("top"));
     	  $(window).scroll(function() {
     	    var position = $(window).scrollTop(); 
@@ -33,10 +26,28 @@
 		$('.sidemenu').css('visibility','hidden');
 	}
 	
-	function search(target){
+	/* function search(target){
 		
-		var searchword
-		
+		var tag = $('#tags').val();
+		var param = JSON.stringify(tag);
+
+		$.ajax({
+			type: 'POST',
+			url: '/findpostbytagAJAX',
+			dataType : 'JSON',
+			async : false,
+			contentType:"application/json;charset=UTF-8",
+			success : function(result){	
+				console.log(param);
+				for(var i=0; i<param.length; i++){
+					var post = param[i];
+				}
+			},
+			error : function(xhr, status, error){
+				alert(xhr.responseText);
+			}
+		}) */
+
 	}
 	
       </script>
@@ -133,7 +144,7 @@
 		<form class="row gx-3 gy-2 align-items-center search">
 		  <div class="col-lg-3">
 		    <label class="visually-hidden" for="keywords" onchange="AJAX">keywords</label>
-		    <input type="text" class="form-control" id="keywords" placeholder="looking for?" autocomplete="off" onkeyup="search(this)" aria-describedby="inputGroup-sizing-lg">
+		    <input type="text" class="form-control" id="tags" placeholder="looking for?" autocomplete="off" aria-describedby="inputGroup-sizing-lg">
 		  </div>
 <!-- 		  <div class="col-sm-3">
 		    <button type="submit" class="btn btn-primary">Submit</button>
@@ -159,7 +170,6 @@
  		<div class="con_center section" id = "section3" style="margin-top: 50px;">
 			<div data-aos="fade-up" data-aos-duration="1000">
 				<div class="row" style="">
-				
 					<th:block th:each="post : ${posts}">
 					<div class="col-md-3 align-self-center">
 						<div style="position: relative; z-index: 1;">
@@ -172,7 +182,6 @@
 						</div>
 					</div>						
 					</th:block>
-					
 				</div>
 			</div>
 			</div>

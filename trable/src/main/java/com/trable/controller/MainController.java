@@ -1,6 +1,7 @@
 package com.trable.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -128,6 +131,31 @@ public class MainController {
 		return "/travel/dtlpage";
 	}
 	
+	// GET HEART
+	@GetMapping(value = "/heart/{id}")
+	public String updateheart(@PathVariable("id") Long postid, Model model) {
+		String id = SecurityContextHolder.getContext().getAuthentication().getName();
+		try {
+			Post post = postservice.getPostbyid(postid);
+			Post post1 = postservice.updatePostHeart(post);
+			Member member = memberService.findMemberbyId(post1.getMember().getId());
+			
+			List<PostImg> postimgs = postImgService.getPostimg(postid);
+			List<Tag> tags = tagService.findbypostid(postid);
+			
+			model.addAttribute("id", id);
+			model.addAttribute("member", member);
+			model.addAttribute("post", post1);
+			model.addAttribute("postimgs",postimgs);		
+			model.addAttribute("tags", tags);
+		} catch (EntityNotFoundException e) {
+			model.addAttribute("errorMessage", "게시물 / 사용자를 불러올 수 없습니다.");
+			return "/travel/searchpage";
+		}
+		
+		return "/travel/dtlpage";
+	}
+	
 	// OPEN UPDATEPAGE
 	@GetMapping(value = "/update/{id}")
 	public String updatepage(@PathVariable("id") Long postid, Model model) {
@@ -183,6 +211,35 @@ public class MainController {
 			heart += memberpost.get(i).getHeart();
 		}
 		
+		// GET TAGS WHAT USER USED LEAST 2 TIMES.
+		List<Tag> tag = tagService.getTagnamebycount(member.getId());
+		List<String> tagnamelist = new ArrayList<>();
+		for(int i = 0; i<tag.size(); i++ ) {
+			 tagnamelist.add(tag.get(i).getTagname());
+		}
+		List<String> enoughtagname = new ArrayList<>();
+		for(int i=0; i<tagnamelist.size(); i++) {
+			int count = 0;
+			for(int j=0; j<tagnamelist.size(); j++) {
+				if(tagnamelist.get(i) == tagnamelist.get(j)) {
+					count ++;					
+				}
+			}
+			if(count > 1) {
+				enoughtagname.add(tagnamelist.get(i));
+			}
+		}
+		List<String> finaltag = new ArrayList<>();
+		for(String test : enoughtagname) {
+			if(!finaltag.contains(test)) {
+				finaltag.add(test);				
+			}
+		}
+		System.out.println("show tags used more than 2times : " + finaltag);
+		
+
+		// ADD ATTRIBUTE
+		model.addAttribute("tags",finaltag);
 		model.addAttribute("heart", heart);
 		model.addAttribute("member", member);
 		model.addAttribute("posts", memberpost);
@@ -191,26 +248,87 @@ public class MainController {
 	
 	// SEARCH PAGE
 	@GetMapping(value = "/find")
-	public String searchpage(PostSearchDto postSearchDto, Model model, Post posttest) {
+	public String searchpage(Model model, Post posttest) {
 		
 		List<Post> post = postservice.getPostShowPage(posttest.getShowPost());
-		
 		model.addAttribute("posts",post);
-		
 		model.addAttribute("imgLocation",imgLocation);
 		return "/travel/searchpage";
 	}
 	
+//	@RequestMapping(value = "/findpostbytagAJAX")
+//	public List<Post> returnpost(@RequestBody String tag){
+//		String json = null;
+//		try {
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return postservice.getPostbyTag(tag);
+//	}
+	
+	// RECOMMEND PAGE
+	@GetMapping(value = "/like")
+	public String likepage(Model model, Post post) {
+		String id = SecurityContextHolder.getContext().getAuthentication().getName();
+		UserDetails user = memberService.loadUserByUsername(id);
+		Member member = memberService.findMember(user.getUsername());	
+		
+		// GET TAGS WHAT USER USED LEAST 2 TIMES.
+		List<Tag> tag = tagService.getTagnamebycount(member.getId());
+		List<String> tagnamelist = new ArrayList<>();
+		for(int i = 0; i<tag.size(); i++ ) {
+			 tagnamelist.add(tag.get(i).getTagname());
+		}
+		List<String> enoughtagname = new ArrayList<>();
+		for(int i=0; i<tagnamelist.size(); i++) {
+			int count = 0;
+			for(int j=0; j<tagnamelist.size(); j++) {
+				if(tagnamelist.get(i) == tagnamelist.get(j)) {
+					count ++;					
+				}
+			}
+			if(count > 1) {
+				enoughtagname.add(tagnamelist.get(i));
+			}
+		}
+		List<String> finaltag = new ArrayList<>();
+		for(String test : enoughtagname) {
+			if(!finaltag.contains(test)) {
+				finaltag.add(test);				
+			}
+		}
+		
+		// GET POSTS BY USE FINALTAG
+		List<Post> tagpost = new ArrayList<>();
+		for(String eachtag : finaltag) {
+			List<Post> casepost = postservice.getPostbyTagname(eachtag);//각 태그별로 가져온 postlist
+			System.out.println("casepost : " + casepost);
+			for(int i=0; i<casepost.size(); i++) {
+				if(!tagpost.contains(casepost.get(i))) {
+					tagpost.add(casepost.get(i));
+				}
+			}
+		}
+		
+		model.addAttribute("posts",tagpost);
+		return "/travel/likepage";
+	}
+
 	// HIDE POST
 	@GetMapping(value = "/hide/{id}")
 	public String hidepost(@PathVariable("id") Long postid, Member member) {
 		postservice.getPostbyid(postid).updatePostHide();
+		postRepository.save(postservice.getPostbyid(postid));
+		
 		return "redirect:/";
 	}
 	// SHOW POST
 	@GetMapping(value = "/show/{id}")
 	public String showpost(@PathVariable("id") Long postid, Member member) {
 		postservice.getPostbyid(postid).updatePostShow();
+		postRepository.save(postservice.getPostbyid(postid));
 		return "redirect:/";
 	}
 	
@@ -221,12 +339,12 @@ public class MainController {
 		return "redirect:/";
 	}
 	
-	@GetMapping(value = "/like")
-	public String likepage() {
-		return "/travel/likepage";
-	}
-	@GetMapping(value = "/setting")
-	public String settingpage() {
+	// SETTING PAGE
+	@GetMapping(value = "/setting/{id}")
+	public String settingpage(@PathVariable("id") Long memberid, Model model) {
+		String id = SecurityContextHolder.getContext().getAuthentication().getName();
+		UserDetails user = memberService.loadUserByUsername(id);
+		Member member = memberService.findMember(user.getUsername());	
 		return "/user/usersettingpage";
 	}
 }
