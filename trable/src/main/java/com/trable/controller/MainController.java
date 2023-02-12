@@ -259,7 +259,7 @@ public class MainController {
 		
 		// CHECK HAS BLOCK Member LIST
 		
-		//List<BlockTags> Taglist = blockTagsRepository.findbymemid(member.getId());
+		List<BlockTags> Taglist = blockService.getblktag(member.getId());
 		List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
 		
 		for(int i=0; i<post.size(); i++) {

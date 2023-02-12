@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.trable.dto.MemberFormDto;
+import com.trable.entity.BlockMembers;
 import com.trable.entity.BlockTags;
 import com.trable.entity.Member;
 import com.trable.repository.BlockTagsRepository;
@@ -43,13 +44,13 @@ public class MemberController {
 		@GetMapping(value = "/new")
 		public String signup(Model model) {
 			model.addAttribute("memberFormDto", new MemberFormDto());
-			return "member/signuppage";
+			return "/member/signuppage";
 		}
 			
 		// OPEN LOGINPAGE
 		@GetMapping(value = "/login")
 		public String login() {
-			return "member/loginpage";
+			return "/member/loginpage";
 		}
 
 		// CLICK SIGNUP
@@ -96,6 +97,15 @@ public class MemberController {
 			String id = SecurityContextHolder.getContext().getAuthentication().getName();
 			UserDetails user = memberService.loadUserByUsername(id);
 			Member member = memberService.findMember(user.getUsername());	
+			List<BlockTags> Taglist = blockService.getblktag(member.getId());
+			List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
+			
+			if(Taglist.size() >= 1) {
+				model.addAttribute("blocktags",Taglist);
+			}else if(Memlist.size() >= 1) {
+				model.addAttribute("blockmems",Memlist);
+			}
+			
 			model.addAttribute("member",member);
 			return "/user/usersettingpage";
 		}
