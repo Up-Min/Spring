@@ -33,12 +33,24 @@ public class BlockService {
 		return blockTagsRepository.save(blocktag);
 	}
 	
-	public void deleteBlockMember() {
-	blockMembersRepository.deleteAll();
+	public void deleteBlockMember(Long memberid) {
+		List<BlockMembers> list = blockMembersRepository.findbmbymemid(memberid);
+		if(list.size()>0) {
+			for(BlockMembers lis : list) {
+				blockMembersRepository.delete(lis);
+			}			
+		}
 	}
-	public void deleteBlockTag() {
-	 blockTagsRepository.deleteAll();
+	public void deleteBlockTag(Long memberid) {
+	 List<BlockTags> list = blockTagsRepository.findbymemid(memberid);
+	 if(list.size()>0) {
+		 for(BlockTags lis : list) {
+			 blockTagsRepository.delete(lis);
+		 }		 
+	 }
 	}
+	
+	
 	
 	public BlockMembers getblockMember(Long memberid) {
 		return blockMembersRepository.findById(memberid).orElseThrow(EntityNotFoundException::new);

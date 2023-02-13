@@ -109,7 +109,7 @@ public class MainController {
 	@GetMapping(value = {"/view", "/view/{id}"})
 	public String dtlpage(@PathVariable("id") Long postid, Model model) {
 		
-		String id = SecurityContextHolder.getContext().getAuthentication().getName(); 
+		String id = SecurityContextHolder.getContext().getAuthentication().getName(); //
 //		UserDetails user = memberService.loadUserByUsername(id);
 //		Member member = memberService.findMember(user.getUsername());	
 		try {
@@ -257,8 +257,10 @@ public class MainController {
 		UserDetails user = memberService.loadUserByUsername(id);
 		Member member = memberService.findMember(user.getUsername());	
 		
-		// CHECK HAS BLOCK Member LIST
+	
 		
+		
+		// CHECK HAS BLOCK Member LIST
 		List<BlockTags> Taglist = blockService.getblktag(member.getId());
 		List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
 		

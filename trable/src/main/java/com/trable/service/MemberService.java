@@ -86,4 +86,9 @@ public class MemberService implements UserDetailsService{
 		return member;
 	}
 	
+	public void deletemember(Long memberid) {
+		Member member = memberRepository.findById(memberid).orElseThrow(EntityNotFoundException::new);
+		memberRepository.delete(member);
+	}
+	
 }

@@ -71,7 +71,7 @@ public class MemberController {
 					model.addAttribute("errorMessage", e.getMessage());
 					return "member/signuppage";
 				}
-			return "main";
+			return "/member/loginpage";
 
 		}
 		
@@ -88,7 +88,7 @@ public class MemberController {
 			System.out.println(memberid);
 			System.out.println(pw);
 			memberService.updateMemberpwd(memberid, pw, passwordEncoder);
-			return "redirect:/";
+			return "/members/logout";
 		}
 		
 		// SETTING PAGE
@@ -99,10 +99,12 @@ public class MemberController {
 			Member member = memberService.findMember(user.getUsername());	
 			List<BlockTags> Taglist = blockService.getblktag(member.getId());
 			List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
+			System.out.println(Memlist);
 			
 			if(Taglist.size() >= 1) {
 				model.addAttribute("blocktags",Taglist);
-			}else if(Memlist.size() >= 1) {
+			}
+			if(Memlist.size() >= 1) {
 				model.addAttribute("blockmems",Memlist);
 			}
 			
@@ -139,4 +141,20 @@ public class MemberController {
 			}
 			return "redirect:/";
 		}
+		
+		// RESET BLOCK SETTING
+		@GetMapping(value = "/resetset/{id}")
+		public String resetset(@PathVariable("id") Long memberid) {
+			blockService.deleteBlockMember(memberid);
+			blockService.deleteBlockTag(memberid);
+			return "redirect:/";
+		}
+		
+		// DELETE USER
+		@GetMapping(value = "/deleteuser/{id}")
+		public String deleteuser(@PathVariable("id") Long memberid) {
+			memberService.deletemember(memberid);
+			return "redirect:/";
+		}
+		
 }

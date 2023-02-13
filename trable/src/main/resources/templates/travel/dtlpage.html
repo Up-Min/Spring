@@ -50,13 +50,30 @@
 			return false;
 		}
 	}
-	
-	
 	function giveheart(value){
 		alert("하트를 눌렀습니다!");
 		location.href = "/heart/"+value;
 	}
-	
+	function select(){
+		var selectval = $('.select').val();
+		
+		switch (selectval) {
+			case "1":
+				location.href = "/Sselects/bylike";
+				break;
+			case "2":
+				location.href = "/Sselects/byctime";				
+				break;
+			case "3":
+				location.href = "/Sselects/byrctime";				
+				break;
+			case "4":
+				location.href = "/Sselects/byutime";				
+				break;
+			case "5":
+				location.href = "/Sselects/byrutime";				
+				break;	
+		}
       </script>
     </th:block>
 
@@ -182,10 +199,9 @@
 									<a type="button" th:onclick="deletepost([[${post.id}]])"><img alt="delete" src="/images/delete.png" width="50px">  </a>															
 <!-- 									<a th:href = "'/delete/'+${post.id}" onclick="delete()"><img alt="delete" src="/images/delete.png" width="50px">  </a>															
  -->									</div>
-								</div>
+ 							</div>
 						</div>
 					</div>
-					
     			</div>
     			
     			

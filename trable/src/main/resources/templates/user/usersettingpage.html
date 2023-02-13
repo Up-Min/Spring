@@ -57,6 +57,34 @@
 			}
 		}
 		
+		function resetsetting(e){
+			var confir = confirm("차단 설정을 초기화 하시겠습니까?");
+			if(confir){
+				alert = ("모든 차단 설정을 초기화합니다.");
+				location.href = "/members/resetset/"+e;
+			}else{
+				return false;
+			}
+		}
+		
+		function deletemember(e){
+			var confir = confirm("회원 정보를 삭제하시겠습니까?");
+			var confir2 = confirm("삭제한 정보는 되돌릴 수 없습니다. 정말 삭제하시겠습니까?");
+			if(confir){
+				if(confir2){
+					alert = ("회원정보를 삭제합니다.");
+					location.href = "/members/deleteuser/"+e;
+				}
+				else{
+					alert = ("삭제를 취소합니다");
+					return false;
+				}
+			}else{
+				alert = ("삭제를 취소합니다");
+				return false;
+			}
+		}
+		
 	</script>
 </th:block>
 
@@ -210,7 +238,6 @@ input.file {
 						<div class="col-md-1"></div>
 						<div class="col-md-10">
 							<p class="conhead"> 특정 사용자 차단 </p>
-				
 						</div>
 						<div class="col-md-1"></div>
 						<div class="col-md-4">
@@ -218,6 +245,10 @@ input.file {
 						</div>
 						<div class="col-md-4">
 
+						</div>
+						<div th:if = "blockmems">
+							<span> 현재 차단 사용자 목록 : </span>
+							<span th:each = "blockmem : ${blockmems}">[[${blockmem.blockmembername}]] </span>
 						</div>
 						<div class="col-md-1">
 							<button class="setbutton" type="button" onclick="checkub()"> 적용 </button>							
@@ -236,7 +267,11 @@ input.file {
 							<input type="text" class="form-control setin" id="blocktag" name = "blocktag" placeholder="ex) 테스트 / 테스트,테스트1">
 						</div>
 						<div class="col-md-4">
-
+						
+						</div>
+						<div th:if = "blocktags">
+							<span> 현재 차단 태그 목록 : </span>
+							<span th:each = "blocktag : ${blocktags}"> [[${blocktag.blocktagname}]] </span>
 						</div>
 						<div class="col-md-1">
 							<button class="setbutton" type="button" onclick="checktb()"> 적용 </button>
@@ -274,15 +309,15 @@ input.file {
 
 						</div>
 						<div class="col-md-1">
-							<button class="setbutton delete" type="submit"> 회원탈퇴 </button>
+							<button class="setbutton delete" type="button" th:onclick="deletemember([[${member.id}]])" > 회원탈퇴 </button>
 						</div>
 					</div>
 					
 
 
 					<div class="buttonsection">
-						<button class="button settingbut" type="button" onclick=""> 설정 초기화 </button>
-						<button class="button settingbut" type="button" onclick=""> 설정 나가기 </button>
+						<button class="button settingbut" type="button" th:onclick="resetsetting([[${member.id}]])"> 차단 설정 초기화 </button>
+						<button class="button settingbut" type="button"  th:href = "main"> 설정 나가기 </button>
 					</div>
 
 

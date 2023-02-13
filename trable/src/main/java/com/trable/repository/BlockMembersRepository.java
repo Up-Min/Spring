@@ -14,4 +14,7 @@ public interface BlockMembersRepository extends JpaRepository<BlockMembers, Long
 	@Query(value = "select * from blockmember where blockmember.member_id = :MEMBERNUM", nativeQuery = true)
 	List<BlockMembers> findbmbymemid(@Param("MEMBERNUM") Long memberid);
 	
+	@Query(value = "delete from blockmember where blockmember.member_id = :MEMID", nativeQuery = true)
+	void delbmbymemid(@Param("MEMID") Long memid);
+	
 }
