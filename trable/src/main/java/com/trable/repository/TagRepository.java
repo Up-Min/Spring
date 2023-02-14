@@ -25,5 +25,6 @@ public interface TagRepository extends JpaRepository<Tag, Long>{
 	@Query(value = "select c.tag_id, c.tagname from post a join post_tag b on a.post_id = b.post_id join tag c on b.tag_id = c.tag_id where a.member_id = :MEMBERID", nativeQuery = true)
 	List<Tag> getTagnamebycount (@Param("MEMBERID") Long memberid);
 		
-	
+	@Query(value = "select * from post a join post_tag b on a.post_id = b.post_id join tag c on b.tag_id = c.tag_id where a.post_id = :postid", nativeQuery = true)
+	List<Tag> findtagsbypostid(@Param("postid") Long postid);
 }

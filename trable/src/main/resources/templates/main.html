@@ -87,6 +87,12 @@
 <th:block layout:fragment="css">
 	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 	<style>
+	
+	 *{
+ 	font-family: 'Nanum Gothic', sans-serif;
+ 	font-weight: 700;
+ 	}
+	
 .content{
 margin: 0 auto !important;
 position : relative;
@@ -175,7 +181,7 @@ width: 95%
 }
 
 body{
- background: linear-gradient(180deg, #1A00BC, #714503, #017C57, #037A1D);
+ background: linear-gradient(180deg, #252537, #36385F, #455284, #69607C, #945E81, #B97486);
 }
 
 .array{
@@ -216,7 +222,7 @@ transform : rotate(90deg);
 		    <a class="nav-link" href="/write"><img src="/images/write.png" alt="towrite" width="70px"></a>
 		  </li>
 		  <li class="nav-item" sec:authorize = "isAuthenticated()">
-		    <a class="nav-link" href="/find"><img src="/images/search.png" alt="tosearch" width="70px"></a>
+		    <a class="nav-link" href="/searchs/find"><img src="/images/search.png" alt="tosearch" width="70px"></a>
 		  </li>
 		  <li class="nav-item" sec:authorize ="isAnonymous()" >
 		    <a class="nav-link" href="#photo"><img src="/images/search.png" alt="tosearch" width="70px"></a>
@@ -256,24 +262,21 @@ transform : rotate(90deg);
 			<div data-aos="fade-up" data-aos-duration="1000">
 				<div class="row">
 					<div class="col-md-12 align-self-center">
-						<div class="con_left text" style="">share your
-							Travel</div>
+						<div class="con_left text" style=""> 당신의 눈이 기억하고 </div>
 					</div>
 				</div>
 			</div>
 			<div data-aos="fade-up" data-aos-duration="1000">
 				<div class="row">
 					<div class="col-md-12 align-self-center">
-						<div class="con_center text" >share your
-							View</div>
+						<div class="con_center text" >당신의 가슴이 기억하는 경험들</div>
 					</div>
 				</div>
 			</div>
 			<div data-aos="fade-up" data-aos-duration="1000">
 				<div class="row">
 					<div class="col-md-12 align-self-center">
-						<div class="con_right text" style="">share tour
-							TRABLE</div>
+						<div class="con_right text" style="">이곳, TRABLE에서 기록하세요.</div>
 					</div>
 				</div>
 			</div>
@@ -281,7 +284,8 @@ transform : rotate(90deg);
 				<div class="row">
 					<div class="col-md-12 align-self-center">
 						<div class="con_center text" style="">
-							EARTH, <br> Starts from U.
+							<br>
+							 우리는,  당신으로부터.
 						</div>
 					</div>
 				</div>
@@ -289,8 +293,7 @@ transform : rotate(90deg);
 			<div data-aos="fade-up" data-aos-duration="1000">
 				<div class="row">
 					<div class="col-md-12 align-self-center ">
-						<div class="con_right text" style="font-size: 35px; font-style: italic; margin-bottom: 100px;">sincerely
-							yours, TRABLE</div>
+						<div class="con_right text" style="font-size: 35px; font-style: italic; margin-bottom: 100px;">당신의 친구, TRABLE, Earth.</div>
 					</div>
 				</div>
 			</div>

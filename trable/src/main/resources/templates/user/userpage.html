@@ -25,9 +25,11 @@
     <th:block layout:fragment="css">
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
       <style>
-body {
-	/* background: linear-gradient(180deg, #714503, #017C57); */
-background: darkgray;
+      		 *{
+ 	font-family: 'Nanum Gothic', sans-serif;
+ 	}
+body{
+ background: linear-gradient(180deg, #36385F, #455284);
 }
 
 .wrap {
@@ -152,17 +154,20 @@ color: black;
 							</div>
 						</div>
 						<div class="col-md-6">
+							<br>
 							<div class="row-md-4">
-								<h1 th:text = "${member.email}"></h1>
+								<h3 th:text = "'사용자명 :' + ${member.email}"></h3>
 							</div>
+							<br>
 							<div class="row-md-4">
-								<h4> most used tag </h4>
+								<h4> 가장 많이 사용한 태그들 </h4>
 							</div>
 							<div class="row-md-4">
 								<span th:each = "tag : ${tags}"> #[[${tag}]] </span>
 							</div>
+							<br>
 							<div class="row-md-4">
-								<span class="setting"> user setting </span>
+								<span class="setting"> 사용자 설정 </span>
 								<a th:href="'/members/setting/'+${member.id}"><img alt="setting" src="/images/settings.png" width="50px">  </a> 
 							</div>
 							
@@ -173,10 +178,10 @@ color: black;
 					<div class="row head2">
 						<div class="col-md-1"></div>
 						<div class="col-md-2"><img alt="heart" src="/images/flatheart.png" width="75px"></div>
-						<div class="col-md-2"><span>user heart</span><br><h1>[[${heart}]]</h1> </div>
+						<div class="col-md-2"><span>회원님의 총 좋아요</span><br><h1>[[${heart}]]</h1> </div>
 						<div class="col-md-1"></div>
 						<div class="col-md-2"><img alt="trophy" src="/images/trophy.png" width="75px">	</div>
-						<div class="col-md-2"> <span>user grade</span> <br> <h1> [[${member.usergrade}]] </h1></div>
+						<div class="col-md-2"> <span>당신의 회원 등급은?</span> <br> <h1> [[${member.usergrade}]] </h1></div>
 						<div class="col-md-1"></div>
 						
 					</div>

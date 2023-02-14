@@ -88,7 +88,8 @@ public class MemberController {
 			System.out.println(memberid);
 			System.out.println(pw);
 			memberService.updateMemberpwd(memberid, pw, passwordEncoder);
-			return "/members/logout";
+			SecurityContextHolder.clearContext();
+			return "redirect:/";
 		}
 		
 		// SETTING PAGE
@@ -153,7 +154,9 @@ public class MemberController {
 		// DELETE USER
 		@GetMapping(value = "/deleteuser/{id}")
 		public String deleteuser(@PathVariable("id") Long memberid) {
+			
 			memberService.deletemember(memberid);
+			SecurityContextHolder.clearContext();
 			return "redirect:/";
 		}
 		

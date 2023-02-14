@@ -248,45 +248,7 @@ public class MainController {
 		return "/user/userpage";
 	}
 	
-	// SEARCH PAGE
-	@GetMapping(value = "/find")
-	public String searchpage(Model model, Post posttest) {
-		
-		List<Post> post = postservice.getPostShowPage(posttest.getShowPost());
-		String id = SecurityContextHolder.getContext().getAuthentication().getName();
-		UserDetails user = memberService.loadUserByUsername(id);
-		Member member = memberService.findMember(user.getUsername());	
-		
-	
-		
-		
-		// CHECK HAS BLOCK Member LIST
-		List<BlockTags> Taglist = blockService.getblktag(member.getId());
-		List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
-		
-		for(int i=0; i<post.size(); i++) {
-			for(int j=0; j<Memlist.size(); j++) {
-				if(post.get(i).getMember().getEmail().equals(Memlist.get(j).getBlockmembername())) {
-					post.remove(post.get(i));
-				}
-			}
-		}
-		model.addAttribute("posts",post);
-		model.addAttribute("imgLocation",imgLocation);
-		return "/travel/searchpage";
-	}
-	
-//	@RequestMapping(value = "/findpostbytagAJAX")
-//	public List<Post> returnpost(@RequestBody String tag){
-//		String json = null;
-//		try {
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return postservice.getPostbyTag(tag);
-//	}
+
 	
 	// RECOMMEND PAGE
 	@GetMapping(value = "/like")
@@ -331,6 +293,26 @@ public class MainController {
 				}
 			}
 		}
+		
+		// CHECK BLOCK Member LIST
+		List<BlockTags> Taglist = blockService.getblktag(member.getId());
+		List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
+		
+		for(int i=0; i<tagpost.size(); i++) {
+			for(int j=0; j<Memlist.size(); j++) {
+				if(tagpost.get(i).getMember().getEmail().equals(Memlist.get(j).getBlockmembername())) {
+					tagpost.remove(tagpost.get(i));
+				}
+			}
+		}
+		for(int i=0; i<tagpost.size(); i++) {
+			for(int j=0; j<Taglist.size(); j++) {
+				if(tagpost.get(i).getMember().getEmail().equals(Taglist.get(j).getBlocktagname())) {
+					tagpost.remove(tagpost.get(i));
+				}
+			}
+		}
+		
 		
 		model.addAttribute("posts",tagpost);
 		return "/travel/likepage";

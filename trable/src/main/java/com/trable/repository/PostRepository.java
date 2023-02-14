@@ -24,29 +24,37 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	@Query(value = "select * from post where post.show_post = 'show' and member_id != :MEMBERID", nativeQuery = true)
 	List<Post> findbyshowNotmember(@Param("MEMBERID") int memberid);
 	
-	
-	
 	@Query(value = "select * from post a join post_tag b on a.post_id = b.post_id join tag c on b.tag_id = c.tag_id where c.tagname = :TAG",nativeQuery = true)
 	List<Post> findByTag(@Param("TAG") Tag tag);
 
 	@Query(value = "select * from post a join post_tag b on a.post_id = b.post_id join tag c on b.tag_id = c.tag_id where c.tagname = :TAG",nativeQuery = true)
 	List<Post> findByTag1(@Param("TAG") String tag);
 
+
 	@Query(value ="select * from post order by heart desc",nativeQuery = true)
 	List<Post> findBylike();
+	@Query(value = "select * from post a join post_tag b on a.post_id = b.post_id join tag c on b.tag_id = c.tag_id where c.tagname = :TAG order by a.heart", nativeQuery = true)
+	List<Post> findBylikeSearch(@Param("TAG") Optional<String> tag);
 	
 	@Query(value ="select * from post order by reg_time",nativeQuery = true)
 	List<Post> findByctime();
+	@Query(value = "select * from post a join post_tag b on a.post_id = b.post_id join tag c on b.tag_id = c.tag_id where c.tagname = :TAG order by a.reg_time", nativeQuery = true)
+	List<Post> findByctimeSearch(@Param("TAG") Optional<String> tag);	
 	
 	@Query(value ="select * from post order by reg_time desc",nativeQuery = true)
 	List<Post> findByrctime();
+	@Query(value = "select * from post a join post_tag b on a.post_id = b.post_id join tag c on b.tag_id = c.tag_id where c.tagname = :TAG order by a.reg_time desc", nativeQuery = true)
+	List<Post> findByrctimeSearch(@Param("TAG") Optional<String> tag);	
 	
 	@Query(value ="select * from post order by up_date_time",nativeQuery = true)
 	List<Post> findByutime();
+	@Query(value = "select * from post a join post_tag b on a.post_id = b.post_id join tag c on b.tag_id = c.tag_id where c.tagname = :TAG order by a.up_date_time", nativeQuery = true)
+	List<Post> findByutimeSearch(@Param("TAG") Optional<String> tag);	
 	
 	@Query(value ="select * from post order by up_date_time desc",nativeQuery = true)
 	List<Post> findByrutime();
-	
+	@Query(value = "select * from post a join post_tag b on a.post_id = b.post_id join tag c on b.tag_id = c.tag_id where c.tagname = :TAG order by a.up_date_time desc", nativeQuery = true)
+	List<Post> findByrutimeSearch(@Param("TAG") Optional<String> tag);	
 	
 	
 	

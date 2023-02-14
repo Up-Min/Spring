@@ -2,6 +2,7 @@ package com.trable.entity;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -54,7 +55,7 @@ public class Post extends BaseTimeEntity{
 	@Column(name = "mainimg_url", nullable = false)
 	private String imgurl;
 	
-	@ManyToOne (fetch = FetchType.LAZY)
+	@ManyToOne (fetch = FetchType.LAZY , cascade = CascadeType.ALL)
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
 	

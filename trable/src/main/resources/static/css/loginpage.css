@@ -593,7 +593,7 @@ input {
 }
 .form-wrap form label[for] {
     position: relative;
-    padding-left: 20px;
+    padding-left: 15px;
     cursor: pointer;
 }
 .form-wrap form label[for]:before {
@@ -603,7 +603,7 @@ input {
     top: 0px;
     left: -14px;
     content: '';
-    border: 1px solid #5A6374;
+    border: 1px solid white;
 }
 .form-wrap form label[for]:after {
     position: absolute;

@@ -32,6 +32,41 @@
 		$('.select1').css('visibility','hidden');
 	}
 	
+	function search(){
+		var getsearch;
+		var para = document.location.href.split("/");
+		console.log(para);
+		console.log(para[4]);
+		setTimeout(function(){getsearch=$('#tags').val();
+		console.log(getsearch);
+
+		location.href = '/'+para[3]+'/'+para[4]+'/'+getsearch;		
+		},2000);
+	}
+	
+	function select1(){
+		var selectval = $('.select').val();
+		
+		switch (selectval) {
+			case "1":
+				location.href = "/searchs/bylike";
+				break;
+			case "2":
+				location.href = "/searchs/byctime";				
+				break;
+			case "3":
+				location.href = "/searchs/byrctime";				
+				break;
+			case "4":
+				location.href = "/searchs/byutime";				
+				break;
+			case "5":
+				location.href = "/searchs/byrutime";				
+				break;	
+		}
+	}
+	
+	
 	/* function search(target){
 		
 		var tag = $('#tags').val();
@@ -68,6 +103,10 @@
       	padding: 0;
       }
       
+     body{
+ 		background: linear-gradient(180deg, #455284, #69607C);
+		} 
+      
 .sidemenu{
 	width: 150px;
 	height: 100%;
@@ -82,6 +121,7 @@
       
       .content{
       	padding : 10px;
+      	width: 70%;
       }
       
       .search{
@@ -132,6 +172,7 @@
 	color: black;
 }
 
+
 /* .select{
 	visibility: hidden;
 }
@@ -156,10 +197,7 @@
 		    <a class="nav-link" href="/write"><img src="/images/write.png" alt="towrite" width="70px"></a>
 		  </li>
 		  <li class="nav-item" sec:authorize = "isAuthenticated()">
-		    <a class="nav-link" href="/find"><img src="/images/search.png" alt="tosearch" width="70px"></a>
-		  </li>
-		  <li class="nav-item" sec:authorize ="isAnonymous()" >
-		    <a class="nav-link" href="#photo"><img src="/images/search.png" alt="tosearch" width="70px"></a>
+		    <a class="nav-link" href="/searchs/find"><img src="/images/search.png" alt="tosearch" width="70px"></a>
 		  </li>
 		  <li class="nav-item" sec:authorize="isAuthenticated()">
 		    <a class="nav-link" href="/like"><img src="/images/userheart.png" alt="tolike" width="70px"></a>
@@ -177,8 +215,8 @@
 		<!-- SEARCH DIV -->
 		<form class="row gx-3 gy-2 align-items-center search">
 		  <div class="col-lg-3">
-		    <label class="visually-hidden" for="keywords" onchange="search()">keywords</label>
-		    <input type="text" class="form-control" id="tags" placeholder="looking for?" autocomplete="off" aria-describedby="inputGroup-sizing-lg">
+		    <label class="visually-hidden" for="keywords">keywords</label>
+		    <input type="text" class="form-control" id="tags" placeholder="당신의 취향은 무엇인가요?" onkeydown="search()" autocomplete="off" aria-describedby="inputGroup-sizing-lg">
 		  </div>
 <!-- 		  <div class="col-sm-3">
 		    <button type="submit" class="btn btn-primary">Submit</button>
@@ -189,13 +227,13 @@
     		<div class="arrayup"> <img class="uparrow" alt="" src="/images/double_arrows.png" width="50px"> </div>
     		<div class="select1" data-aos="zoom-in" style="visibility: hidden;">
     		    <label class="visually-hidden" for="specificSizeSelect">Preference</label>
-    			<select class="select" id="specificSizeSelect">
-      			<option selected class="change" onchange="select()">Array TRABLES </option>
-     			<option value="1">by like</option>
-     			<option value="2">by createdtime</option>
-     			<option value="3">by recently created</option>
-     			<option value="4">by updatedtime</option>
-     			<option value="5">by recently updated</option>
+     			<select class="select" id="specificSizeSelect" onchange="select1()">
+      			<option selected class="change" value="0"> 게시물 정렬 </option>
+     			<option class="soption" value="1">좋아요 순으로</option>
+     			<option class="soption" value="2">생성일 순으로</option>
+     			<option class="soption" value="3">최근 생성된 순으로</option>
+     			<option class="soption" value="4">수정한 순으로</option>
+     			<option class="soption" value="5">최근 수정한 순으로</option>
    				 </select>
     		</div>
     		<div class="arraydown"> <img class="downarrow" alt="" src="/images/double_arrows.png" width="50px"> </div>
@@ -208,7 +246,7 @@
 					<th:block th:each="post : ${posts}">
 					<div class="col-md-3 align-self-center">
 						<div style="position: relative; z-index: 1;">
-							<a class="a" th:href="'view/'+${post.id}"><img class="a1" alt="1" th:src="${post.imgurl}" width="390px" ></a>
+							<a class="a" th:href="'/'+'view/'+${post.id}"><img class="a1" alt="1" th:src="${post.imgurl}" width="100%" ></a>
 							<div class="a2" style="position: absolute; top:90%; left:69%; color: white; z-index: 2; background-color: rgba(0,0,0,0.2);" >  
 								<div><img alt="heart" src="/images/flatheart.png" width="30px">
 								<span> [[${post.heart}]] </span>

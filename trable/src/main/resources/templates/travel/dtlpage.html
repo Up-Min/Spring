@@ -54,9 +54,9 @@
 		alert("하트를 눌렀습니다!");
 		location.href = "/heart/"+value;
 	}
-	function select(){
+/* 	function select(){
 		var selectval = $('.select').val();
-		
+	}
 		switch (selectval) {
 			case "1":
 				location.href = "/Sselects/bylike";
@@ -73,7 +73,7 @@
 			case "5":
 				location.href = "/Sselects/byrutime";				
 				break;	
-		}
+		} */
       </script>
     </th:block>
 
@@ -85,13 +85,14 @@
       *{
       	margin: 0 auto;
       	padding: 0;
+ 	font-family: 'Nanum Gothic', sans-serif;
+ 	font-weight: bold;
       }
       
-      body{
-/* 		background: linear-gradient(180deg, #037A1D, #006DBC, #1A00BC); */
-		background: darkgray;
-		margin-top: 50px;
-		}
+body{
+ background: linear-gradient(180deg, #455284, #69607C, #945E81, #B97486);
+	margin-top: 0px;
+}
 
 .sidemenu{
 	width: 150px;
@@ -104,6 +105,8 @@
 }
 
 		.wrap{
+		top: 100px;
+		position: relative;
 		}
 		
 		
@@ -158,22 +161,25 @@
 						<img th:alt="${post.imgname}" th:src="${post.imgurl}" width="90%">
 					</div>
 					<div class="col-md-6">
+					<br>
 						<div class="row-md-3">
-							<h2> write by : [[${member.email}]] </h2>
+							<h2> 작성자 : [[${member.email}]] </h2>
 						</div>
+						<br>
 						<div class="row-md-3">
-							<h2> tags </h2><br> 
-								<div th:each = "tag : ${tags}">
-									<span> #[[${tag.tagname}]] </span>
+							<h3> 태그 </h3> 
+								<div >
+									<span th:each = "tag : ${tags}"> #[[${tag.tagname}]] </span>
 								</div>
 						</div>						
+						<br>
 						<div class="row-md-3">
-							<h2> hearts : [[${post.heart}]] </h2>
+							<h3> 좋아요 : [[${post.heart}]] </h3>
 						</div>	
 						<div class="row-md-3 likesection">
 							<div class="row-md-6" style="text-align: left;">							
 								<button class="button" th:onclick="giveheart([[${post.id}]])" style="background: transparent; border: 0"><img alt="heart" src="/images/flatheart.png" width="50px"> </button>
-								<span> I like this TRABLE! </span>
+								<span> 이 TRABLE, 마음에 들어요! </span>
 							</div>
 						</div>											
 					</div>
@@ -182,20 +188,20 @@
 						<div class="updateANDdelete">
 								<div class="row center">
 									<div class="col-md-3">
-									<p> UPDATE POST </p>
+									<p> 게시물 수정 </p>
 									<a th:href = "'/update/'+${post.id}"><img alt="update" src="/images/refresh.png" width="50px"></a>						
 									</div>
 									<div th:if="${post.showPost} == 'SHOW'"></div>
 									<div class="col-md-3">
-									<p> HIDE POST </p>
+									<p> 게시물 숨김 </p>
 									<a type="button" th:onclick="hidepost([[${post.id}]])"><img alt="hide" src="/images/eyeclosed.png" width="55px"> </a>
 									</div>									
 									<div class="col-md-3">
-									<p> SHOW POST </p>
+									<p> 게시물 숨김 해제 </p>
 									<a type="button" th:onclick="showpost([[${post.id}]])"><img alt="hide" src="/images/eyeopen.png" width="55px"> </a>
 									</div>									
 									<div class="col-md-3">
-									<p> DELETE POST </p>
+									<p> 게시물 삭제 </p>
 									<a type="button" th:onclick="deletepost([[${post.id}]])"><img alt="delete" src="/images/delete.png" width="50px">  </a>															
 <!-- 									<a th:href = "'/delete/'+${post.id}" onclick="delete()"><img alt="delete" src="/images/delete.png" width="50px">  </a>															
  -->									</div>
