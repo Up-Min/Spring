@@ -2,6 +2,7 @@ package com.trable.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
@@ -178,7 +179,7 @@ public class MainController {
 	public String updatepost(@PathVariable("id") Long postid, Model model, @Valid PostFormDto postFormDto,
 			BindingResult bindingResult, @RequestParam("PostImgFile") List<MultipartFile> postImgFileList,
 			@RequestParam("MainImgFile") MultipartFile postMainImg,
-			@RequestParam("Tag") String tag) {
+			@RequestParam("Tag") Optional<String> tag) {
 		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("errorMessage", "데이터를 정상적으로 가져오지 못했습니다.");
@@ -190,6 +191,7 @@ public class MainController {
 		
 		try {
 			String email = SecurityContextHolder.getContext().getAuthentication().getName();
+			System.out.println("Control Tag : " + tag);
 			postservice.updatePost(postFormDto, postImgFileList, postMainImg, email, postid, tag);
 		} catch (Exception e) {
 			e.printStackTrace();

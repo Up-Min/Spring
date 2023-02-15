@@ -56,11 +56,15 @@ public class TagService {
 	}
 	
 	public void updateTag(String tagname, Post post) {
-		postTagRepository.deleteposttagbypostid(post.getId());
+		
+		if(postTagRepository.getpostlistbyid(post.getId()).size()>0) {
+			postTagRepository.deleteById(post.getId());			
+		}
+		
+		System.out.println("tagservice Tag : " + tagname);
 		
 		String tag1 = tagname.trim();
 		String[] taglist = tag1.split("#");
-		
 		for(int i=1; i<taglist.length; i++) {
 			try {
 				Tag tag = tagRepository.findByTagname(taglist[i]).orElseThrow(EntityNotFoundException::new);

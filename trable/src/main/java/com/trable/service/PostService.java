@@ -56,18 +56,22 @@ public class PostService {
 	}
 	
 	public Long updatePost(PostFormDto postFormDto, List<MultipartFile> postImgFileList, 
-		MultipartFile postMainImg, String email, Long postid, String tag) throws Exception {
+		MultipartFile postMainImg, String email, Long postid, Optional<String> tag) throws Exception {
 		Member member = memberRepository.findByEmail(email);
 		Post post = postRepository.findById(postid).orElseThrow(EntityNotFoundException::new);
 		List<PostImg> postimglist = postImgRepository.findByPostId(postid);
+		String rtag;
 		
 		post.updatePost(member, postFormDto);
 		postMainImgService.updatePostMainImg(post, postMainImg);		
 		for(int i=0; i<postImgFileList.size(); i++) {
 			postImgService.updatePostImg(postimglist.get(i),postimglist.get(i).getId(),postImgFileList.get(i));
 		}
-		
-//		tagService.updateTag(tag, post);
+		System.out.println("postservice Tag : " + tag);
+		if(!tag.isEmpty()) {
+			rtag = tag.get();
+			tagService.updateTag(rtag, post);
+		}
 		
 		return post.getId();
 	}
