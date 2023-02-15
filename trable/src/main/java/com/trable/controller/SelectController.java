@@ -1,5 +1,6 @@
 package com.trable.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,7 @@ import com.trable.repository.PostRepository;
 import com.trable.service.BlockService;
 import com.trable.service.MemberService;
 import com.trable.service.PostService;
+import com.trable.service.TagService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +31,7 @@ public class SelectController {
 	private final PostRepository postRepository;
 	private final BlockService blockService;
 	private final MemberService memberService;
+	private final TagService tagService;
 	
 	@GetMapping(value = "/bylike")
 	public String bylike(Model model) {
@@ -36,9 +39,11 @@ public class SelectController {
 		UserDetails user = memberService.loadUserByUsername(id);
 		Member member = memberService.findMember(user.getUsername());
 		
-		List<Post> post = postRepository.findBylike();
 		List<BlockTags> Taglist = blockService.getblktag(member.getId());
 		List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
+		
+		List<String> finaltag = tagService.returntagsleast2times();
+		List<Post> post = postservice.getPostsUsingFinalTagbylike(finaltag);
 		
 		for(int i=0; i<post.size(); i++) {
 			for(int j=0; j<Memlist.size(); j++) {
@@ -48,7 +53,7 @@ public class SelectController {
 			}
 		}
 		model.addAttribute("posts",post);
-		return "/travel/searchpage";
+		return "/travel/likepage";
 	}
 	@GetMapping(value = "/byctime")
 	public String byctime(Model model) {
@@ -56,9 +61,11 @@ public class SelectController {
 		UserDetails user = memberService.loadUserByUsername(id);
 		Member member = memberService.findMember(user.getUsername());
 		
-		List<Post> post = postRepository.findByctime();
 		List<BlockTags> Taglist = blockService.getblktag(member.getId());
 		List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
+		
+		List<String> finaltag = tagService.returntagsleast2times();
+		List<Post> post = postservice.getPostsUsingFinalTagbyctime(finaltag);
 		
 		for(int i=0; i<post.size(); i++) {
 			for(int j=0; j<Memlist.size(); j++) {
@@ -68,7 +75,7 @@ public class SelectController {
 			}
 		}
 		model.addAttribute("posts",post);
-		return "/travel/searchpage";		
+		return "/travel/likepage";		
 	}
 	@GetMapping(value = "/byrctime")
 	public String byrctime(Model model) {
@@ -76,9 +83,11 @@ public class SelectController {
 		UserDetails user = memberService.loadUserByUsername(id);
 		Member member = memberService.findMember(user.getUsername());
 		
-		List<Post> post = postRepository.findByrctime();
 		List<BlockTags> Taglist = blockService.getblktag(member.getId());
 		List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
+		
+		List<String> finaltag = tagService.returntagsleast2times();
+		List<Post> post = postservice.getPostsUsingFinalTagbyrctime(finaltag);
 		
 		for(int i=0; i<post.size(); i++) {
 			for(int j=0; j<Memlist.size(); j++) {
@@ -87,9 +96,8 @@ public class SelectController {
 				}
 			}
 		}
-		System.out.println("postlist test : " + post);
 		model.addAttribute("posts",post);
-		return "/travel/searchpage";		
+		return "/travel/likepage";		
 	}
 	@GetMapping(value = "/byutime")
 	public String byutime(Model model) {
@@ -97,9 +105,11 @@ public class SelectController {
 		UserDetails user = memberService.loadUserByUsername(id);
 		Member member = memberService.findMember(user.getUsername());	
 		
-		List<Post> post = postRepository.findByutime();
 		List<BlockTags> Taglist = blockService.getblktag(member.getId());
 		List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
+		
+		List<String> finaltag = tagService.returntagsleast2times();
+		List<Post> post = postservice.getPostsUsingFinalTagbyutime(finaltag);
 		
 		for(int i=0; i<post.size(); i++) {
 			for(int j=0; j<Memlist.size(); j++) {
@@ -109,7 +119,7 @@ public class SelectController {
 			}
 		}
 		model.addAttribute("posts",post);
-		return "/travel/searchpage";		
+		return "/travel/likepage";		
 	}
 	@GetMapping(value = "/byrutime")
 	public String byrutime(Model model) {
@@ -117,9 +127,11 @@ public class SelectController {
 		UserDetails user = memberService.loadUserByUsername(id);
 		Member member = memberService.findMember(user.getUsername());	
 		
-		List<Post> post = postRepository.findByrutime();
 		List<BlockTags> Taglist = blockService.getblktag(member.getId());
 		List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
+		
+		List<String> finaltag = tagService.returntagsleast2times();
+		List<Post> post = postservice.getPostsUsingFinalTagbyrutime(finaltag);
 		
 		for(int i=0; i<post.size(); i++) {
 			for(int j=0; j<Memlist.size(); j++) {
@@ -129,7 +141,7 @@ public class SelectController {
 			}
 		}
 		model.addAttribute("posts",post);
-		return "/travel/searchpage";		
+		return "/travel/likepage";		
 	}
 	
 	

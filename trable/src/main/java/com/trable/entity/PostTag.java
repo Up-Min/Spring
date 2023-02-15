@@ -41,4 +41,9 @@ public class PostTag {
 		postTag.setTag(tag);
 		return postTag;
 	}
+	
+	public void updatePostTag(Post post, Tag tag) {
+		this.post = post;
+		this.tag = tag;
+	}
 }

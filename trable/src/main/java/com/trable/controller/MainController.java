@@ -177,7 +177,8 @@ public class MainController {
 	@PostMapping(value = "/update/{id}")
 	public String updatepost(@PathVariable("id") Long postid, Model model, @Valid PostFormDto postFormDto,
 			BindingResult bindingResult, @RequestParam("PostImgFile") List<MultipartFile> postImgFileList,
-			@RequestParam("MainImgFile") MultipartFile postMainImg) {
+			@RequestParam("MainImgFile") MultipartFile postMainImg,
+			@RequestParam("Tag") String tag) {
 		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("errorMessage", "데이터를 정상적으로 가져오지 못했습니다.");
@@ -189,7 +190,7 @@ public class MainController {
 		
 		try {
 			String email = SecurityContextHolder.getContext().getAuthentication().getName();
-			postservice.updatePost(postFormDto, postImgFileList, postMainImg, email, postid);
+			postservice.updatePost(postFormDto, postImgFileList, postMainImg, email, postid, tag);
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "데이터 수정 중 오류가 발생했습니다.");
@@ -214,29 +215,7 @@ public class MainController {
 		Member member1 = memberService.updateMembergrade(member.getId(), heart);
 		
 		// GET TAGS WHAT USER USED LEAST 2 TIMES.
-		List<Tag> tag = tagService.getTagnamebycount(member.getId());
-		List<String> tagnamelist = new ArrayList<>();
-		for(int i = 0; i<tag.size(); i++ ) {
-			 tagnamelist.add(tag.get(i).getTagname());
-		}
-		List<String> enoughtagname = new ArrayList<>();
-		for(int i=0; i<tagnamelist.size(); i++) {
-			int count = 0;
-			for(int j=0; j<tagnamelist.size(); j++) {
-				if(tagnamelist.get(i) == tagnamelist.get(j)) {
-					count ++;					
-				}
-			}
-			if(count > 1) {
-				enoughtagname.add(tagnamelist.get(i));
-			}
-		}
-		List<String> finaltag = new ArrayList<>();
-		for(String test : enoughtagname) {
-			if(!finaltag.contains(test)) {
-				finaltag.add(test);				
-			}
-		}
+		List<String> finaltag = tagService.returntagsleast2times();
 		System.out.println("show tags used more than 2times : " + finaltag);
 		
 
@@ -252,69 +231,75 @@ public class MainController {
 	
 	// RECOMMEND PAGE
 	@GetMapping(value = "/like")
-	public String likepage(Model model, Post post) {
+	public String likepage(Model model) {
 		String id = SecurityContextHolder.getContext().getAuthentication().getName();
 		UserDetails user = memberService.loadUserByUsername(id);
 		Member member = memberService.findMember(user.getUsername());	
 		
 		// GET TAGS WHAT USER USED LEAST 2 TIMES.
-		List<Tag> tag = tagService.getTagnamebycount(member.getId());
-		List<String> tagnamelist = new ArrayList<>();
-		for(int i = 0; i<tag.size(); i++ ) {
-			 tagnamelist.add(tag.get(i).getTagname());
-		}
-		List<String> enoughtagname = new ArrayList<>();
-		for(int i=0; i<tagnamelist.size(); i++) {
-			int count = 0;
-			for(int j=0; j<tagnamelist.size(); j++) {
-				if(tagnamelist.get(i) == tagnamelist.get(j)) {
-					count ++;					
-				}
-			}
-			if(count > 1) {
-				enoughtagname.add(tagnamelist.get(i));
-			}
-		}
-		List<String> finaltag = new ArrayList<>();
-		for(String test : enoughtagname) {
-			if(!finaltag.contains(test)) {
-				finaltag.add(test);				
-			}
-		}
+		List<String> finaltag = tagService.returntagsleast2times();
+		
+		
+//		List<Tag> tag = tagService.getTagnamebycount(member.getId());
+//		List<String> tagnamelist = new ArrayList<>();
+//		for(int i = 0; i<tag.size(); i++ ) {
+//			 tagnamelist.add(tag.get(i).getTagname());
+//		}
+//		List<String> enoughtagname = new ArrayList<>();
+//		for(int i=0; i<tagnamelist.size(); i++) {
+//			int count = 0;
+//			for(int j=0; j<tagnamelist.size(); j++) {
+//				if(tagnamelist.get(i) == tagnamelist.get(j)) {
+//					count ++;					
+//				}
+//			}
+//			if(count > 1) {
+//				enoughtagname.add(tagnamelist.get(i));
+//			}
+//		}
+//		List<String> finaltag = new ArrayList<>();
+//		for(String test : enoughtagname) {
+//			if(!finaltag.contains(test)) {
+//				finaltag.add(test);				
+//			}
+//		}
+		
 		
 		// GET POSTS BY USE FINALTAG
-		List<Post> tagpost = new ArrayList<>();
-		for(String eachtag : finaltag) {
-			List<Post> casepost = postservice.getPostbyTagname(eachtag);//각 태그별로 가져온 postlist
-			System.out.println("casepost : " + casepost);
-			for(int i=0; i<casepost.size(); i++) {
-				if(!tagpost.contains(casepost.get(i))) {
-					tagpost.add(casepost.get(i));
-				}
-			}
-		}
+		List<Post> post = postservice.getPostsUsingFinalTag(finaltag);
+		
+//		List<Post> post = new ArrayList<>();
+//		for(String eachtag : finaltag) {
+//			List<Post> casepost = postservice.getPostbyTagname(eachtag);//각 태그별로 가져온 postlist
+//			System.out.println("casepost : " + casepost);
+//			for(int i=0; i<casepost.size(); i++) {
+//				if(!post.contains(casepost.get(i))) {
+//					post.add(casepost.get(i));
+//				}
+//			}
+//		}
 		
 		// CHECK BLOCK Member LIST
 		List<BlockTags> Taglist = blockService.getblktag(member.getId());
 		List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
 		
-		for(int i=0; i<tagpost.size(); i++) {
+		for(int i=0; i<post.size(); i++) {
 			for(int j=0; j<Memlist.size(); j++) {
-				if(tagpost.get(i).getMember().getEmail().equals(Memlist.get(j).getBlockmembername())) {
-					tagpost.remove(tagpost.get(i));
+				if(post.get(i).getMember().getEmail().equals(Memlist.get(j).getBlockmembername())) {
+					post.remove(post.get(i));
 				}
 			}
 		}
-		for(int i=0; i<tagpost.size(); i++) {
-			for(int j=0; j<Taglist.size(); j++) {
-				if(tagpost.get(i).getMember().getEmail().equals(Taglist.get(j).getBlocktagname())) {
-					tagpost.remove(tagpost.get(i));
-				}
-			}
-		}
+//		for(int i=0; i<post.size(); i++) {
+//			for(int j=0; j<Taglist.size(); j++) {
+//				if(post.get(i).getMember().getEmail().equals(Taglist.get(j).getBlocktagname())) {
+//					post.remove(post.get(i));
+//				}
+//			}
+//		}
 		
 		
-		model.addAttribute("posts",tagpost);
+		model.addAttribute("posts",post);
 		return "/travel/likepage";
 	}
 

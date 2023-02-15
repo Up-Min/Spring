@@ -38,6 +38,7 @@ public class PostService {
 	private final PostMainImgService postMainImgService;
 	private final MemberRepository memberRepository;
 	private final TagRepository tagRepository;
+	private final TagService tagService;
 	
 	public Long savePost(PostFormDto postFormDto, List<MultipartFile> postImgFileList, MultipartFile postMainImg, String email) throws Exception {
 		Member member = memberRepository.findByEmail(email);
@@ -55,17 +56,18 @@ public class PostService {
 	}
 	
 	public Long updatePost(PostFormDto postFormDto, List<MultipartFile> postImgFileList, 
-		MultipartFile postMainImg, String email, Long postid) throws Exception {
+		MultipartFile postMainImg, String email, Long postid, String tag) throws Exception {
 		Member member = memberRepository.findByEmail(email);
 		Post post = postRepository.findById(postid).orElseThrow(EntityNotFoundException::new);
 		List<PostImg> postimglist = postImgRepository.findByPostId(postid);
 		
 		post.updatePost(member, postFormDto);
-		postMainImgService.updatePostMainImg(post, postMainImg);
-		
+		postMainImgService.updatePostMainImg(post, postMainImg);		
 		for(int i=0; i<postImgFileList.size(); i++) {
 			postImgService.updatePostImg(postimglist.get(i),postimglist.get(i).getId(),postImgFileList.get(i));
 		}
+		
+//		tagService.updateTag(tag, post);
 		
 		return post.getId();
 	}
@@ -134,5 +136,83 @@ public class PostService {
 		return post;
 	}
 	
+	public List<Post> getPostsUsingFinalTag(List<String> finaltag){
+		List<Post> post = new ArrayList<>();
+		for(String eachtag : finaltag) {
+			List<Post> casepost = postRepository.findByTag1(eachtag);//각 태그별로 가져온 postlist
+			System.out.println("casepost : " + casepost);
+			for(int i=0; i<casepost.size(); i++) {
+				if(!post.contains(casepost.get(i))) {
+					post.add(casepost.get(i));
+				}
+			}
+		}
+		return post;
+	}
+	public List<Post> getPostsUsingFinalTagbylike(List<String> finaltag){
+		List<Post> post = new ArrayList<>();
+		for(String eachtag : finaltag) {
+			List<Post> casepost = postRepository.findBylikeSearch(eachtag);//각 태그별로 가져온 postlist
+			System.out.println("casepost : " + casepost);
+			for(int i=0; i<casepost.size(); i++) {
+				if(!post.contains(casepost.get(i))) {
+					post.add(casepost.get(i));
+				}
+			}
+		}
+		return post;
+	}	
+	public List<Post> getPostsUsingFinalTagbyctime(List<String> finaltag){
+		List<Post> post = new ArrayList<>();
+		for(String eachtag : finaltag) {
+			List<Post> casepost = postRepository.findByctimeSearch(eachtag);//각 태그별로 가져온 postlist
+			System.out.println("casepost : " + casepost);
+			for(int i=0; i<casepost.size(); i++) {
+				if(!post.contains(casepost.get(i))) {
+					post.add(casepost.get(i));
+				}
+			}
+		}
+		return post;
+	}
+	public List<Post> getPostsUsingFinalTagbyrctime(List<String> finaltag){
+		List<Post> post = new ArrayList<>();
+		for(String eachtag : finaltag) {
+			List<Post> casepost = postRepository.findByrctimeSearch(eachtag);//각 태그별로 가져온 postlist
+			System.out.println("casepost : " + casepost);
+			for(int i=0; i<casepost.size(); i++) {
+				if(!post.contains(casepost.get(i))) {
+					post.add(casepost.get(i));
+				}
+			}
+		}
+		return post;
+	}	
+	public List<Post> getPostsUsingFinalTagbyutime(List<String> finaltag){
+		List<Post> post = new ArrayList<>();
+		for(String eachtag : finaltag) {
+			List<Post> casepost = postRepository.findByutimeSearch(eachtag);//각 태그별로 가져온 postlist
+			System.out.println("casepost : " + casepost);
+			for(int i=0; i<casepost.size(); i++) {
+				if(!post.contains(casepost.get(i))) {
+					post.add(casepost.get(i));
+				}
+			}
+		}
+		return post;
+	}
+	public List<Post> getPostsUsingFinalTagbyrutime(List<String> finaltag){
+		List<Post> post = new ArrayList<>();
+		for(String eachtag : finaltag) {
+			List<Post> casepost = postRepository.findByrutimeSearch(eachtag);//각 태그별로 가져온 postlist
+			System.out.println("casepost : " + casepost);
+			for(int i=0; i<casepost.size(); i++) {
+				if(!post.contains(casepost.get(i))) {
+					post.add(casepost.get(i));
+				}
+			}
+		}
+		return post;
+	}
 	
 	}

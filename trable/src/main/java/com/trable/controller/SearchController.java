@@ -38,21 +38,23 @@ public class SearchController {
 	
 	
 	// SEARCH PAGE
-	@GetMapping(value = "/find")
-	public String searchpage(Model model, Post posttest) {
+	@GetMapping(value = {"/find","/find/{tags}"})
+	public String searchpage(Model model, Post posttest,@PathVariable("tags") Optional<String> searchtag) {
 		
-		List<Post> post = postservice.getPostShowPage(posttest.getShowPost());
 		String id = SecurityContextHolder.getContext().getAuthentication().getName();
 		UserDetails user = memberService.loadUserByUsername(id);
 		Member member = memberService.findMember(user.getUsername());	
 		
-	
+		List<Post> post = new ArrayList<>();
 		// CHECK BLOCK Member LIST
 		List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
 		System.out.println("차단 멤버 : " + Memlist);
 		
-		
-		System.out.println(" 차단 멤버 공정 전 : " + post.size());
+		if(searchtag.isEmpty()) {
+		post = postRepository.findByMemberNotshow();
+		}else {
+		post = postRepository.findByTag2(searchtag);			
+		}
 				
 		for(int i=0; i<post.size(); i++) {
 			for(int j=0; j<Memlist.size(); j++) {
@@ -61,11 +63,9 @@ public class SearchController {
 				}
 			}
 		}	
-		System.out.println("공정후 (차단멤버 제거) : " + post.size());			
 		
 
 		model.addAttribute("posts",post);
-		//model.addAttribute("imgLocation",imgLocation);
 		return "/travel/searchpage";
 	}
 	

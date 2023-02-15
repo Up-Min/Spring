@@ -22,6 +22,8 @@ public class PostFormDto {
 	
 	private String imgurl;
 	
+	private String posttags;
+	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
 	public Post createPost() {
