@@ -38,7 +38,10 @@ public class SecurityConfig {
 		.mvcMatchers("/","/members/**","/item/**","/images/**","/searchs/**").permitAll();
 		//.anyRequest().authenticated();
 		
+		
 		http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+
+		// http.csrf().disable();
 		
 		http.sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
