@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+
+<!-- layout이 적용되어있는 페이지 폼 입니다. 
+		따로 적용할 거 없이 "content 영역에 각 페이지 별 내용 기입하시면 됩니다."-->
+
 <html
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -6,33 +10,24 @@
 >
   <head>
     <meta charset="UTF-8" />
-    <title>Insert title here</title>
+    <title> Insert title here </title> 
 
     <!-- THYMELEAF JS  -->
     <th:block layout:fragment="script">
-      <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-      <script th:inline="javascript"></script>
+      <script th:inline="javascript">
+      
+      </script>
     </th:block>
 
     <!-- THYMELEAF CSS -->
     <th:block layout:fragment="css">
-        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-      <style>
-      
-      *{
-      	margin: 0 auto;
-      	padding: 0;
-      }
-      
-      </style>
+      <style> </style>
     </th:block>
   </head>
   <body>
-    <div layout:fragment="content">본문 영역입니다.
-
-        <script>
-			AOS.init();
-		</script>
+    <div layout:fragment="content">
+    본문 영역입니다.
+ 테스트입니다.
     </div>
   </body>
 </html>
