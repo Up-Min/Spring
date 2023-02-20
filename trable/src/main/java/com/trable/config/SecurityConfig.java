@@ -43,8 +43,7 @@ public class SecurityConfig {
 
 		// http.csrf().disable();
 		
-		http.sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 		
 		return http.build();
 	}

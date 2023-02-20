@@ -96,7 +96,7 @@ public class MainController {
 			// GET POST BY POSTID
 			Post post = postservice.getPostbyid(postid);
 			
-			// CREATE & SAVE TAG, POSTTAG
+			// CREATE & SAVE TAG, POSTTAG //
 			tagService.saveTag(tag, post);
 			
 		}catch (Exception e) {
