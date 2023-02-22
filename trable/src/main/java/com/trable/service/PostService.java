@@ -170,7 +170,7 @@ public class PostService {
 		List<Post> post = new ArrayList<>();
 		for(String eachtag : finaltag) {
 			List<Post> casepost = postRepository.findByctimeSearch(eachtag);//각 태그별로 가져온 postlist
-			System.out.println("casepost : " + casepost);
+			System.out.println("casepost :: " + casepost);
 			for(int i=0; i<casepost.size(); i++) {
 				if(!post.contains(casepost.get(i))) {
 					post.add(casepost.get(i));
