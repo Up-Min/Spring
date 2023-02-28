@@ -115,7 +115,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 		// 쿼리 dsl 사용 MainItemDto로 쿼리 조회한 결과를 바로 보내줄거임. (MainItemDto에서 선언한 @쿼리프로젝션 으로 QMainItemDto.java 만들어져있음) 
 		//new MainItemDto로 바로 바꿔준다 (소괄호 안에 있는)
 		List<MainItemDto> content = queryFactory.select(
-				new QMainItemDto(item.id, item.itemNm, item.itemDetail, itemImg.imgUrl, item.price))
+				new QMainItemDto(item.id, item.itemNm, item.itemDetail, itemImg.imgUrl, item.price)) // select * from
 				.from(itemImg).join(itemImg.item, item) //itemImg.item과 item엔티티를 join 시킨다.
 				.where(itemImg.repimgYn.eq("Y"))
 				.where(itemNmLike(itemSearchDto.getSearchQuery())) //itemNmLike 구현해줘야함.
