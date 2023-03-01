@@ -64,8 +64,16 @@
 			}
 		}
     	
+
+		
 	});
 	
+		function test(){
+			$('.sidemenu').css('visibility','hidden');
+		}
+		function test1(){
+			$('.sidemenu').css('visibility','hidden');
+		}
 	
 	</script>
 </th:block>
@@ -75,10 +83,25 @@
 	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 	<link href="/css/loginpage.css" rel="stylesheet">
 	<style>
-			 *{
- 	font-family: 'Nanum Gothic', sans-serif;
- 	}
-	
+
+.content{
+margin-top: 50px;
+width: 85%;
+}	
+
+
+.sidemenu{
+	width: 150px;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top : 0%;
+	background-color: rgba(205,205,205, 1);
+	visibility: hidden;
+	text-align: center;
+	z-index: 2;
+}
+
 	div.fileinputs {
 	position: relative;
 }

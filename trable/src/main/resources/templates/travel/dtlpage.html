@@ -54,26 +54,6 @@
 		alert("하트를 눌렀습니다!");
 		location.href = "/heart/"+value;
 	}
-/* 	function select(){
-		var selectval = $('.select').val();
-	}
-		switch (selectval) {
-			case "1":
-				location.href = "/Sselects/bylike";
-				break;
-			case "2":
-				location.href = "/Sselects/byctime";				
-				break;
-			case "3":
-				location.href = "/Sselects/byrctime";				
-				break;
-			case "4":
-				location.href = "/Sselects/byutime";				
-				break;
-			case "5":
-				location.href = "/Sselects/byrutime";				
-				break;	
-		} */
       </script>
     </th:block>
 
@@ -85,14 +65,18 @@
       *{
       	margin: 0 auto;
       	padding: 0;
- 	font-family: 'Nanum Gothic', sans-serif;
- 	font-weight: bold;
       }
       
 body{
  background: linear-gradient(180deg, #455284, #69607C, #945E81, #B97486);
 	margin-top: 0px;
 }
+
+.content{
+margin-top: 50px;
+width: 85%;
+}	
+
 
 .sidemenu{
 	width: 150px;
@@ -107,6 +91,7 @@ body{
 		.wrap{
 		top: 100px;
 		position: relative;
+		margin-bottom: 100px;
 		}
 		
 		
@@ -127,14 +112,11 @@ body{
 		margin-bottom: 50px;
 		}
 		
-		.row_left{
+		.row_center{
 		margin-right: auto;
-		}
-		
-		.row_right{
 		margin-left: auto;
 		}
-		
+				
 		.row_final{
 			height: 50%;
 		}
@@ -213,7 +195,7 @@ body{
     			
     			
     			<!-- POST IMG -->
-    			<div class="row row_left" th:each="postimg : ${postimgs}">
+    			<div class="row row_center" th:each="postimg : ${postimgs}" style="text-align: center;">
 					<img th:alt="${postimg.imgname}" th:src="${postimg.imgurl}" >
     			</div>
     		</div>

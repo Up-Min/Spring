@@ -7,9 +7,6 @@
     <meta charset="UTF-8" />
     <title>Insert title here</title>
     <style>
-      body {
-        position: relative;
-      }
     </style>
   </head>
   <body>
@@ -20,29 +17,43 @@
         data-bs-theme="dark"
         onmouseover="test()"
         onmouseout="test1()"
-        style="position: absolute; top: 2%; left: 15px; z-index: 1"
+        style="position: absolute; top: 20px; left: 15px; z-index: 1"
       >
         <!-- <nav class="navbar navbar-expand-sm style = background-color:#e3f2fd;"> -->
         <!--  배경색을 따로 코드로 지정할 수도 있다. -->
 
         <div class="container-fluid Mainlogo">
-          <!-- 이것만 뷰 포트에 맞춰서 컨테이너 크기 지정하면 된다! -->
           <a class="navbar-brand" href="/"
             ><img alt="로고" src="/images/logo.png" width="110px" />
           </a>
-          <!-- home를 가게 할 루트경로 '/' spring에서는 static과 templates안에 있는 폴더가 같이 있다고 생각한다!  -->
-         <!--  <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button> -->
         </div>
+        
+       <!-- MENU  -->
+		<div data-aos="fade-right" data-aos-duration="1000" class="sidemenu" onmouseover="test()" onmouseout="test1()">
+		<ul class="nav flex-column">
+		  <li class="nav-item" style="margin-top: 20px;">
+		    <a class="nav-link active" aria-current="page" href="/"><img src="/images/Logo.png" alt="logo" width="110px"></a>
+		  </li>
+		  <li class="nav-item" style="margin-top: 15px;" sec:authorize="isAuthenticated()">
+		    <a class="nav-link" href="/write"><img src="/images/write.png" alt="towrite" width="70px"></a>
+		  </li>
+		  <li class="nav-item" style="margin-top: 15px;" sec:authorize = "isAuthenticated()">
+		    <a class="nav-link" href="/searchs/find"><img src="/images/search.png" alt="tosearch" width="70px"></a>
+		  </li>
+		  <li class="nav-item" style="margin-top: 15px;" sec:authorize ="isAnonymous()" >
+		    <a class="nav-link" href="#photo"><img src="/images/search.png" alt="tosearch" width="70px"></a>
+		  </li>
+		  <li class="nav-item" style="margin-top: 15px;"  sec:authorize="isAuthenticated()">
+		    <a class="nav-link" href="/like"><img src="/images/userheart.png" alt="tolike" width="70px"></a>
+		  </li>
+		  <li class="nav-item" style="margin-top: 15px;" sec:authorize="isAuthenticated()">
+		    <a class="nav-link" href="/user"><img src="/images/user.png" alt="touser" width="70px"></a>
+		  </li>
+		  <!-- <li class="nav-item" sec:authorize="isAuthenticated()">
+		    <a class="nav-link" href="/setting"><img src="/images/settings.png" alt="tosetting" width="70px"></a>
+		  </li> -->
+		  </ul>		
+		</div>
       </nav>
     </div>
   </body>

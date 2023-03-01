@@ -34,7 +34,7 @@ public class PostImgService {
 		
 		if(!StringUtils.isEmpty(oriImgName)) {
 			imgName = fileService.uploadFile(postImgLocation, oriImgName, postimgfile.getBytes());
-			imgUrl = "/image/data/img/"+imgName;
+			imgUrl = "/image/img/"+imgName;
 		}
 		
 		postImg.updateImg(oriImgName, imgName, imgUrl);
@@ -42,7 +42,6 @@ public class PostImgService {
 	}
 	
 	public void updatePostImg(PostImg postImg, Long postImgid, MultipartFile postimgfile) throws Exception {
-		
 		if(!postimgfile.isEmpty()) {
 			PostImg savedPostImg = postImgRepository.findById(postImgid)
 					.orElseThrow(EntityNotFoundException::new);
@@ -55,13 +54,12 @@ public class PostImgService {
 			String imgName = "";
 			String imgUrl = "";
 			
-			if(!StringUtils.isEmpty(oriImgName)) {
-				imgName = fileService.uploadFile(postImgLocation, oriImgName, postimgfile.getBytes());
-				imgUrl = "/image/data/img/"+imgName;
-			}
+			imgName = fileService.uploadFile(postImgLocation, oriImgName, postimgfile.getBytes());
+			imgUrl = "/image/img/"+imgName;
 			
-			postImg.updateImg(oriImgName, imgName, imgUrl);
-			postImgRepository.save(postImg);	
+			savedPostImg.updateImg(oriImgName, imgName, imgUrl);
+			postImgRepository.save(savedPostImg);
+				
 			
 		}
 	}

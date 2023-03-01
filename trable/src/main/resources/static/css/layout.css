@@ -3,6 +3,7 @@
  *{
   margin: 0 auto;
   padding: 0;
+  font-family: 'Noto Sans KR', sans-serif;
  } 
 
 html{
@@ -28,10 +29,6 @@ footer{
 	text-align: center;
 	}
 	
-.content{ /* layout1.html에 있는 class = "content"에 적용할거임. */
-	/* margin: 50px 200px 100px 200px; */ /* 맨위, 오른쪽, 아래, 왼쪽 */
-	margin-top: 50px;
-}
 
 
 

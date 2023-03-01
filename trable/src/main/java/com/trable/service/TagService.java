@@ -58,10 +58,13 @@ public class TagService {
 	public void updateTag(String tagname, Post post) {
 		
 		if(postTagRepository.getpostlistbyid(post.getId()).size()>0) {
-			postTagRepository.deleteById(post.getId());			
+			List<PostTag> Taglist = postTagRepository.getpostlistbyid(post.getId());
+			for(PostTag tag : Taglist) {
+				postTagRepository.delete(tag);
+			}
 		}
 		
-		System.out.println("tagservice Tag : " + tagname);
+		System.out.println("tagservice update Tag : " + tagname);
 		
 		String tag1 = tagname.trim();
 		String[] taglist = tag1.split("#");

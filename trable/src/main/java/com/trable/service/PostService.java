@@ -67,12 +67,7 @@ public class PostService {
 		for(int i=0; i<postImgFileList.size(); i++) {
 			postImgService.updatePostImg(postimglist.get(i),postimglist.get(i).getId(),postImgFileList.get(i));
 		}
-		System.out.println("postservice Tag : " + tag);
-		if(!tag.isEmpty()) {
-			rtag = tag.get();
-			tagService.updateTag(rtag, post);
-		}
-		
+				
 		return post.getId();
 	}
 	

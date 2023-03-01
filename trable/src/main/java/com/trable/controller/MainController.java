@@ -180,6 +180,7 @@ public class MainController {
 			BindingResult bindingResult, @RequestParam("PostImgFile") List<MultipartFile> postImgFileList,
 			@RequestParam("MainImgFile") MultipartFile postMainImg,
 			@RequestParam("Tag") Optional<String> tag) {
+	;
 		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("errorMessage", "데이터를 정상적으로 가져오지 못했습니다.");
@@ -191,8 +192,8 @@ public class MainController {
 		
 		try {
 			String email = SecurityContextHolder.getContext().getAuthentication().getName();
-			System.out.println("Control Tag : " + tag);
-			postservice.updatePost(postFormDto, postImgFileList, postMainImg, email, postid, tag);
+			Long postidd = postservice.updatePost(postFormDto, postImgFileList, postMainImg, email, postid, tag);
+			tagService.updateTag(tag.get(), postservice.getPostbyid(postidd));
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "데이터 수정 중 오류가 발생했습니다.");

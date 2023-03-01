@@ -26,11 +26,11 @@ public class UserImgService {
 	
 		String oriImgName = imgfile.getOriginalFilename();
 		String imgName = "";
-		String imgUrl = "";
+		String imgUrl = "";	
 		
 		if(!StringUtils.isEmpty(oriImgName)) {
 			imgName = fileService.uploadFile(imgLocation, oriImgName, imgfile.getBytes());
-			imgUrl = "/image/data/img/"+imgName;
+			imgUrl = "/image/img/"+imgName;
 		}
 		
 		member.updateImg(oriImgName, imgName, imgUrl);
