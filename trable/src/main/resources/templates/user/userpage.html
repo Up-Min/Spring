@@ -163,15 +163,15 @@ color: black;
 							</div>
 							<br>
 							<div class="row-md-4">
-								<h4> 가장 많이 사용한 태그들 </h4>
+								<h4> 자주 사용한 태그들 </h4>
 							</div>
 							<div class="row-md-4">
 								<span th:each = "tag : ${tags}"> #[[${tag}]] </span>
 							</div>
 							<br>
 							<div class="row-md-4">
-								<span class="setting"> 사용자 설정 </span>
 								<a th:href="'/members/setting/'+${member.id}"><img alt="setting" src="/images/settings.png" width="50px">  </a> 
+								<span class="setting"> 사용자 설정 </span>
 							</div>
 							
 						</div>
@@ -184,7 +184,7 @@ color: black;
 						<div class="col-md-2"><span>회원님의 총 좋아요</span><br><h1>[[${heart}]]</h1> </div>
 						<div class="col-md-1"></div>
 						<div class="col-md-2"><img alt="trophy" src="/images/trophy.png" width="75px">	</div>
-						<div class="col-md-2"> <span>당신의 회원 등급은?</span> <br> <h1> [[${member.usergrade}]] </h1></div>
+						<div class="col-md-2"> <span>회원님의 등급은?</span> <br> <h1> [[${member.usergrade}]] </h1></div>
 						<div class="col-md-1"></div>
 						
 					</div>

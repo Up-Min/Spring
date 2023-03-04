@@ -147,14 +147,12 @@ public class MemberController {
 		@GetMapping(value = "/resetset/{id}")
 		public String resetset(@PathVariable("id") Long memberid) {
 			blockService.deleteBlockMember(memberid);
-			blockService.deleteBlockTag(memberid);
 			return "redirect:/";
 		}
 		
 		// DELETE USER
 		@GetMapping(value = "/deleteuser/{id}")
 		public String deleteuser(@PathVariable("id") Long memberid) {
-			
 			memberService.deletemember(memberid);
 			SecurityContextHolder.clearContext();
 			return "redirect:/";
