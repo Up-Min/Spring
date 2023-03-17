@@ -16,10 +16,12 @@ import com.trable.constant.ShowPost;
 import com.trable.dto.PostFormDto;
 import com.trable.dto.PostImgDto;
 import com.trable.dto.PostSearchDto;
+import com.trable.entity.Alert;
 import com.trable.entity.Member;
 import com.trable.entity.Post;
 import com.trable.entity.PostImg;
 import com.trable.entity.Tag;
+import com.trable.repository.AlertRepository;
 import com.trable.repository.MemberRepository;
 import com.trable.repository.PostImgRepository;
 import com.trable.repository.PostRepository;
@@ -32,13 +34,16 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class PostService {
 
-	private final PostRepository postRepository;
-	private final PostImgRepository postImgRepository;
 	private final PostImgService postImgService;
 	private final PostMainImgService postMainImgService;
+	private final TagService tagService;
+	private final AlertService alertService;
+
 	private final MemberRepository memberRepository;
 	private final TagRepository tagRepository;
-	private final TagService tagService;
+	private final PostRepository postRepository;
+	private final PostImgRepository postImgRepository;
+	private final AlertRepository alertRepository;
 	
 	public Long savePost(PostFormDto postFormDto, List<MultipartFile> postImgFileList, MultipartFile postMainImg, String email) throws Exception {
 		Member member = memberRepository.findByEmail(email);
@@ -129,9 +134,17 @@ public class PostService {
 		return postRepository.findByTag1(tagname);
 	}
 	
-	public Post updatePostHeart(Post post) {
+	// UPDATE HEART
+	public Post updatePostHeart(Post post, Member member) {
 		post.updatePostHeart(); 
-		postRepository.save(post);	
+		postRepository.save(post);
+		
+		// ADD ADDITIONAL ALERT
+		String alerttype = "Heart";
+		String alertdetatil = "Heart Updated From post";
+		Alert alert = alertService.CreateAlert(member, alerttype, alertdetatil);
+		alertRepository.save(alert);
+		
 		return post;
 	}
 	

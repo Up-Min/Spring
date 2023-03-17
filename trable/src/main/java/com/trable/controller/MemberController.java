@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.trable.dto.MemberFormDto;
@@ -28,6 +31,7 @@ import com.trable.service.UserImgService;
 
 import groovyjarjarantlr4.v4.parse.ANTLRParser.finallyClause_return;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.PackagePrivate;
 
 @RequestMapping("/members")
 @Controller
@@ -53,6 +57,13 @@ public class MemberController {
 			return "/member/loginpage";
 		}
 
+		// CHECK ID DUPLICATE
+		@GetMapping(value = "/chkid/{id}")
+		public @ResponseBody ResponseEntity<Integer> chkid(@PathVariable("id") String id){
+			Integer result = memberService.chkid(id);
+			return new ResponseEntity<Integer> (result, HttpStatus.OK);
+		}
+		
 		// CLICK SIGNUP
 		@PostMapping(value = "/new")
 		public String signup(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model, @RequestParam("user_img") MultipartFile file) {
@@ -100,7 +111,6 @@ public class MemberController {
 			Member member = memberService.findMember(user.getUsername());	
 			List<BlockTags> Taglist = blockService.getblktag(member.getId());
 			List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
-			System.out.println(Memlist);
 			
 			if(Taglist.size() >= 1) {
 				model.addAttribute("blocktags",Taglist);
@@ -129,25 +139,35 @@ public class MemberController {
 			return "redirect:/";
 		}
 		
-		// BLOCK TAG
-		@PostMapping(value = "/tagblock/{id}")
-		public String tagblock(@PathVariable("id") Long memberid, Model model,
-				@RequestParam("blocktag") List<String> blocktag) {
-			Member member = memberService.findMemberbyId(memberid);
-			System.out.println("member : "+member);
-			System.out.println("blocktag : "+blocktag);
-			for(String tag : blocktag) {
-				System.out.println("tag" + tag);
-				blockService.createBlockTag(member, tag);
-			}
-			return "redirect:/";
-		}
+//		// BLOCK TAG
+//		@PostMapping(value = "/tagblock/{id}")
+//		public String tagblock(@PathVariable("id") Long memberid, Model model,
+//				@RequestParam("blocktag") List<String> blocktag) {
+//			Member member = memberService.findMemberbyId(memberid);
+//			System.out.println("member : "+member);
+//			System.out.println("blocktag : "+blocktag);
+//			for(String tag : blocktag) {
+//				System.out.println("tag" + tag);
+//				blockService.createBlockTag(member, tag);
+//			}
+//			return "redirect:/";
+//		}
 		
 		// RESET BLOCK SETTING
 		@GetMapping(value = "/resetset/{id}")
 		public String resetset(@PathVariable("id") Long memberid) {
 			blockService.deleteBlockMember(memberid);
 			return "redirect:/";
+		}
+		
+		// CHK PASSWORD BEFORE DELETE
+		@GetMapping(value = "/chkpass/{id}/{pass}")
+		public @ResponseBody ResponseEntity<Integer> chkpass(@PathVariable("id") Long id,@PathVariable("pass") String password) {
+			System.err.println("control id check " + id);
+			System.err.println("control pass check " + password);
+			Integer result = memberService.chkpassword(id, password, passwordEncoder);
+			
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
 		}
 		
 		// DELETE USER

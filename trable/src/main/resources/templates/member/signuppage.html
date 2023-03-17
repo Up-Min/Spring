@@ -75,6 +75,32 @@
 			$('.sidemenu').css('visibility','hidden');
 		}
 	
+		function chkid() {
+			var email = $('#user_email').val();
+			var url = '/members/chkid/' + email;
+			if(email.length > 5){
+				$.ajax({
+					type : 'get',
+					url : url,
+					dataType : 'json',
+					cache : false,
+					success : function (result) {
+						if(result == 0){
+							$('#chk_result').text('이메일이 중복되지 않습니다.');
+							$('#chk_result').css("color","black");
+							
+						}else{
+							$('#chk_result').text('중복되는 이메일이 존재합니다!');
+							$('#chk_result').css("color","red");
+						}
+					},
+					error : function(a,b,c){
+						console.log(a,b,c);
+					}	
+				})
+			}
+		}
+		
 	</script>
 </th:block>
 
@@ -128,6 +154,10 @@ body{
 
 #label_rem{
 	color: black;
+}
+
+#user_email{
+	margin-bottom: 0;
 }
 
 .bt {
@@ -197,7 +227,8 @@ body{
 							<!-- TABS CONTENT SIGNUP -->
 							<div id="signup-tab-content" class="active">
 								<form class="signup-form" role = "form" action="/members/new" method="post" th:object=${memberFormDto} enctype="multipart/form-data">
-									<input type="email" class="input form-floating" th:field = "*{email}" id="user_email" autocomplete="off" placeholder="사용할 이메일을 입력하세요"> 
+									<input type="email" class="input form-floating" th:field = "*{email}" id="user_email" autocomplete="off" placeholder="사용할 이메일을 입력하세요" onkeyup="chkid()"> 
+									<div id=chk_result class="chk_result c-alert-color py-2"></div>
 									<!-- <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect Data</p> -->
 									<input type="password" class="input form-floating" th:field = "*{password}" id="user_pass" autocomplete="off" placeholder="사용할 비밀번호를 입력하세요"> 
 									<!-- <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect Data</p> -->
@@ -205,7 +236,7 @@ body{
 										<input type="file" class="file input" id="user_img" name="user_img" style="margin-bottom: 20px;" />
 										<div class="fakefile">
 										<!-- <input /> -->
-										<input class="input" id="user_fakeimg" autocomplete="off" placeholder="Set User Image" style="width: 293px;">
+										<input class="input" id="user_fakeimg" autocomplete="off" placeholder="클릭하여 회원 이미지 지정" style="width: 293px;">
 										</div>
 									</div>
 									<div>

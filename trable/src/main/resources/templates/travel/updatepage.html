@@ -4,7 +4,7 @@
 	layout:decorate="~{layouts/layout}">
 <head>
 <meta charset="UTF-8" />
-<title>What's your TRABLE?</title>
+<title>당신의 TRABLE은 무엇인가요?</title>
 
 <!-- THYMELEAF JS  -->
 <th:block layout:fragment="script">
@@ -58,10 +58,9 @@
 <th:block layout:fragment="css">
 	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 	<style>
-body {
-	/* background: linear-gradient(180deg, #714503, #017C57); */
-background: darkgray;
-}
+     body{
+ 		background: linear-gradient(180deg, #455284, #69607C);
+		} 
 
 
 
@@ -80,9 +79,9 @@ background: darkgray;
 	top: 100px;
 	width: 1000px;
 	height: 100%;
-	margin: 0 auto;
 	padding: 0;
 	text-align: center;
+	margin-bottom: 100px;
 }
 
 .writingbox {
@@ -167,35 +166,36 @@ input.file {
 			<form th:action="'/update/'+${id}" method="post" role="form" enctype="multipart/form-data" th:object="${postFormDto}">
 					<div class="row">
 						<div class="col-md-12">
-							<h3 style="margin-top: 15px;"> what's your <img alt="logo" src="/images/Logo.png" width="10%">? </h3>
+							<h3 style="margin-top: 15px;"> 당신의 <img alt="logo" src="/images/Logo.png" width="10%">은 무엇인가요?
+							 </h3>
 						</div>
 					</div>
 					
 		<!-- NAME, MAIN IMAGE(PREVIEW) -->
 				<div class="head">
 					<div class="mb-3 row">
-						<label for="inputname" class="col-sm-2 col-form-label">PostName</label>
+						<label for="inputname" class="col-sm-2 col-form-label" style="margin: 0;">게시물 이름</label>
 						<div class="col-md-10">
 							<input type="text" th:field = "*{postname}" class="form-control" id="inputPostname">
 						</div>
 					</div>
 					<input type="hidden" th:field="*{heart}" value="0">
 					<div class="mb-3 row">
-						<label for="inputimg" class="col-sm-2 col-form-label">MainImage</label>
+						<label for="inputimg" class="col-sm-2 col-form-label" style="margin: 0;">메인 이미지</label>
 						<div class="col-md-10 row">
 							<div class="fileinputs">
 								<input type="file" class="file form-control" id="0" name="MainImgFile" onchange="mainImg(this)" style="margin-bottom: 10px;"/>
 							</div>
 						</div>
-							<label for="seeimg" class="col-sm-2 col-form-label">preview <br> image</label>
+							<label for="seeimg" class="col-sm-2 col-form-label" style="margin: 0;">이미지 미리보기</label>
 						<div class="col-md-10 row">
-								<img id = "preview0" style="width: 30%">
+								<img id = "preview0" style="width: 30%; margin: 0;">
 							</div>
 						</div>
 					<div class="mb-3 row">
-						<label for="inputtag" class="col-sm-2 col-form-label">Tag</label>
+						<label for="inputtag" class="col-sm-2 col-form-label" style="margin: 0;">태그</label>
 						<div class="col-md-10">
-							<input type="text" class="form-control" name = "Tag">
+							<input type="text" name="Tag" class="form-control" id="inputTagname" placeholder="#TRABLE#취미#삶#기쁨#TRABLE과함께해요">
 						</div>
 					</div>
 				
@@ -222,7 +222,7 @@ input.file {
 					</div>
 				</div>
 				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> 
-			<input type="submit" class="button" value="Travel with TRABLE" style="margin: 0 auto; height: 50px; margin-top:20px; margin-bottom: 20px;  ">
+			<input type="submit" class="button" value="추억 저장하기" style="margin: 0 auto; height: 50px; margin-top:20px; margin-bottom: 20px;  ">
 		</form>
 			</div>
 		</div>

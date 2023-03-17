@@ -137,8 +137,8 @@ public class MainController {
 		String id = SecurityContextHolder.getContext().getAuthentication().getName();
 		try {
 			Post post = postservice.getPostbyid(postid);
-			Post post1 = postservice.updatePostHeart(post);
-			Member member = memberService.findMemberbyId(post1.getMember().getId());
+			Member member = memberService.findMemberbyId(post.getMember().getId());
+			Post post1 = postservice.updatePostHeart(post, member);
 			
 			
 			List<PostImg> postimgs = postImgService.getPostimg(postid);

@@ -87,7 +87,37 @@
 				return false;
 			}
 		}
-		 /*]]>*/
+		
+		function passchk(){
+			var loginid = /*[[${member.id}]]*/;
+			var password = $('#outpw').val();
+			var url = "/members/chkpass/"+loginid+"/"+password;
+			
+			$.ajax({
+				type : 'get',
+				url : url,
+				dataType : 'json',
+				cache : false,
+				success : function(result){
+					if(result == 0){
+						$('#chk_result').text('비밀번호가 일치하지 않습니다.');
+					    $('#chk_result').removeClass('c-confirm-color');
+                        $('#chk_result').addClass('c-alert-color');	
+
+					}else{
+						$('#chk_result').text('비밀번호가 일치 합니다!');
+						$('#chk_result').removeClass('c-alert-color');
+                        $('#chk_result').addClass('c-confirm-color');					
+					}
+				},
+				error : function(a,b,c){
+					console.log(a,b,c);
+				}
+			})
+		}
+		
+		
+		/*]]>*/
 	</script>
 </th:block>
 
@@ -269,7 +299,8 @@ input.file {
 						</div>
 						<div class="col-md-1"></div>
 						<div class="col-md-4">
-							<input type="password" class="form-control setin" id="changepw" placeholder="변경할 비밀번호를 입력하세요">
+							<input type="password" class="form-control setin" id="changepw" placeholder="변경할 비밀번호를 입력하세요" >
+
 						</div>
 						<div class="col-md-4">
 
@@ -285,7 +316,8 @@ input.file {
 						</div>
 						<div class="col-md-1"></div>
 						<div class="col-md-4">
-							<input type="password" class="form-control setin" id="outpw" placeholder="회원탈퇴를 위해 비밀번호를 입력하세요">
+							<input type="password" class="form-control setin" id="outpw" placeholder="회원탈퇴를 위해 비밀번호를 입력하세요" onkeyup="passchk()">
+							<div id=chk_result class="chk_result c-alert-color py-2"></div>
 						</div>
 						<div class="col-md-4">
 

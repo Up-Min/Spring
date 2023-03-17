@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mysema.commons.lang.Assert;
 import com.trable.constant.UserGrade;
 import com.trable.dto.MemberFormDto;
 import com.trable.entity.Member;
@@ -30,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberService implements UserDetailsService{
 	private final MemberRepository memberRepository;
-
+	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		Member member = memberRepository.findByEmail(email);
@@ -69,6 +70,37 @@ public class MemberService implements UserDetailsService{
 		Member member =  memberRepository.findById(Memberid).orElseThrow(EntityNotFoundException::new);
 		member.updatepwd(pw, passwordEncoder);
 		memberRepository.save(member);
+	}
+	
+	public int chkid(String id) {
+		Member member = memberRepository.findByEmail(id);
+		
+		if(member == null) {
+			return 0;
+		}else{
+			return 1;
+		}
+		
+	}
+	
+	public int chkpassword(Long id, String password, PasswordEncoder passencoder) {
+		Member member = memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+
+		String oripassword = member.getPassword();
+		String newpassword = passencoder.encode(password);
+		
+		System.err.println("ori"+oripassword);
+		System.err.println("new"+newpassword);
+		
+		//Assert.assertThat(passencoder.matches(oripassword, password),oripassword,password,);
+		
+		System.err.println("chk" + passencoder.matches(oripassword, password));
+		
+		if(oripassword.matches(password)) {
+			return 1;
+		}else {
+			return 0;
+		}
 	}
 	
 	public Member updateMembergrade(Long Memberid, int heart) {
