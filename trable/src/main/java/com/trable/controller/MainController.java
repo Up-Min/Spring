@@ -7,7 +7,9 @@ import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +29,7 @@ import com.trable.entity.Member;
 import com.trable.entity.Post;
 import com.trable.entity.PostImg;
 import com.trable.entity.Tag;
+import com.trable.repository.AlertRepository;
 import com.trable.repository.BlockMembersRepository;
 import com.trable.repository.BlockTagsRepository;
 import com.trable.repository.PostRepository;
@@ -44,16 +47,21 @@ import lombok.RequiredArgsConstructor;
 public class MainController {
 
 	
-	private final MemberService memberService;
 	private final PasswordEncoder passwordEncoder;
+	
+	private final MemberService memberService;
 	private final PostService postservice;
 	private final PostImgService postImgService;
 	private final TagService tagService;
-	private final PostRepository postRepository;
 	private final BlockService blockService;
+
+	private final PostRepository postRepository;
+	private final AlertRepository alertRepository;
+	
 	
 	@Value("${ImgLocation}")
 	private String imgLocation;
+
 	
 	// MAINPAGE
 	@GetMapping(value = "/")
