@@ -31,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberService implements UserDetailsService{
 	private final MemberRepository memberRepository;
+	private final UserImgService userImgService;
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -100,6 +101,16 @@ public class MemberService implements UserDetailsService{
 			return 1;
 		}else {
 			return 0;
+		}
+	}
+	
+	public void updatememberimg(Long memberid, MultipartFile file) {
+		Member member = memberRepository.getReferenceById(memberid);
+		try {
+			userImgService.updatememberImg(member, file);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("memberservice updateimg ERROR!!!!");
 		}
 	}
 	

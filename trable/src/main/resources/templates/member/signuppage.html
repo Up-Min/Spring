@@ -13,12 +13,13 @@
 	<script type="text/javascript" th:src="@{/js/cookie.js}"></script>
 
 	<script th:inline="javascript">
-	$(document).ready(function(){
+	//$(document).ready(function(){
+	window.onload = function(){
     	var errorMessage = [[${errorMessage}]];
     	if(errorMessage != null){
         	alert(errorMessage);
     	}
-    	
+    	    	
     	var userInputId = getCookie("userInputId");
     	var setCookieYN = getCookie("setCookieYN");
 	
@@ -66,7 +67,8 @@
     	
 
 		
-	});
+	}
+	;
 	
 		function test(){
 			$('.sidemenu').css('visibility','hidden');
@@ -87,7 +89,8 @@
 					success : function (result) {
 						if(result == 0){
 							$('#chk_result').text('이메일이 중복되지 않습니다.');
-							$('#chk_result').css("color","black");
+							$('#chk_result').css("color","white");
+							$('#chk_result').css("textweight", "bold");
 							
 						}else{
 							$('#chk_result').text('중복되는 이메일이 존재합니다!');

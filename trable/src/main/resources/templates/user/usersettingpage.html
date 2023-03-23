@@ -25,6 +25,29 @@
 		function test1(){
 			$('.sidemenu').css('visibility','hidden');
 		}
+		
+		function changeImg(input) {
+	 		var id = $(input).attr('id');
+		    var reader = new FileReader();
+		    reader.onload = function(e) {
+		      document.getElementById('previewimg').src = e.target.result;
+		    };
+		    reader.readAsDataURL(input.files[0]);
+		} 
+		
+		function changeuserimg(){
+		    var reader = new FileReader();
+			var confir = confirm("대표 이미지를 변경하시겠습니까?");
+			
+			if(confir){
+				alert("이미지가 변경되었습니다.");
+				document.getElementById('changeimgform').submit();					
+			}
+			else{
+				return false;
+			}
+		}
+		
 		function changepw(e){
 			var pw = $('#changepw').val();
 			var confir = confirm("비밀번호를 변경하시겠습니까?");
@@ -156,8 +179,8 @@ padding: 10px;
 }
 .writingbox {
 	margin: 0 auto;
-	height: 700px;
-	width: 700px;
+	height : 95%;
+	width: 95%;
 	background-color: #D9D9D9;
 }
 
@@ -165,7 +188,7 @@ padding: 10px;
 	margin-left: 60px;
 	margin-top: 10px;
 	padding: 10px;
-	width: 70%;
+	width: 80%;
 	height: 100%;
 }
 
@@ -185,8 +208,21 @@ padding: 10px;
 	margin-bottom: 1px;
 }
 
+.photozone{
+	text-align: left;
+	padding: 7px;
+}
+
+.photohead, .photobody{
+	display: flex;
+}
+
+.photobody{
+	height: 170px;
+}
+
 .setin{
-	width: 400px;
+	width: 500px;
 }
 
 .setsession{
@@ -268,6 +304,36 @@ input.file {
 					
 		<!-- NAME, MAIN IMAGE(PREVIEW) -->
 				<div class="head">
+				<form th:action="'/members/changeimg/'+${member.id}" method="post" enctype="multipart/form-data" id="changeimgform" >
+					<div class="mb-3 row setsession">
+						<div class="col-md-10">
+							<p class="conhead"> 회원 프로필 사진 수정 </p>
+						</div>
+					 <div class="col-md-1">
+					 </div>
+						<div class="col-md-10 photozone">
+							<div class="photohead">
+							<span> 현재 프로필 사진 </span>
+							<span> 변경할 프로필 사진 </span>							
+							</div>
+						</div>
+						 <div class="col-md-10 photozone">
+							<div class="photobody">
+							<img alt="beforeimg" th:src="${member.imgurl}" width="30%">
+							<img alt="" id="previewimg" width="30%">
+							</div>
+						 </div>
+						 <div class="col-md-9">
+						 	<div class="photoinputblock">
+						 	<input type="file" class="file form-control setin" id="0" name="changeimgfile" onchange="changeImg(this)">
+						 	</div>												 
+						 </div>
+						 <div class="col-md-1">
+						 	<button class="setbutton" type="button" onclick="changeuserimg()"> 변경 </button>
+						 </div>
+					</div>	
+				
+				</form>
 				
 				<form th:action="'/'+'members/userblock/'+${member.id}" method="post" id="blockuserform"role="form">
 					<div class="mb-3 row setsession">
@@ -279,7 +345,6 @@ input.file {
 							<input type="text" class="form-control setin" id="blockuser" name="blockuser" placeholder="ex) test@test.com / test@test.com,test1@test1.com">
 						</div>
 						<div class="col-md-4">
-
 						</div>
 						<div class="col-md-1">
 							<button class="setbutton" type="button" onclick="checkub()"> 적용 </button>							

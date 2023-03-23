@@ -36,12 +36,15 @@ public class Alert {
 	
 	private String alertdetail;
 	
-	public static Alert createAlert(Member member, String alerttype, String alertdate, String alertdetail) {
+	private String alertcheck;
+	
+	public static Alert createAlert(Member member, String alerttype, String alertdate, String alertdetail, String altchk) {
 		Alert alert = new Alert();
 		alert.setMember(member);
 		alert.setAlerttype(alerttype);
 		alert.setAlertdate(alertdate);
 		alert.setAlertdetail(alertdetail);
+		alert.setAlertcheck(altchk);
 		return alert;
 	}
 	

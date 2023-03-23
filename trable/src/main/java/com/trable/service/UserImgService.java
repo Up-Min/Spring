@@ -1,5 +1,7 @@
 package com.trable.service;
 
+import java.io.IOException;
+
 import javax.transaction.Transactional;
 
 import org.apache.groovy.parser.antlr4.util.StringUtils;
@@ -32,11 +34,24 @@ public class UserImgService {
 			imgName = fileService.uploadFile(imgLocation, oriImgName, imgfile.getBytes());
 			imgUrl = "/image/img/"+imgName;
 		}
-		
 		member.updateImg(oriImgName, imgName, imgUrl);
-		
 	}
 	
-	
+	public void updatememberImg(Member member, MultipartFile imgfile) throws Exception {
+		// 그 전에 기존거 없애줘야함.
+		member.updateImg("", "", "");
+		String oriImgName = imgfile.getOriginalFilename();
+		String imgName = "";
+		String imgUrl = "";	
+		
+		if(!StringUtils.isEmpty(oriImgName)) {
+			imgName = fileService.uploadFile(imgLocation, oriImgName, imgfile.getBytes());
+			imgUrl = "/image/img/"+imgName;
+		}
+		member.updateImg(oriImgName, imgName, imgUrl);
+
+		
+		
+	}
 	
 }

@@ -80,6 +80,16 @@
 			// 만일 리소스가 로드가 되면 더이상 이벤트 스크립트가 있을 필요가 없으니 삭제
 			isVisible && window.removeEventListener('scroll', func); */
 		}
+		 
+		 var socket = new WebSocket("ws://localhost/alert");
+		 socket.onopen = () => {
+			console.log(socket);
+		 };
+		 var socket = new WebSocket("ws://localhost/chat");
+		 socket.onopen = () => {
+			console.log(socket);
+		 };
+		 
 	</script>
 </th:block>
 

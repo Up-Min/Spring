@@ -13,7 +13,8 @@
 	<script type="text/javascript" th:src="@{/js/cookie.js}"></script>
 
 	<script th:inline="javascript">
-	$(document).ready(function(){
+	//$(document).ready(function(){
+	window.onload = function(){
     	var errorMessage = [[${errorMessage}]];
     	if(errorMessage != null){
         	alert(errorMessage);
@@ -40,9 +41,7 @@
     		}
     	})
     	
-	
-    	
-	});
+	};
 	
 		function test(){
 			$('.sidemenu').css('visibility','hidden');

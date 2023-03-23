@@ -82,6 +82,7 @@ public class MemberController {
 					model.addAttribute("errorMessage", e.getMessage());
 					return "member/signuppage";
 				}
+			model.addAttribute("errorMessage", "회원가입이 정상적으로 완료되었습니다!");
 			return "/member/loginpage";
 
 		}
@@ -112,6 +113,7 @@ public class MemberController {
 			List<BlockTags> Taglist = blockService.getblktag(member.getId());
 			List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
 			
+			
 			if(Taglist.size() >= 1) {
 				model.addAttribute("blocktags",Taglist);
 			}
@@ -121,6 +123,15 @@ public class MemberController {
 			
 			model.addAttribute("member",member);
 			return "/user/usersettingpage";
+		}
+		
+		// CHANGE USER IMG
+		@PostMapping(value = "/changeimg/{id}")
+		public String userimgchange(@PathVariable("id") Long memberid, Model model, 
+				@RequestParam("changeimgfile") MultipartFile imgfile) {			
+			memberService.updatememberimg(memberid, imgfile);
+			//return "members/setting/"+memberid;
+			return "redirect:/";
 		}
 		
 		// BLOCK USER
