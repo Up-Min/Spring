@@ -131,7 +131,7 @@ public class MemberController {
 				@RequestParam("changeimgfile") MultipartFile imgfile) {			
 			memberService.updatememberimg(memberid, imgfile);
 			//return "members/setting/"+memberid;
-			return "redirect:/";
+			return "redirect:/members/setting/"+memberid;
 		}
 		
 		// BLOCK USER
