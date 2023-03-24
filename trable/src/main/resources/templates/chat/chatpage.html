@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<!-- layout이 적용되어있는 페이지 폼 입니다. 
+		따로 적용할 거 없이 "content 영역에 각 페이지 별 내용 기입하시면 됩니다."-->
+
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  layout:decorate="~{layouts/layout}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title> 채팅페이지 </title> 
+
+    <!-- THYMELEAF JS  -->
+    <th:block layout:fragment="script">
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script src="/js/chatpage.js"></script>
+    
+      <script th:inline="javascript">
+		function test(){
+			$('.sidemenu').css('visibility','hidden');
+		}
+		function test1(){
+			$('.sidemenu').css('visibility','hidden');
+		}
+		
+		
+		/**
+		 *
+		 */		
+      </script>
+    </th:block>
+
+    <!-- THYMELEAF CSS -->
+    <th:block layout:fragment="css">
+    	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+      <style> 
+      .chating{
+        background-color: white;
+        width: 500px;
+        height: 500px;
+        border: 1px solid black;
+        overflow: auto;
+      }
+      
+      .chating p {
+        color: red;
+        text-align: left;
+      }
+
+      #yourMsg{
+        display: none;
+      }
+
+      </style>
+    </th:block>
+  </head>
+  <body>
+    <div layout:fragment="content">
+    			<h1> 채팅ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ </h1>
+    			아니 왜 채팅이 안나와
+
+        <div id="container" class="container">
+            <div id="chating" class="chating">
+            
+            </div>
+            <div id="yourName">
+              <table>
+                <tr>
+                 <th> 닉네임 </th> 
+                 <th> <input class="form-control form-control-sm" type="text" name="userName" id="userName"> </th> 
+                 <th> <button class="btn btn-sm btn-primary" onclick="chatName()" id="startBtn"> 등록 </button> </th> 
+                </tr>
+              </table>
+            </div>
+
+            <div id="yourMsg">
+              <table>
+                <tr>
+                  <th> 메세지 </th>
+                  <th> <input class="form-control form-control-sm" type="text" name="chatting" id="chatting" placeholder="보낼 메세지를 입력하세요"> </th>
+                 <th> <button class="btn btn-sm btn-primary" onclick="send()" id="sendBtn"> 보내기 </button></th>
+                </tr>
+              </table>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>

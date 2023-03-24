@@ -33,6 +33,8 @@ public class AlertWebSocketHandler extends TextWebSocketHandler{
 		Member member = objectMapper.readValue(message.getPayload(), Member.class);
 		//Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		List<Alert> alertList = alertService.Alertlistbymemid(member.getId());
+		System.err.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		System.err.println("alertlisttest (handle): "+alertList);
 		if(alertList != null) {
 			for(Alert a : alertList) {
 				System.err.println("alertList");

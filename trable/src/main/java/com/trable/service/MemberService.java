@@ -90,14 +90,7 @@ public class MemberService implements UserDetailsService{
 		String oripassword = member.getPassword();
 		String newpassword = passencoder.encode(password);
 		
-		System.err.println("ori"+oripassword);
-		System.err.println("new"+newpassword);
-		
-		//Assert.assertThat(passencoder.matches(oripassword, password),oripassword,password,);
-		
-		System.err.println("chk" + passencoder.matches(oripassword, password));
-		
-		if(oripassword.matches(password)) {
+		if(passencoder.matches(password, oripassword)) {
 			return 1;
 		}else {
 			return 0;

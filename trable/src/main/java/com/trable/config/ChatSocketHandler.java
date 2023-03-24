@@ -1,6 +1,7 @@
 package com.trable.config;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Component;
@@ -15,30 +16,34 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ChatSocketHandler extends TextWebSocketHandler{
 
-    private static final ConcurrentHashMap<String, WebSocketSession> CLIENTS = new ConcurrentHashMap<String, WebSocketSession>();
-	
+    HashMap<String, WebSocketSession> sessionMap = new HashMap<>();
+    
+    
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        CLIENTS.put(session.getId(), session);
+       super.afterConnectionEstablished(session);
+    	sessionMap.put(session.getId(), session);
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        CLIENTS.remove(session.getId());
+       sessionMap.remove(session.getId());
+    	super.afterConnectionClosed(session, status);
+    	
     }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        String id = session.getId();  //메시지를 보낸 아이디
-        CLIENTS.entrySet().forEach( arg->{
-            if(!arg.getKey().equals(id)) {  //같은 아이디가 아니면 메시지를 전달합니다.
-                try {
-                    arg.getValue().sendMessage(message);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+    	String msg = message.getPayload();
+    	for(String key : sessionMap.keySet()) {
+    		WebSocketSession wss = sessionMap.get(key);
+    		try {
+				wss.sendMessage(new TextMessage(msg));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+    	}
+    	
     }
 	
 }

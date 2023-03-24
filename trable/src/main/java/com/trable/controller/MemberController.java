@@ -174,10 +174,7 @@ public class MemberController {
 		// CHK PASSWORD BEFORE DELETE
 		@GetMapping(value = "/chkpass/{id}/{pass}")
 		public @ResponseBody ResponseEntity<Integer> chkpass(@PathVariable("id") Long id,@PathVariable("pass") String password) {
-			System.err.println("control id check " + id);
-			System.err.println("control pass check " + password);
 			Integer result = memberService.chkpassword(id, password, passwordEncoder);
-			
 			return new ResponseEntity<Integer>(result, HttpStatus.OK);
 		}
 		
