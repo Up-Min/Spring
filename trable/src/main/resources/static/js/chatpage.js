@@ -41,6 +41,7 @@ function chatName() {
     socket.send(userName + " 님이 입장하셨습니다.");
   }
 }
+//1
 function send() {
   var uN = $("#userName").val();
   var msg = $("#chatting").val();
