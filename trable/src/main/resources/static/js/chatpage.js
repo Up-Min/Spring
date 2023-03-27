@@ -1,18 +1,13 @@
-/**
- *
- */
-
 var socket;
 
-$('#chating').scrollTop($('#chating').prop('scrollHeight'));
-
-function wsOpen() {
+function wsOpen(userName) {
   socket = new WebSocket("ws://localhost/chat");
-  wsEvt();
+  wsEvt(userName);
 }
 
-function wsEvt() {
+function wsEvt(userName) {
   socket.onopen = () => {
+    socket.send(userName + " 님이 입장하셨습니다.");
     console.log(socket);
   };
 
@@ -21,34 +16,39 @@ function wsEvt() {
     if (msg != null && msg.trim() != "") {
       $("#chating").append("<p>" + msg + "</p>");
     }
-
-    document.addEventListener("keypress", function (e) {
-      if (e.keyCode == 13) {
-        send();
-      }
-    });
   };
+  document.addEventListener("keypress", function (e) {
+    if (e.keyCode == 13) {
+      send();
+    }
+    let chat = document.querySelector("#chating");
+    chat.scrollTop = chat.scrollHeight;
+    console.log("chat", chat);
+    console.log("scrollheight", chat.scrollHeight);
+    console.log("chatscrollTop", chat.scrollTop);
+  });
 }
+
+function send() {
+  var uN = $("#userName").val();
+  var msg = $("#chatting").val();
+  if (msg == null || msg.trim == "") {
+    return false();
+  } else {
+    socket.send(uN + " " + msg);
+    msg.val = null;
+  }
+}
+
 function chatName() {
   var userName = $("#userName").val();
   if (userName == null || userName.trim == "") {
     alert("사용자 이름을 입력해주세요.");
     $("#userName").focus();
   } else {
-    wsOpen();
+    wsOpen(userName);
     $("#yourName").hide();
     $("#yourMsg").show();
-    socket.send(userName + " 님이 입장하셨습니다.");
   }
 }
 //1
-function send() {
-  var uN = $("#userName").val();
-  var msg = $("#chatting").val();
-  if(msg == null || msg.trim == ""){
-	  return false();
-  }else{
-  socket.send(uN + " " + msg);
-  $("#chatting").val(" ");	  
-  }
-}
