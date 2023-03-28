@@ -23,9 +23,6 @@ function wsEvt(userName) {
     }
     let chat = document.querySelector("#chating");
     chat.scrollTop = chat.scrollHeight;
-    console.log("chat", chat);
-    console.log("scrollheight", chat.scrollHeight);
-    console.log("chatscrollTop", chat.scrollTop);
   });
 }
 
@@ -36,7 +33,7 @@ function send() {
     return false();
   } else {
     socket.send(uN + " " + msg);
-    msg.val = null;
+    $("#chatting").val(" ");
   }
 }
 
