@@ -250,6 +250,21 @@ public class MainController {
 		// GET TAGS WHAT USER USED LEAST 2 TIMES.
 		List<String> finaltag = tagService.returntagsleast2times();
 		
+		// GET POSTS BY USE FINALTAG
+		List<Post> post = postservice.getPostsUsingFinalTag(finaltag);
+		
+		
+		// CHECK BLOCK Member LIST
+		List<BlockTags> Taglist = blockService.getblktag(member.getId());
+		List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
+		
+		for(int i=0; i<post.size(); i++) {
+			for(int j=0; j<Memlist.size(); j++) {
+				if(post.get(i).getMember().getEmail().equals(Memlist.get(j).getBlockmembername())) {
+					post.remove(post.get(i));
+				}
+			}
+		}
 		
 //		List<Tag> tag = tagService.getTagnamebycount(member.getId());
 //		List<String> tagnamelist = new ArrayList<>();
@@ -268,17 +283,6 @@ public class MainController {
 //				enoughtagname.add(tagnamelist.get(i));
 //			}
 //		}
-//		List<String> finaltag = new ArrayList<>();
-//		for(String test : enoughtagname) {
-//			if(!finaltag.contains(test)) {
-//				finaltag.add(test);				
-//			}
-//		}
-		
-		
-		// GET POSTS BY USE FINALTAG
-		List<Post> post = postservice.getPostsUsingFinalTag(finaltag);
-		
 //		List<Post> post = new ArrayList<>();
 //		for(String eachtag : finaltag) {
 //			List<Post> casepost = postservice.getPostbyTagname(eachtag);//각 태그별로 가져온 postlist
@@ -289,18 +293,12 @@ public class MainController {
 //				}
 //			}
 //		}
-		
-		// CHECK BLOCK Member LIST
-		List<BlockTags> Taglist = blockService.getblktag(member.getId());
-		List<BlockMembers> Memlist = blockService.getblkmem(member.getId());
-		
-		for(int i=0; i<post.size(); i++) {
-			for(int j=0; j<Memlist.size(); j++) {
-				if(post.get(i).getMember().getEmail().equals(Memlist.get(j).getBlockmembername())) {
-					post.remove(post.get(i));
-				}
-			}
-		}
+//		List<String> finaltag = new ArrayList<>();
+//		for(String test : enoughtagname) {
+//			if(!finaltag.contains(test)) {
+//				finaltag.add(test);				
+//			}
+//		}
 //		for(int i=0; i<post.size(); i++) {
 //			for(int j=0; j<Taglist.size(); j++) {
 //				if(post.get(i).getMember().getEmail().equals(Taglist.get(j).getBlocktagname())) {

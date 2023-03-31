@@ -75,13 +75,11 @@ public class MemberService implements UserDetailsService{
 	
 	public int chkid(String id) {
 		Member member = memberRepository.findByEmail(id);
-		
 		if(member == null) {
 			return 0;
 		}else{
 			return 1;
-		}
-		
+		}	
 	}
 	
 	public int chkpassword(Long id, String password, PasswordEncoder passencoder) {

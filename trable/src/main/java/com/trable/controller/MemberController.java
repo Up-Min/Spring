@@ -150,20 +150,6 @@ public class MemberController {
 			return "redirect:/";
 		}
 		
-//		// BLOCK TAG
-//		@PostMapping(value = "/tagblock/{id}")
-//		public String tagblock(@PathVariable("id") Long memberid, Model model,
-//				@RequestParam("blocktag") List<String> blocktag) {
-//			Member member = memberService.findMemberbyId(memberid);
-//			System.out.println("member : "+member);
-//			System.out.println("blocktag : "+blocktag);
-//			for(String tag : blocktag) {
-//				System.out.println("tag" + tag);
-//				blockService.createBlockTag(member, tag);
-//			}
-//			return "redirect:/";
-//		}
-		
 		// RESET BLOCK SETTING
 		@GetMapping(value = "/resetset/{id}")
 		public String resetset(@PathVariable("id") Long memberid) {
@@ -185,5 +171,19 @@ public class MemberController {
 			SecurityContextHolder.clearContext();
 			return "redirect:/";
 		}
+//		// BLOCK TAG
+//		@PostMapping(value = "/tagblock/{id}")
+//		public String tagblock(@PathVariable("id") Long memberid, Model model,
+//				@RequestParam("blocktag") List<String> blocktag) {
+//			Member member = memberService.findMemberbyId(memberid);
+//			System.out.println("member : "+member);
+//			System.out.println("blocktag : "+blocktag);
+//			for(String tag : blocktag) {
+//				System.out.println("tag" + tag);
+//				blockService.createBlockTag(member, tag);
+//			}
+//			return "redirect:/";
+//		}
+		
 		
 }

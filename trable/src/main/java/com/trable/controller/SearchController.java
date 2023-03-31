@@ -63,8 +63,6 @@ public class SearchController {
 				}
 			}
 		}	
-		
-
 		model.addAttribute("posts",post);
 		return "/travel/searchpage";
 	}

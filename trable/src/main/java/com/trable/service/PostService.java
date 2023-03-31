@@ -96,9 +96,7 @@ public class PostService {
 	}
 	
 	public List<Post> getPostShowPage(ShowPost showpost){
-		List<Post> post = postRepository.findByMemberNotshow();
-		
-		
+		List<Post> post = postRepository.findByMemberNotshow();	
 		return post;
 	}
 	
