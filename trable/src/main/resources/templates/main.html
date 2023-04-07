@@ -218,6 +218,19 @@ transform : rotate(90deg);
 	 top: 27px;
 	 rotate : 270deg;
 }
+.tohomezone {
+	 display: flex;
+	 width: 100px;
+	 height: 100px;
+	 position: absolute;
+	 margin : 0 auto;
+	 bottom: 40px;
+	 left: 45%;
+	 rotate : 180deg;
+}
+.tohomezone:hover{
+	cursor: pointer;
+}
  .chevron {
 	 position: absolute;
 	 width: 2.1rem;
@@ -273,7 +286,7 @@ transform : rotate(90deg);
 <body>
 
 	<div layout:fragment="content">
-	<div class="arrowzone" style =>
+	<div class="arrowzone">
   		<div class="chevron"></div>
   		<div class="chevron"></div>
   		<div class="chevron"></div>
@@ -369,6 +382,11 @@ transform : rotate(90deg);
 					</div>
 				</div>
 				</div>
+		<div class="tohomezone" onclick="location.href='#section1'">
+  		<div class="chevron"></div>
+  		<div class="chevron"></div>
+  		<div class="chevron"></div>
+	</div>
 		<script>
 			AOS.init();
 		</script>
