@@ -166,28 +166,25 @@ width: 85%;
 						</div>											
 					</div>
 					<!-- UPDATE, DELETE POST -->
-					<div th:if="${id} == ${member.email}">					
+					<div th:if = "${id} == ${member.email}">					
 						<div class="updateANDdelete">
-						<!--  fdsf-->
-								<div class="row center">
-									<div class="col-md-3">
+							<div class="row center">
+								<div class="col-md-3">
 									<p> 게시물 수정 </p>
 									<a th:href = "'/update/'+${post.id}"><img alt="update" src="/images/refresh.png" width="50px"></a>						
-									</div>
-									<div th:if="${post.showPost} == 'SHOW'"></div>
-									<div class="col-md-3">
+								</div>
+								<div class="col-md-3">
 									<p> 게시물 숨김 </p>
 									<a type="button" th:onclick="hidepost([[${post.id}]])"><img alt="hide" src="/images/eyeclosed.png" width="55px"> </a>
-									</div>									
-									<div class="col-md-3">
+								</div>																		
+								<div class="col-md-3">
 									<p> 게시물 숨김 해제 </p>
 									<a type="button" th:onclick="showpost([[${post.id}]])"><img alt="hide" src="/images/eyeopen.png" width="55px"> </a>
-									</div>									
-									<div class="col-md-3">
+								</div>																										
+								<div class="col-md-3">
 									<p> 게시물 삭제 </p>
 									<a type="button" th:onclick="deletepost([[${post.id}]])"><img alt="delete" src="/images/delete.png" width="50px">  </a>															
-<!-- 									<a th:href = "'/delete/'+${post.id}" onclick="delete()"><img alt="delete" src="/images/delete.png" width="50px">  </a>															
- -->									</div>
+								</div>						
  							</div>
 						</div>
 					</div>

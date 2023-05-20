@@ -130,6 +130,9 @@ public class MainController {
 			model.addAttribute("id", id);
 			model.addAttribute("member", member);
 			model.addAttribute("post", post);
+				
+			System.err.println("post show test : " + post.getShowPost());
+				
 			model.addAttribute("postimgs",postimgs);		
 			model.addAttribute("tags", tags);
 		} catch (EntityNotFoundException e) {
